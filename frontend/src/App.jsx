@@ -1,0 +1,64 @@
+import { lazy, Suspense } from "react";
+import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import "./App.css";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { ScrollToTop } from "./components/ScrollToTop";
+import { Home } from "./pages/Home";
+import { ADN } from "./pages/ADN";
+import { Produits } from "./pages/Produits";
+import { Contact } from "./pages/Contact";
+
+const Restaurants = lazy(() => import("./pages/Restaurants").then((m) => ({ default: m.Restaurants })));
+
+function LoadingFallback() {
+  const { t } = useTranslation();
+  return <>{t("common.loading")}</>;
+}
+import { MentionsLegales } from "./pages/MentionsLegales";
+import { PolitiqueConfidentialite } from "./pages/PolitiqueConfidentialite";
+import { PolitiqueCookies } from "./pages/PolitiqueCookies";
+import { CGU } from "./pages/CGU";
+import { Formation } from "./pages/Formation";
+import { FormationSection } from "./pages/FormationSection";
+import { Allergenes } from "./pages/Allergenes";
+
+function AppContent() {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/" || pathname === "";
+
+  return (
+    <>
+      <ScrollToTop />
+      <div className={`cojean-style ${isHome ? "page-is-home" : ""}`}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/produits" element={<Produits />} />
+          <Route path="/adn" element={<ADN />} />
+          <Route path="/restaurants" element={<Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}><LoadingFallback /></div>}><Restaurants /></Suspense>} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/allergenes" element={<Allergenes />} />
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
+          <Route path="/politique-cookies" element={<PolitiqueCookies />} />
+          <Route path="/cgu" element={<CGU />} />
+          <Route path="/formation" element={<Formation />} />
+          <Route path="/formation/:sectionId" element={<FormationSection />} />
+        </Routes>
+        <Footer />
+      </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+export default App;

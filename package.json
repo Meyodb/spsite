@@ -1,0 +1,14 @@
+{
+  "name": "soup-juice-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "start": "cd server && node server.js",
+    "start:tunnel": "node scripts/start-with-tunnel.js",
+    "deploy": "cd frontend && npx vercel --prod"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}
