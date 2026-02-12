@@ -34,7 +34,7 @@
     "cgu": "Terms of use"
   },
   "home": {
-    "heroTitle": "Food, the feel-good way",
+    "heroTitle": "Manger sain, se sentir bien, recommencer demain",
     "ctaProducts": "See our products",
     "statSince": "Healthy canteen since",
     "statRestaurants": "Restaurants in Paris",
@@ -100,8 +100,45 @@
   },
   "adn": {
     "heroTitle": "OUR DNA",
-    "heroSubtitle": "What eating at Soup & Juice really brings you",
+    "heroSubtitle": "The values and commitments that drive us since 2001",
     "ariaHero": "Header",
+    "photoPlaceholder": "Photo to be added",
+    "identite": {
+      "label": "IDENTITY & VISION",
+      "title": "A brand born in 2001",
+      "text": "Soup & Juice is a fast-food chain that places flavour balance at the heart of every dish. Our mission: to support your daily nutritional intake with healthy, tasty and varied options.",
+      "imageAlt": "Soup & Juice identity and vision"
+    },
+    "pillars": {
+      "title": "What eating at Soup & Juice really brings you",
+      "intro": "Three fundamental pillars for your wellbeing"
+    },
+    "qualite": {
+      "label": "QUALITY & KNOW-HOW",
+      "title": "Homemade recipes",
+      "text": "Our dishes are selected for their nutritional qualities. Complete and balanced recipes, they are prepared in our kitchens by teams who work every day close to the products to guarantee freshness and taste.",
+      "imageAlt": "Soup & Juice homemade recipes"
+    },
+    "engagements": {
+      "title": "OUR COMMITMENTS",
+      "subtitle": "Values that guide each of our actions",
+      "jus": {
+        "title": "Fresh & natural juices",
+        "text": "Our fruit and vegetable juices are fresh, without HPP, without preservatives, without pasteurization and without additives."
+      },
+      "soupes": {
+        "title": "Vegetarian soups",
+        "text": "All our soups are vegetarian and 90% lactose-free."
+      },
+      "emballages": {
+        "title": "Sustainable packaging",
+        "text": "80% of our packaging is recyclable or compostable. Vegetable starch straws, reusable cutlery kits and reusable crates."
+      },
+      "local": {
+        "title": "Local & solidarity",
+        "text": "Production in Yvelines and short-circuit supply. We support and initiate actions in favor of associations."
+      }
+    },
     "forme": {
       "title": "FITNESS",
       "intro": "More stable energy, all day long.",
@@ -123,14 +160,10 @@
       "intro": "Cuisine that respects the body's balance.",
       "body": "For over 25 years we have favoured raw, varied and digestible ingredients. Seasonal vegetables, pulses, grains, herbs and spices are used to support digestion, nutritional balance and overall wellbeing. Our recipes avoid unnecessary excess and rely on simple, effective combinations known for their benefits.",
       "tagline": "Because good nutrition isn't theory. It's daily practice."
-    },
-    "resume": {
-      "title": "IN SUMMARY",
-      "body": "Eating at Soup & Juice for several days or weeks means building better eating habits, naturally."
     }
   },
   "contact": {
-    "title": "Contact us",
+    "title": "CONTACT US",
     "subtitle": "We're here to answer all your questions",
     "subjectLabel": "Subject of your request",
     "subjectPlaceholder": "Select a subject",
@@ -172,7 +205,7 @@
     }
   },
   "restaurants": {
-    "title": "Our restaurants",
+    "title": "OUR RESTAURANTS",
     "subtitle": "Find the Soup & Juice restaurant nearest you",
     "hours": "Monday - Friday: 9:00 AM - 3:00 PM",
     "ariaDeliveroo": "Order on Deliveroo",

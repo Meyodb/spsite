@@ -34,7 +34,7 @@
     "cgu": "CGU"
   },
   "home": {
-    "heroTitle": "Food, the feel-good way",
+    "heroTitle": "Manger sain, se sentir bien, recommencer demain",
     "ctaProducts": "Voir nos produits",
     "statSince": "Cantine saine depuis",
     "statRestaurants": "Restaurants sur Paris",
@@ -100,8 +100,45 @@
   },
   "adn": {
     "heroTitle": "NOTRE ADN",
-    "heroSubtitle": "Ce que manger chez Soup & Juice apporte vraiment",
+    "heroSubtitle": "Les valeurs et engagements qui nous animent depuis 2001",
     "ariaHero": "En-tête",
+    "photoPlaceholder": "Photo à ajouter",
+    "identite": {
+      "label": "IDENTITÉ & VISION",
+      "title": "Une marque née en 2001",
+      "text": "Soup & Juice est une enseigne de restauration rapide qui place l'équilibre des saveurs au cœur de chaque assiette. Notre mission : accompagner vos apports nutritionnels au quotidien avec des options saines, savoureuses et variées.",
+      "imageAlt": "Identité et vision Soup & Juice"
+    },
+    "pillars": {
+      "title": "Ce que manger chez Soup & Juice apporte vraiment",
+      "intro": "Trois piliers fondamentaux pour votre bien-être"
+    },
+    "qualite": {
+      "label": "QUALITÉ & SAVOIR-FAIRE",
+      "title": "Recettes faites maison",
+      "text": "Nos plats sont sélectionnés pour leurs qualités nutritionnelles. Recettes complètes et équilibrées, elles sont élaborées dans nos cuisines par des équipes qui travaillent chaque jour au plus près des produits pour vous garantir fraîcheur et goût.",
+      "imageAlt": "Recettes faites maison Soup & Juice"
+    },
+    "engagements": {
+      "title": "NOS ENGAGEMENTS",
+      "subtitle": "Des valeurs qui guident chacune de nos actions",
+      "jus": {
+        "title": "Jus frais & naturels",
+        "text": "Nos jus de fruits et de légumes sont frais, sans HPP, sans conservateur, sans pasteurisation et sans additif."
+      },
+      "soupes": {
+        "title": "Soupes végétariennes",
+        "text": "Toutes nos soupes sont végétariennes et préparées à 90 % sans lactose."
+      },
+      "emballages": {
+        "title": "Emballages durables",
+        "text": "80 % de nos packagings sont recyclables ou compostables. Pailles en amidon végétal, kits couverts consignés et caisses consignées."
+      },
+      "local": {
+        "title": "Local & solidarité",
+        "text": "Production dans les Yvelines et approvisionnement en circuit court. Nous soutenons et initions des actions en faveur d'associations."
+      }
+    },
     "forme": {
       "title": "FORME",
       "intro": "Une énergie plus stable, toute la journée.",
@@ -123,14 +160,10 @@
       "intro": "Une cuisine qui respecte l'équilibre du corps.",
       "body": "Depuis plus de 25 ans, nous privilégions des ingrédients bruts, variés et digestes. Légumes de saison, légumineuses, céréales, herbes et épices sont utilisés pour soutenir la digestion, l'équilibre nutritionnel et le bien-être global. Nos recettes évitent les excès inutiles et misent sur des associations simples, efficaces et reconnues pour leurs bienfaits.",
       "tagline": "Parce qu'une bonne alimentation, ce n'est pas une théorie. C'est une pratique quotidienne."
-    },
-    "resume": {
-      "title": "EN RÉSUMÉ",
-      "body": "Manger chez Soup & Juice pendant plusieurs jours ou plusieurs semaines, c'est installer de meilleures habitudes alimentaires, naturellement."
     }
   },
   "contact": {
-    "title": "Contactez-nous",
+    "title": "CONTACTEZ-NOUS",
     "subtitle": "Nous sommes à votre écoute pour répondre à toutes vos questions",
     "subjectLabel": "Sujet de votre demande",
     "subjectPlaceholder": "Sélectionnez un sujet",
@@ -172,7 +205,7 @@
     }
   },
   "restaurants": {
-    "title": "Nos restaurants",
+    "title": "NOS RESTAURANTS",
     "subtitle": "Trouvez le restaurant Soup & Juice le plus proche de vous",
     "hours": "Lundi - Vendredi: 9h00 - 15h00",
     "ariaDeliveroo": "Commander sur Deliveroo",

@@ -7,6 +7,9 @@ import citron from "../assets/images/citron.png";
 import ananas from "../assets/images/ananas.png";
 import palmier from "../assets/images/palmier.png";
 import backImage from "../assets/images/back.png";
+import photoMenu1 from "../assets/images/photo menu/photo-sandwich.jpg";
+import photoMenu2 from "../assets/images/photo menu/photo-salade.jpg";
+import photoMenu3 from "../assets/images/photo menu/photo-platchaud.jpg";
 
 const CATEGORY_I18N_KEYS = {
   "JUS": "JUS",
@@ -253,6 +256,7 @@ export const Produits = () => {
           </div>
           <div className="formulas-description">
             {t("products.formulaDesc")}
+            <span className="formulas-volume-note">{t("products.formulaNote")}</span>
           </div>
           
           <div className="formulas-grid">
@@ -287,14 +291,22 @@ export const Produits = () => {
             </div>
           </div>
 
-          <div className="formulas-note">
-            {t("products.formulaNote")}
+          <div className="formulas-photos-grid">
+            <div className="formula-photo-item">
+              <img src={photoMenu1} alt="Menu photo 1" className="formula-photo" />
+            </div>
+            <div className="formula-photo-item">
+              <img src={photoMenu2} alt="Menu photo 2" className="formula-photo" />
+            </div>
+            <div className="formula-photo-item">
+              <img src={photoMenu3} alt="Menu photo 3" className="formula-photo" />
+            </div>
           </div>
         </div>
 
         <div className="menu-sections">
           {Object.entries(productsByCategory).map(([category, categoryProducts]) => (
-            <div key={category} className="menu-section">
+            <div key={category} className={`menu-section ${category === "MILKSHAKES" ? "no-right-border" : ""}`}>
               <div className="section-header">
                 <h2 className="section-title">
                   <span>{t(`products.categories.${CATEGORY_I18N_KEYS[category] || category}`)}</span>
