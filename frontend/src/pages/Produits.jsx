@@ -16,9 +16,16 @@ const CATEGORY_I18N_KEYS = {
   "BOOSTERS": "BOOSTERS",
   "MILKSHAKES": "MILKSHAKES",
   "SOUPES": "SOUPES",
+  "PLAT CHAUD": "PLAT_CHAUD",
+  "SALADES": "SALADES",
+  "SANDWICH": "SANDWICH",
   "THÉ & CAFÉ": "THE_CAFE",
   "BOOSTERS SPÉCIAUX": "BOOSTERS_SPECIAL",
 };
+
+/** Ordre d'affichage : ligne 1 Jus | Soupes | Plat chaud, ligne 2 Milkshakes | Booster | Salades, ligne 3 Thé & Café | Boosters Spéciaux | Sandwich */
+const FIRST_ROW_ORDER = ["JUS", "SOUPES", "PLAT CHAUD"];
+const OTHER_CATEGORIES_ORDER = ["MILKSHAKES", "BOOSTERS", "SALADES", "THÉ & CAFÉ", "BOOSTERS SPÉCIAUX", "SANDWICH"];
 
 export const Produits = () => {
   const { t } = useTranslation();
@@ -214,6 +221,55 @@ export const Produits = () => {
       price: "2.5",
       description: "À mettre soit dans vos jus / milkshakes ou soupes",
       isSpecial: true
+    },
+    {
+      id: 26,
+      name: "TIKKA MASALA",
+      category: "PLAT CHAUD",
+      price: "7.5",
+      description: ""
+    },
+    {
+      id: 27,
+      name: "COUSCOUS",
+      category: "PLAT CHAUD",
+      price: "7.5",
+      description: ""
+    },
+    {
+      id: 28,
+      name: "QUICHE CHÈVRE ÉPINARD",
+      category: "PLAT CHAUD",
+      price: "7.5",
+      description: ""
+    },
+    {
+      id: 29,
+      name: "BUDDHA BOWL",
+      category: "SALADES",
+      price: "8",
+      description: ""
+    },
+    {
+      id: 30,
+      name: "RISOTTO",
+      category: "SALADES",
+      price: "8",
+      description: ""
+    },
+    {
+      id: 31,
+      name: "LENTILLES",
+      category: "SALADES",
+      price: "8",
+      description: ""
+    },
+    {
+      id: 32,
+      name: "QUINOA",
+      category: "SALADES",
+      price: "8",
+      description: ""
     }
   ]);
 
@@ -224,6 +280,20 @@ export const Produits = () => {
     acc[product.category].push(product);
     return acc;
   }, {});
+
+  // S'assurer que PLAT CHAUD et SANDWICH existent et sont toujours affichés
+  if (!productsByCategory["PLAT CHAUD"]) {
+    productsByCategory["PLAT CHAUD"] = [];
+  }
+  if (!productsByCategory["SANDWICH"]) {
+    productsByCategory["SANDWICH"] = [];
+  }
+
+  // Ordre d'affichage : Jus | Soupes | Plat chaud en première ligne, puis le reste
+  const orderedCategories = [
+    ...FIRST_ROW_ORDER.filter((cat) => productsByCategory[cat]),
+    ...OTHER_CATEGORIES_ORDER.filter((cat) => productsByCategory[cat]),
+  ];
 
   const [isReady, setIsReady] = useState(false);
 
@@ -305,8 +375,11 @@ export const Produits = () => {
         </div>
 
         <div className="menu-sections">
-          {Object.entries(productsByCategory).map(([category, categoryProducts]) => (
-            <div key={category} className={`menu-section ${category === "MILKSHAKES" ? "no-right-border" : ""}`}>
+          {orderedCategories.map((category, index) => {
+            const categoryProducts = productsByCategory[category] || [];
+            const isLastInRow = (index + 1) % 3 === 0 || index === orderedCategories.length - 1;
+            return (
+            <div key={category} className={`menu-section ${isLastInRow ? "no-right-border" : ""}`}>
               <div className="section-header">
                 <h2 className="section-title">
                   <span>{t(`products.categories.${CATEGORY_I18N_KEYS[category] || category}`)}</span>
@@ -372,6 +445,15 @@ export const Produits = () => {
                       <span className="price-value">5.60€</span>
                     </span>
                   )}
+                  {category === "PLAT CHAUD" && (
+                    <span className="section-price">7,50€</span>
+                  )}
+                  {category === "SALADES" && (
+                    <span className="section-price">8€</span>
+                  )}
+                  {category === "SANDWICH" && (
+                    <span className="section-price">7,50€</span>
+                  )}
                   {category === "THÉ & CAFÉ" && (
                     <span className="section-price">2.5€</span>
                   )}
@@ -396,7 +478,8 @@ export const Produits = () => {
                 ))}
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
 
         {productsByCategory["JUS"] && (

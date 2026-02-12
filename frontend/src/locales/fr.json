@@ -67,6 +67,9 @@
       "BOOSTERS": "BOOSTERS",
       "MILKSHAKES": "MILKSHAKES",
       "SOUPES": "SOUPES",
+      "PLAT_CHAUD": "PLAT CHAUD",
+      "SALADES": "SALADES",
+      "SANDWICH": "SANDWICH",
       "THE_CAFE": "THÉ & CAFÉ",
       "BOOSTERS_SPECIAL": "BOOSTERS SPÉCIAUX"
     },
@@ -95,7 +98,14 @@
       "22": { "name": "SOUPE DU JOUR", "description": "Toutes nos recettes sont maison et nous sommes aussi distributeur depuis 2001" },
       "23": { "name": "THÉ", "description": "Sélection de thés premium" },
       "24": { "name": "CAFÉ", "description": "Café arabica bio" },
-      "25": { "name": "BOOSTER COLLAGÈNE", "description": "À mettre soit dans vos jus / milkshakes ou soupes" }
+      "25": { "name": "BOOSTER COLLAGÈNE", "description": "À mettre soit dans vos jus / milkshakes ou soupes" },
+      "26": { "name": "TIKKA MASALA", "description": "" },
+      "27": { "name": "COUSCOUS", "description": "" },
+      "28": { "name": "QUICHE CHÈVRE ÉPINARD", "description": "" },
+      "29": { "name": "BUDDHA BOWL", "description": "" },
+      "30": { "name": "RISOTTO", "description": "" },
+      "31": { "name": "LENTILLES", "description": "" },
+      "32": { "name": "QUINOA", "description": "" }
     }
   },
   "adn": {
