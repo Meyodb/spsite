@@ -12,8 +12,9 @@ import photoMenu2 from "../assets/images/photo menu/photo-salade.jpg";
 import photoMenu3 from "../assets/images/photo menu/photo-platchaud.jpg";
 import photoMilkshake from "../assets/images/photo menu/photo-milkshak.jpg";
 import photoBooster from "../assets/images/photo menu/photo-booster.jpg";
-import photoDessert from "../assets/images/photo menu/photo-dessert.jpg";
 import photoSoupe from "../assets/images/photo menu/photo-soupe.png";
+import photoSaladesBowls from "../assets/images/photo menu/photo-salades-bowls.jpg";
+import photoDesserts from "../assets/images/photo menu/photo-desserts.jpg";
 
 const CATEGORY_I18N_KEYS = {
   "JUS": "JUS",
@@ -372,7 +373,21 @@ export const Produits = () => {
       name: "COOKIE CHOCOLAT AU LAIT",
       category: "DESSERTS",
       price: "3",
-      description: "Farine de blé, cassonade, pépite de chocolat lait, lait entier, soja, arômes, margarine, vanille, œufs, poudre à lever & huiles végétales."
+      description: "Pépites de chocolat au lait, cassonade, vanille."
+    },
+    {
+      id: 54,
+      name: "COOKIE CHOCOLAT NOIR",
+      category: "DESSERTS",
+      price: "3",
+      description: "Pépites de chocolat noir, cassonade, vanille."
+    },
+    {
+      id: 55,
+      name: "COOKIE CHOCOLAT BLANC",
+      category: "DESSERTS",
+      price: "3",
+      description: "Pépites de chocolat blanc, cassonade, vanille."
     },
     {
       id: 45,
@@ -387,6 +402,13 @@ export const Produits = () => {
       category: "DESSERTS",
       price: "4.5",
       description: "Miel, muesli, matière grasse < 3.5%."
+    },
+    {
+      id: 56,
+      name: "FROMAGE BLANC CRÈME DE MARRONS SPECULOOS",
+      category: "DESSERTS",
+      price: "4.5",
+      description: "Crème de marrons, speculoos, matière grasse < 3.5%."
     },
     {
       id: 47,
@@ -436,27 +458,6 @@ export const Produits = () => {
       category: "DESSERTS",
       price: "4",
       description: "Lait de coco, framboise, sucre blond de canne, graines de chia, coco râpée."
-    },
-    {
-      id: 54,
-      name: "COOKIE CHOCOLAT NOIR",
-      category: "DESSERTS",
-      price: "3",
-      description: "Farine de blé, cassonade, pépite de chocolat noir, soja, arômes, margarine, vanille, œufs, poudre à lever & huiles végétales."
-    },
-    {
-      id: 55,
-      name: "COOKIE CHOCOLAT BLANC",
-      category: "DESSERTS",
-      price: "3",
-      description: "Farine de blé, cassonade, pépite de chocolat blanc, lait entier, soja, arômes, margarine, vanille, œufs, poudre à lever & huiles végétales."
-    },
-    {
-      id: 56,
-      name: "FROMAGE BLANC CRÈME DE MARRONS SPECULOOS",
-      category: "DESSERTS",
-      price: "4.5",
-      description: "Crème de marrons, speculoos, matière grasse < 3.5%."
     },
     {
       id: 60,
@@ -713,14 +714,19 @@ export const Produits = () => {
                       <img src={photoBooster} alt="Boosters" className="section-photo-img" />
                     </div>
                   )}
-                  {category === "DESSERTS" && (
-                    <div className="section-photo section-photo-portrait">
-                      <img src={photoDessert} alt="Desserts" className="section-photo-img" />
-                    </div>
-                  )}
                   {category === "SOUPES" && (
                     <div className="section-photo section-photo-portrait">
                       <img src={photoSoupe} alt="Soupes" className="section-photo-img" />
+                    </div>
+                  )}
+                  {category === "SALADES" && (
+                    <div className="section-photo section-photo-portrait">
+                      <img src={photoSaladesBowls} alt="Salades" className="section-photo-img" />
+                    </div>
+                  )}
+                  {category === "SANDWICH" && (
+                    <div className="section-photo section-photo-portrait">
+                      <img src={photoDesserts} alt="Desserts" className="section-photo-img" />
                     </div>
                   )}
                   {category === "THÉ & CAFÉ" && productsByCategory["BOISSONS"] && (
@@ -728,6 +734,7 @@ export const Produits = () => {
                       <div className="section-header">
                         <h2 className="section-title">
                           <span>{t("products.categories.BOISSONS")}</span>
+                          <span className="section-price">2€</span>
                         </h2>
                       </div>
                       <div className="section-content">
@@ -735,7 +742,6 @@ export const Produits = () => {
                           <div key={product.id} className="product-item">
                             <span className="product-name">
                               {t(`products.items.${product.id}.name`)}
-                              <span className="product-extra-price">{product.price.replace('.', ',')}€</span>
                             </span>
                             <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
                           </div>
