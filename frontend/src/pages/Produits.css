@@ -269,6 +269,50 @@
   display: block;
 }
 
+/* Sections photo entre les catégories */
+.menu-content {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-photo {
+  margin-top: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.section-photo:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--green);
+}
+
+.section-photo-landscape {
+  aspect-ratio: 2 / 1;
+  width: 100%;
+  max-width: 100%;
+}
+
+.section-photo-portrait {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  max-width: 100%;
+}
+
+.section-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
+
+.section-photo-milkshake .section-photo-img {
+  object-position: center 25%;
+}
+
 .menu-title {
   font-size: 48px;
   font-weight: 900;
@@ -281,21 +325,60 @@
 }
 
 /* Sections en colonnes */
+.menu-content .menu-sections {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.menu-content .menu-sections:not(:first-child) {
+  margin-top: 35px;
+}
+
+.section-sub {
+  margin-top: 30px;
+}
+
+.section-sub .section-header {
+  height: auto;
+  min-height: auto;
+}
+
 .menu-sections {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 35px;
   margin-top: 30px;
   margin-bottom: 30px;
-  align-items: start;
+  align-items: stretch;
   position: relative;
   z-index: 1;
+}
+
+/* Layout en colonnes : sections empilées verticalement (MILKSHAKES sous JUS, etc.) */
+.menu-sections-columns {
+  align-items: start;
+}
+
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.menu-column .menu-section {
+  width: 100%;
+}
+
+.menu-column .menu-section:not(:last-child) {
+  margin-bottom: 12px;
 }
 
 .menu-section {
   background: transparent;
   padding: 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-section:not(:last-child)::after {
@@ -550,6 +633,60 @@
   color: #000;
 }
 
+.product-badge-popular,
+.product-badge-vegetarian,
+.product-badge-vegan {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+
+.product-badge-popular {
+  background: var(--green);
+  color: #fff;
+}
+
+.product-badge-vegetarian {
+  background: #4a7c3f;
+  color: #fff;
+}
+
+.product-badge-vegan {
+  background: #2d6a4f;
+  color: #fff;
+}
+
+.product-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+  align-self: flex-start;
+}
+
+.product-name:has(.product-extra-price) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.product-extra-price {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+  white-space: nowrap;
+  padding-left: 12px;
+}
+
 /* Info box */
 .info-box {
   margin-top: 40px;
@@ -692,11 +829,9 @@
     gap: 40px;
   }
   
-  .menu-section:nth-child(2)::after {
-    display: none;
-  }
-  
-  .menu-section:last-child::after {
+  /* Layout colonnes : masquer bordure sur colonnes 2 et 3 */
+  .menu-sections-columns .menu-column:nth-child(2) .menu-section::after,
+  .menu-sections-columns .menu-column:nth-child(3) .menu-section::after {
     display: none;
   }
 }
@@ -748,6 +883,10 @@
     grid-template-columns: 1fr;
     gap: 40px;
     margin-top: 35px;
+  }
+
+  .section-photo {
+    margin-top: 16px;
   }
 
   .menu-section::after {

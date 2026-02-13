@@ -1208,7 +1208,7 @@ body {
 
 .adn-hero-title {
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 500;
   line-height: 1.25;
   margin: 0 0 0.75rem;
   letter-spacing: -0.02em;
@@ -1253,7 +1253,7 @@ body {
 }
 
 .adn-identity-title {
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--text);
   line-height: 1.3;
@@ -1286,15 +1286,15 @@ body {
 
 /* Section Label commun */
 .adn-section-label {
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: var(--green);
+  color: #c47a6b;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin: 0 0 1.25rem 0;
   line-height: 1.3;
   display: block;
-  text-align: center;
+  text-align: left;
 }
 
 /* Section Les 3 piliers */
@@ -1319,12 +1319,38 @@ body {
 }
 
 .adn-pillars-section-intro {
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: var(--text-light);
   text-align: center;
   margin: 0 auto 2.5rem;
   line-height: 1.6;
   max-width: 600px;
+}
+
+.adn-pillars-photo {
+  width: 75%;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 0 auto 2rem auto;
+}
+
+.adn-pillars-photo .adn-photo {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center 75%;
+  display: block;
+}
+
+.adn-quality-no-image {
+  display: block !important;
+  text-align: center;
+}
+
+.adn-quality-no-image .adn-quality-content {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .adn-pillars-grid {
@@ -1355,9 +1381,9 @@ body {
 }
 
 .adn-pillar-title {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--green-dark);
+  color: #c47a6b;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin: 0 0 0.75rem;
@@ -1433,12 +1459,13 @@ body {
   order: 1;
 }
 
+
 .adn-quality-container .adn-quality-content {
   order: 2;
 }
 
 .adn-quality-title {
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--text);
   line-height: 1.3;
@@ -1464,7 +1491,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed rgba(130, 144, 123, 0.3);
   max-height: 300px;
 }
 

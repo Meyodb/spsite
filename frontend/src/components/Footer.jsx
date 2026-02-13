@@ -10,7 +10,7 @@ export const Footer = () => {
           <ul className="footer-links">
             <li><a href="#/adn">{t("footer.engagements")}</a></li>
             <li><a href="#/restaurants">{t("footer.restaurants")}</a></li>
-            <li><a href="#/allergenes">{t("footer.allergens")}</a></li>
+            <li><a href="/allergenes.pdf" target="_blank" rel="noopener noreferrer">{t("footer.allergens")}</a></li>
           </ul>
         </div>
         <div className="footer-column">

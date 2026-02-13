@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import qualiteImage from "../assets/images/photo menu/Photoroom_20250704_124732.JPG";
+import recetteImage from "../assets/images/photo menu/photo-qualite-recettes.png";
 import logoSoupJuice from "../assets/images/logo vert.png";
 
 export const ADN = () => {
@@ -45,6 +46,12 @@ export const ADN = () => {
             <AnimatedItem animation="fadeInUp" delay={100}>
               <h2 className="adn-pillars-section-title">{t("adn.pillars.title")}</h2>
               <p className="adn-pillars-section-intro">{t("adn.pillars.intro")}</p>
+            </AnimatedItem>
+
+            <AnimatedItem animation="fadeInUp" delay={120}>
+              <div className="adn-pillars-photo">
+                <img src={qualiteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" />
+              </div>
             </AnimatedItem>
             
             <div className="adn-pillars-grid">
@@ -91,8 +98,7 @@ export const ADN = () => {
           <div className="adn-quality-container">
             <AnimatedItem animation="fadeInUp" delay={200} className="adn-quality-image">
               <div className="adn-photo-placeholder">
-                <img src={qualiteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" />
-                <div className="adn-photo-placeholder-text">{t("adn.photoPlaceholder")}</div>
+                <img src={recetteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" />
               </div>
             </AnimatedItem>
             <div className="adn-quality-content">
