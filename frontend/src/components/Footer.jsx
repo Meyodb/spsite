@@ -10,13 +10,13 @@ export const Footer = () => {
           <ul className="footer-links">
             <li><a href="#/adn">{t("footer.engagements")}</a></li>
             <li><a href="#/restaurants">{t("footer.restaurants")}</a></li>
-            <li><a href="/allergenes.pdf" target="_blank" rel="noopener noreferrer">{t("footer.allergens")}</a></li>
           </ul>
         </div>
         <div className="footer-column">
           <h4 className="footer-title">{t("footer.support")}</h4>
           <ul className="footer-links">
             <li><a href="#/contact">{t("footer.contact")}</a></li>
+            <li><a href="#/allergenes">{t("footer.allergens")}</a></li>
             <li><a href="#/contact">{t("footer.recruitment")}</a></li>
             <li><a href="#/contact">{t("footer.catering")}</a></li>
           </ul>

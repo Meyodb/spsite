@@ -777,11 +777,12 @@ export const Produits = () => {
           </div>
         )}
 
-        <div className="allergens-link-container">
-          <a href="/allergenes.pdf" target="_blank" rel="noopener noreferrer" className="allergens-link">
-            {t("products.allergensLink")}
+        <div className="allergenes-cta-wrap">
+          <a className="allergenes-cta-btn" href="#/allergenes">
+            {t("products.allergensCta")}
           </a>
         </div>
+
       </div>
     </main>
   );

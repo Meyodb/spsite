@@ -9,6 +9,7 @@ import { Home } from "./pages/Home";
 import { ADN } from "./pages/ADN";
 import { Produits } from "./pages/Produits";
 import { Contact } from "./pages/Contact";
+import { Allergenes } from "./pages/Allergenes";
 
 const Restaurants = lazy(() => import("./pages/Restaurants").then((m) => ({ default: m.Restaurants })));
 
@@ -22,7 +23,6 @@ import { PolitiqueCookies } from "./pages/PolitiqueCookies";
 import { CGU } from "./pages/CGU";
 import { Formation } from "./pages/Formation";
 import { FormationSection } from "./pages/FormationSection";
-import { Allergenes } from "./pages/Allergenes";
 
 function AppContent() {
   const { pathname } = useLocation();

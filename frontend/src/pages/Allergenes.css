@@ -1,510 +1,237 @@
-/* ========== PAGE ALLERGÈNES ========== */
-.allergens-page {
+.allergenes-page {
   min-height: 100vh;
   background: var(--bg);
+  padding: 24px 12px 40px;
 }
 
-/* Bannière verte cohérente avec le thème */
-.allergens-hero {
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
-  color: white;
-  padding: 50px 20px 44px;
-  text-align: center;
-  position: relative;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+.allergenes-container {
+  max-width: 100%;
+  margin: 0 auto;
 }
 
-.allergens-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  pointer-events: none;
+.allergenes-header {
+  margin-bottom: 14px;
 }
 
-/* Section contenu */
-.allergens-section {
-  padding: 80px 20px;
-  background: var(--bg-light);
+.allergenes-title {
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 8px;
 }
 
-.allergens-content {
-  background: white;
-  padding: 70px 80px;
-  border-radius: 0;
-  box-shadow: none;
-  border: 1px solid var(--border);
-  line-height: 1.9;
+.allergenes-subtitle {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 1100px;
 }
 
-/* Bouton contact dans la page allergènes */
-.allergens-contact-cta {
-  margin-top: 32px;
-  text-align: center;
+.allergenes-actions {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.allergens-contact-btn {
-  display: inline-block;
+.allergenes-pdf-btn {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-bright) 100%);
-  color: white;
+  color: #fff;
   border: none;
-  padding: 14px 36px;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 50px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-family: 'Futura', 'Futura PT', 'Montserrat', sans-serif;
+  letter-spacing: 0.4px;
+  cursor: pointer;
 }
 
-.allergens-contact-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
+.allergenes-count {
+  font-size: 0.8rem;
+  color: var(--text-light);
 }
 
-.allergens-contact-btn:hover {
-  background: linear-gradient(135deg, var(--green-bright) 0%, var(--green-dark) 100%);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(130, 144, 123, 0.3);
+.allergenes-notice {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green);
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
-.allergens-contact-btn:hover::before {
-  left: 100%;
+.allergenes-notice p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.55;
 }
 
-.allergens-contact-btn:active {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+.allergenes-notice p + p {
+  margin-top: 6px;
 }
 
-/* Tableau des allergènes */
-.allergens-table-wrapper {
-  margin: 40px 0;
-  overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
-  background: white;
-  max-height: 70vh;
-  overflow-y: auto;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+.allergenes-table-wrapper {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: auto;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
 }
 
-.allergens-table {
-  width: 100%;
+.allergenes-table {
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
-  background: white;
-  min-width: 1400px;
-  display: table !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
-.allergens-table thead {
-  background: linear-gradient(135deg, var(--green) 0%, var(--green-bright) 100%);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.allergens-table th {
-  padding: 18px 16px;
-  text-align: left;
-  font-weight: 600;
-  color: white;
-  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.8px;
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
+.allergenes-table th,
+.allergenes-table td {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  padding: 4px 6px;
+  text-align: center;
+  font-size: 0.68rem;
+  line-height: 1.2;
   white-space: nowrap;
 }
 
-.allergens-table th:first-child {
-  position: sticky;
-  left: 0;
-  z-index: 12;
-  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  min-width: 120px;
-  max-width: 120px;
-}
-
-.allergens-table th:nth-child(2) {
-  position: sticky;
-  left: 120px;
-  z-index: 11;
-  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  min-width: 220px;
-  max-width: 220px;
-}
-
-.allergens-table th:last-child {
+.allergenes-table th:last-child,
+.allergenes-table td:last-child {
   border-right: none;
 }
 
-.allergens-table tbody tr {
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  border-bottom: 1px solid var(--border);
-}
-
-.allergens-table tbody tr:hover {
+.allergenes-table thead th {
   background: var(--green-light);
-  transform: scale(1.01);
-  box-shadow: 0 2px 8px rgba(130, 144, 123, 0.15);
-}
-
-.allergens-table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.allergens-table td {
-  padding: 16px;
   color: var(--text);
-  font-family: 'Montserrat', -apple-system, sans-serif;
-  font-size: 14px;
-  border-right: 1px solid var(--border);
-  text-align: center;
-  vertical-align: middle;
+  font-weight: 700;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
-.allergens-table td:first-child {
-  position: sticky;
-  left: 0;
-  background: white;
-  font-weight: 600;
-  color: var(--green-dark);
-  text-align: center;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-  z-index: 10;
-  min-width: 120px;
-  max-width: 120px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+.allergenes-table thead th abbr {
+  text-decoration: none;
+  border: none;
+  cursor: help;
 }
 
-.allergens-table td:nth-child(2) {
-  position: sticky;
-  left: 120px;
-  background: white;
-  font-weight: 600;
-  color: var(--text);
+.allergenes-table tbody tr:hover {
+  background: rgba(130, 144, 123, 0.08);
+}
+
+.allergenes-table .allergenes-category-cell,
+.allergenes-table th:first-child {
   text-align: left;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
-  z-index: 9;
-  min-width: 220px;
-  max-width: 220px;
-  padding-left: 16px;
+  position: sticky;
+  left: 0;
+  background: #fff;
+  z-index: 2;
+  min-width: 82px;
 }
 
-.allergens-table tbody tr:hover td:first-child,
-.allergens-table tbody tr:hover td:nth-child(2) {
+.allergenes-table .allergenes-product-cell,
+.allergenes-table th:nth-child(2) {
+  text-align: left;
+  position: sticky;
+  left: 82px;
+  background: #fff;
+  z-index: 2;
+  min-width: 180px;
+}
+
+.allergenes-table thead th:first-child,
+.allergenes-table thead th:nth-child(2) {
   background: var(--green-light);
+  z-index: 4;
 }
 
-.allergens-table td:last-child {
-  border-right: none;
+.allergenes-mark-cell {
+  min-width: 30px;
 }
 
-/* Icônes pour présence/absence d'allergènes */
-.allergen-present {
-  color: #d32f2f;
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.allergen-absent {
-  color: #388e3c;
-  font-weight: 700;
-  font-size: 18px;
-}
-
-.allergen-trace {
-  color: #f57c00;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Légende du tableau */
-.allergens-legend {
-  margin-top: 32px;
-  padding: 24px;
-  background: var(--green-light);
-  border-radius: 12px;
-  border-left: 4px solid var(--green);
-}
-
-.allergens-legend-title {
-  font-size: 16px;
-  font-weight: 600;
+.allergenes-mark {
   color: var(--green-dark);
-  margin-bottom: 16px;
-  font-family: 'Futura', 'Futura PT', 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.78rem;
+  line-height: 1;
 }
 
-.allergens-legend-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-
-.allergens-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--text);
-}
-
-.allergens-legend-symbol {
-  font-weight: 700;
-  font-size: 18px;
-  min-width: 24px;
-  text-align: center;
-}
-
-/* Message informatif */
-.allergens-info-box {
-  margin: 32px 0;
-  padding: 24px;
-  background: linear-gradient(135deg, rgba(130, 144, 123, 0.08) 0%, rgba(130, 144, 123, 0.04) 100%);
-  border-radius: 12px;
-  border-left: 4px solid var(--green);
-  font-size: 15px;
-  color: var(--text);
-  line-height: 1.7;
-}
-
-.allergens-info-box p {
-  margin: 0;
-}
-
-.allergens-info-box strong {
-  color: var(--green-dark);
-  font-weight: 600;
-}
-
-/* Mention légale en bas de page */
-.allergens-legal-notice {
-  margin-top: 48px;
-  padding: 32px;
-  background: #2a2a2a;
-  color: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  font-size: 13px;
-  line-height: 1.8;
-  text-align: justify;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.allergens-legal-notice p {
-  margin: 0;
-  font-family: 'Montserrat', -apple-system, sans-serif;
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 1024px) {
-  .allergens-table {
-    min-width: 1200px;
-  }
-  
-  .allergens-table th,
-  .allergens-table td {
-    padding: 14px 10px;
-    font-size: 12px;
-  }
-  
-  .allergens-table th:first-child,
-  .allergens-table td:first-child {
-    min-width: 100px;
-    max-width: 100px;
-  }
-
-  .allergens-table th:nth-child(2),
-  .allergens-table td:nth-child(2) {
-    left: 100px;
-    min-width: 180px;
-    max-width: 180px;
-  }
+.allergenes-legend {
+  margin-top: 12px;
+  color: var(--text-light);
+  font-size: 0.85rem;
 }
 
 @media (max-width: 768px) {
-  .allergens-hero {
-    padding: 40px 20px 32px;
+  .allergenes-page {
+    padding: 24px 14px 40px;
   }
 
-  .allergens-section {
-    padding: 50px 20px;
+  .allergenes-title {
+    font-size: 1.5rem;
   }
 
-  .allergens-content {
-    padding: 40px 30px;
-  }
-
-  .allergens-table-wrapper {
-    margin: 32px 0;
-    border-radius: 8px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
-  }
-
-  .allergens-table {
-    min-width: 1000px;
-    font-size: 11px;
-  }
-
-  .allergens-table th,
-  .allergens-table td {
-    padding: 12px 8px;
-  }
-
-  .allergens-table th:first-child,
-  .allergens-table td:first-child {
-    min-width: 90px;
-    max-width: 90px;
-    font-size: 11px;
-  }
-
-  .allergens-table th:nth-child(2),
-  .allergens-table td:nth-child(2) {
-    left: 90px;
-    min-width: 160px;
-    max-width: 160px;
-  }
-
-  .allergens-legend {
-    padding: 20px;
-    margin-top: 28px;
-  }
-
-  .allergens-legend-items {
+  .allergenes-actions {
     flex-direction: column;
-    gap: 16px;
+    align-items: flex-start;
   }
 
-  .allergens-info-box {
-    margin: 28px 0;
-    padding: 20px;
-    font-size: 14px;
+  .allergenes-table .allergenes-category-cell,
+  .allergenes-table th:first-child {
+    min-width: 76px;
   }
 
-  .allergens-contact-cta {
-    margin-top: 28px;
-  }
-
-  .allergens-contact-btn {
-    padding: 12px 32px;
-    font-size: 14px;
+  .allergenes-table .allergenes-product-cell,
+  .allergenes-table th:nth-child(2) {
+    left: 76px;
+    min-width: 156px;
   }
 }
 
-@media (max-width: 640px) {
-  .allergens-hero {
-    padding: 28px 20px 24px;
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
   }
 
-  .allergens-section {
-    padding: 40px 16px;
+  body * {
+    visibility: hidden !important;
   }
 
-  .allergens-content {
-    padding: 32px 24px;
+  .allergenes-table-wrapper,
+  .allergenes-table-wrapper * {
+    visibility: visible !important;
   }
 
-  .allergens-table-wrapper {
-    margin: 28px -24px;
+  .allergenes-table-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: visible;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: #fff;
   }
 
-  .allergens-table {
-    min-width: 900px;
+  .allergenes-table {
+    width: 100%;
+    min-width: 100%;
   }
 
-  .allergens-table th,
-  .allergens-table td {
-    padding: 10px 6px;
-    font-size: 10px;
+  .allergenes-table th,
+  .allergenes-table td {
+    font-size: 7px;
+    padding: 2px 3px;
   }
 
-  .allergens-table th {
-    padding: 12px 6px;
-  }
-
-  .allergens-table th:first-child,
-  .allergens-table td:first-child {
-    min-width: 80px;
-    max-width: 80px;
-    font-size: 10px;
-  }
-
-  .allergens-table th:nth-child(2),
-  .allergens-table td:nth-child(2) {
-    left: 80px;
-    min-width: 140px;
-    max-width: 140px;
-    font-size: 10px;
-  }
-
-  .allergen-present,
-  .allergen-absent {
-    font-size: 16px;
-  }
-
-  .allergen-trace {
-    font-size: 12px;
-  }
-
-  .allergens-legend {
-    padding: 18px;
-    margin-top: 24px;
-  }
-
-  .allergens-legend-title {
-    font-size: 14px;
-    margin-bottom: 14px;
-  }
-
-  .allergens-legend-item {
-    font-size: 13px;
-  }
-
-  .allergens-info-box {
-    margin: 24px 0;
-    padding: 18px;
-    font-size: 13px;
-  }
-
-  .allergens-contact-btn {
-    padding: 12px 28px;
-    font-size: 13px;
-  }
-  
-  .allergens-table-wrapper {
-    margin: 28px 0;
-  }
-  
-  .allergens-legal-notice {
-    font-size: 11px;
-    padding: 20px;
+  .allergenes-table .allergenes-category-cell,
+  .allergenes-table th:first-child,
+  .allergenes-table .allergenes-product-cell,
+  .allergenes-table th:nth-child(2) {
+    position: static;
+    min-width: 0;
   }
 }
