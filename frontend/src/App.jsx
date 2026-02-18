@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./App.css";
@@ -24,9 +24,24 @@ import { CGU } from "./pages/CGU";
 import { Formation } from "./pages/Formation";
 import { FormationSection } from "./pages/FormationSection";
 
+const SITE_URL = import.meta.env.VITE_SITE_URL || "";
+
 function AppContent() {
   const { pathname } = useLocation();
   const isHome = pathname === "/" || pathname === "";
+
+  useEffect(() => {
+    if (!SITE_URL) return;
+    const hashPath = pathname && pathname !== "/" ? `#${pathname}` : "";
+    const canonical = `${SITE_URL.replace(/\/$/, "")}${hashPath}`;
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "canonical";
+      document.head.appendChild(link);
+    }
+    if (link.href !== canonical) link.href = canonical;
+  }, [pathname]);
 
   return (
     <>

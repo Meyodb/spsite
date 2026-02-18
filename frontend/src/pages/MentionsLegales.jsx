@@ -1,8 +1,6 @@
 import { useTranslation } from "react-i18next";
 import "./Legal.css";
 
-const HEBERGEUR = "";
-
 export const MentionsLegales = () => {
   const { t } = useTranslation();
   return (
@@ -37,7 +35,10 @@ export const MentionsLegales = () => {
             <section className="legal-block">
               <h2 className="legal-block-title">{t("legal.hosting")}</h2>
               <div className="legal-block-content">
-                <p>{t("legal.hostingContent")} {HEBERGEUR || ""}</p>
+                <p>
+                  <strong>Vercel Inc.</strong> — 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis.<br />
+                  <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="legal-link">https://vercel.com</a>
+                </p>
               </div>
             </section>
 
