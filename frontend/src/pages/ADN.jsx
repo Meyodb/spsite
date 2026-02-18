@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import qualiteImage from "../assets/images/photo menu/Photoroom_20250704_124732.JPG";
-import recetteImage from "../assets/images/photo menu/photo-qualite-recettes.png";
+import recetteImage from "../assets/images/photo menu/photo-qualite-recettes.jpg";
 import logoSoupJuice from "../assets/images/logo vert.png";
 
 export const ADN = () => {

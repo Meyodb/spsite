@@ -144,6 +144,21 @@ export const Allergenes = () => {
         </div>
 
         <p className="allergenes-legend">{t("allergens.legend")}</p>
+
+        <div className="allergenes-disclaimer">
+          <p>
+            Tous nos plats ayant tous été travaillés dans nos laboratoires peuvent contenir des traces de céréales 
+            contenant du gluten (blé, seigle, orge, avoine, épeautre, kamut ou leurs souches hybridées) et produits 
+            à base de céréales, de crustacés et produits à base de crustacés, d'oeufs et produits à base d'oeufs, 
+            de poissons et produits à base de poissons, d'arachides et produits à base d'Arachides, d'oeufs et 
+            produits à base d'oeufs, de soja et produits à base de soja, de lait et produits à base de lait 
+            (y compris lactose) de fruits à coques (amandes, noisettes, noix, noix de cajou, noix de pécan, 
+            noix du Brésil, pistaches) et produits à base de fruits à coques, de céleri et produits à base de 
+            céleri, de moutarde, de graines de sésame et produits à base de graines de sésame, de Anhydride 
+            sulfureux et sulfites en concentration de plus de 10mg/kg ou 10 mg/l (exprimé en SO2), de lupin et 
+            produits à base de lupin, de mollusques et produits à base de mollusques.
+          </p>
+        </div>
       </div>
     </main>
   );

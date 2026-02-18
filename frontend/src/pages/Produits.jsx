@@ -14,7 +14,6 @@ import photoMilkshake from "../assets/images/photo menu/photo-milkshak.jpg";
 import photoBooster from "../assets/images/photo menu/photo-booster.jpg";
 import photoSoupe from "../assets/images/photo menu/photo-soupe.png";
 import photoSaladesBowls from "../assets/images/photo menu/photo-salades-bowls.jpg";
-import photoDesserts from "../assets/images/photo menu/photo-desserts.jpg";
 
 const CATEGORY_I18N_KEYS = {
   "JUS": "JUS",
@@ -30,12 +29,14 @@ const CATEGORY_I18N_KEYS = {
   "BOISSONS": "BOISSONS",
 };
 
-const DESSERT_SUBCATEGORIES_ORDER = ["PATISSERIES", "COOKIES", "CAKE", "FROMAGE_BLANC"];
+const DESSERT_SUBCATEGORIES_ORDER = ["DOUCEURS", "PATISSERIE", "SALADE_FRUIT", "COOKIES", "CAKE", "FROMAGE_BLANC"];
 const DESSERT_SUBCATEGORY_PRICES = {
   "COOKIES": "",
   "CAKE": "",
   "FROMAGE_BLANC": "",
-  "PATISSERIES": "4€",
+  "DOUCEURS": "3,5€",
+  "SALADE_FRUIT": "4€",
+  "PATISSERIE": "4,5€",
 };
 
 /** Ordre d'affichage : ligne 1 Jus | Soupes | Plats chauds, ligne 2 Milkshakes | Booster | Salades, ligne 3 Desserts | Sandwich, puis Thé & Café */
@@ -208,22 +209,28 @@ export const Produits = () => {
       description: "Lait de coco, fraise, miel, datte, copeaux de noix de coco, collagène",
     },
     {
-      id: 57,
-      name: "LENTILLES CORAIL AU LAIT DE COCO",
+      id: 74,
+      name: "LENTILLES À L'INDIENNE",
       category: "SOUPES",
-      description: "Lentilles corail, purée de tomate, lait de coco, oignon, ail, huile d'olive, huile de colza, cumin, cannelle, poivre."
+      description: "Carotte, lentilles vertes, pois cassés, oignons, jus de citron, coriandre, ail, curry, cumin, poivre."
     },
     {
-      id: 58,
-      name: "ESPAGNOLE À LA CORIANDRE",
+      id: 72,
+      name: "PATATE DOUCE AU LAIT DE COCO",
       category: "SOUPES",
-      description: "Pommes de terre, poireaux, oignons, huile de colza, huile d'olive, coriandre, ail, poivre."
+      description: "Patate douce, courgette, lait de coco, oignon, coriandre, ail, curry, gingembre, poivre."
     },
     {
-      id: 59,
-      name: "CAROTTE LAIT DE COCO",
+      id: 73,
+      name: "CAROTTE PAVOT",
       category: "SOUPES",
-      description: "Carotte, lait de coco, oignon, crème fraîche, amidon de riz, curcuma."
+      description: "Chou-fleur, carottes, oignons, crème, graines de pavot, cumin, poivre."
+    },
+    {
+      id: 71,
+      name: "PETITS POIS MENTHE",
+      category: "SOUPES",
+      description: "Petits pois, pomme de terre, oignons, menthe, huile d'olive, poivre."
     },
     {
       id: 23,
@@ -383,13 +390,13 @@ export const Produits = () => {
       category: "DESSERTS",
       subCategory: "FROMAGE_BLANC",
       price: "3.5",
-      description: "Coulis fraise /ou coulis mangue muesli /ou acai bowl /ou miel muesli. Matière grasse < 3.5%."
+      description: "Coulis fraise /ou coulis mangue muesli /ou acai bowl /ou miel muesli /ou crème de marrons speculoos. Matière grasse < 3.5%."
     },
     {
       id: 47,
       name: "MOUSSE AU CHOCOLAT",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Œufs, chocolat noir, beurre, lait écrémé, cacao en poudre."
     },
@@ -397,7 +404,7 @@ export const Produits = () => {
       id: 48,
       name: "TIRAMISU",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Crème, mascarpone, génoise, arôme naturel de vanille, bourbon, sucre, lait écrémé, café et cacao."
     },
@@ -405,7 +412,7 @@ export const Produits = () => {
       id: 49,
       name: "MI CUIT FONDANT",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Œuf, huile de colza, sucre, chocolat noir 22%, farine de blé."
     },
@@ -413,7 +420,7 @@ export const Produits = () => {
       id: 50,
       name: "BROWNIE",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Huile de colza, sucre, chocolat noir 22%, farine de blé, sucre, noix de pécan, œuf."
     },
@@ -421,7 +428,7 @@ export const Produits = () => {
       id: 51,
       name: "CRUMBLE POMME SPECULOOS",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Pomme, farine de blé, speculoos concassé, beurre, cannelle."
     },
@@ -429,7 +436,7 @@ export const Produits = () => {
       id: 52,
       name: "TARTE AUX NOIX DE PÉCAN",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Farine de blé, margarine végétale, arôme naturel, sucre roux, jaune d'œuf, noix de pécan, sirop de glucose, œufs, beurre."
     },
@@ -437,9 +444,57 @@ export const Produits = () => {
       id: 53,
       name: "GRAINES DE CHIA FRAMBOISE",
       category: "DESSERTS",
-      subCategory: "PATISSERIES",
+      subCategory: "DOUCEURS",
       price: "4",
       description: "Lait de coco, framboise, sucre blond de canne, graines de chia, coco râpée."
+    },
+    {
+      id: 66,
+      name: "MOUSSE DE SKYR FRUITS ROUGES",
+      category: "DESSERTS",
+      subCategory: "DOUCEURS",
+      price: "3.5",
+      description: "Skyr, pomme, crème, fraises, framboises, mélange de graines (lin, carraghénane, courge, tournesol), mûres, amandes en poudre, gélatine de poisson, citron, farine de blé."
+    },
+    {
+      id: 65,
+      name: "SALADE FRUIT",
+      category: "DESSERTS",
+      subCategory: "SALADE_FRUIT",
+      price: "4",
+      description: "Variété de fruits de saison."
+    },
+    {
+      id: 67,
+      name: "TARTE MYRTILLE",
+      category: "DESSERTS",
+      subCategory: "PATISSERIE",
+      price: "4.5",
+      description: "Myrtilles fraîches, farine de blé, beurre, lait, sucre, œuf."
+    },
+    {
+      id: 68,
+      name: "CHEESECAKE KEYLIME",
+      category: "DESSERTS",
+      subCategory: "PATISSERIE",
+      price: "4.5",
+      description: "Philadelphia cream cheese, crème, farine de blé, mascarpone, beurre, jus de citron vert, jaune d'œufs, zestes de citron et citron vert."
+    },
+    {
+      id: 69,
+      name: "CHEESECAKE FRUITS ROUGES",
+      category: "DESSERTS",
+      subCategory: "PATISSERIE",
+      price: "4.5",
+      description: "Philadelphia cream cheese, sucre, crème, farine de blé, huile végétale, beurre, framboises, myrtille, groseilles, pistaches."
+    },
+    {
+      id: 70,
+      name: "TARTE CITRON MERINGUÉE",
+      category: "DESSERTS",
+      subCategory: "PATISSERIE",
+      price: "4.5",
+      description: "Crème citron, œufs, jus de citron vert, beurre, zestes de citron, farine de blé, poudre d'amandes."
     },
     {
       id: 60,
@@ -679,14 +734,19 @@ export const Produits = () => {
                       DESSERT_SUBCATEGORIES_ORDER.map((subCat) => {
                         const subProducts = categoryProducts.filter((p) => p.subCategory === subCat);
                         if (subProducts.length === 0) return null;
-                        const hasHeader = subCat !== "COOKIES" && subCat !== "CAKE" && subCat !== "FROMAGE_BLANC";
+                        const hasHeader = subCat !== "COOKIES" && subCat !== "CAKE" && subCat !== "FROMAGE_BLANC" && subCat !== "SALADE_FRUIT";
                         return (
                           <div key={subCat} className={`dessert-subcategory${!hasHeader ? " dessert-subcategory--compact" : ""}`}>
                             {hasHeader && (
-                              <div className="dessert-subcategory-header">
-                                <span className="dessert-subcategory-title">{t(`products.dessertSub.${subCat}`)}</span>
-                                <span className="dessert-subcategory-price">{DESSERT_SUBCATEGORY_PRICES[subCat]}</span>
-                              </div>
+                              <>
+                                <div className={`dessert-subcategory-header${subCat === "DOUCEURS" || subCat === "PATISSERIE" ? " dessert-subcategory-header--black-price" : ""}`}>
+                                  <span className="dessert-subcategory-title">{t(`products.dessertSub.${subCat}`)}</span>
+                                  <span className="dessert-subcategory-price">{DESSERT_SUBCATEGORY_PRICES[subCat]}</span>
+                                </div>
+                                {subCat === "PATISSERIE" && (
+                                  <p className="dessert-subcategory-formula-note">{t("products.dessertSub.formulaNotePatisserie")}</p>
+                                )}
+                              </>
                             )}
                             {subProducts.map((product) => (
                               <div
@@ -699,6 +759,7 @@ export const Produits = () => {
                                   {product.id === 44 && <span className="product-price">3€</span>}
                                   {product.id === 64 && <span className="product-price">3€</span>}
                                   {product.id === 45 && <span className="product-price">3,5€</span>}
+                                  {product.id === 65 && <span className="product-price">4€</span>}
                                 </span>
                                 <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
                               </div>
@@ -745,11 +806,6 @@ export const Produits = () => {
                   {category === "SALADES" && (
                     <div className="section-photo section-photo-portrait">
                       <img src={photoSaladesBowls} alt="Salades" className="section-photo-img" />
-                    </div>
-                  )}
-                  {category === "SANDWICH" && (
-                    <div className="section-photo section-photo-portrait">
-                      <img src={photoDesserts} alt="Desserts" className="section-photo-img" />
                     </div>
                   )}
                   {category === "THÉ & CAFÉ" && productsByCategory["BOISSONS"] && (

@@ -163,6 +163,17 @@
   font-size: 0.85rem;
 }
 
+.allergenes-disclaimer {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
 @media (max-width: 768px) {
   .allergenes-page {
     padding: 24px 14px 40px;
@@ -233,5 +244,21 @@
   .allergenes-table th:nth-child(2) {
     position: static;
     min-width: 0;
+  }
+
+  .allergenes-disclaimer,
+  .allergenes-disclaimer * {
+    visibility: visible !important;
+  }
+
+  .allergenes-disclaimer {
+    position: absolute;
+    left: 0;
+    top: 97%;
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    font-size: 6px;
+    line-height: 1.4;
   }
 }
