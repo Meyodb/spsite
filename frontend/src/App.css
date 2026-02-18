@@ -657,8 +657,12 @@ body {
 }
 
 .instagram-icon {
-  width: 20px;
-  height: 20px;
+  width: 1.25em;
+  height: 1.25em;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 24px;
+  max-height: 24px;
   flex-shrink: 0;
 }
 
@@ -2639,8 +2643,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: clamp(44px, 10vw, 56px);
+  height: clamp(44px, 10vw, 56px);
   border-radius: 50%;
   background: #fff;
   border: none;
@@ -2662,8 +2666,8 @@ body {
 }
 
 .footer-instagram-btn svg {
-  width: 32px;
-  height: 32px;
+  width: clamp(20px, 5vw, 32px);
+  height: clamp(20px, 5vw, 32px);
 }
 
 .footer-bottom {
