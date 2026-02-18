@@ -2758,6 +2758,28 @@ body {
   .nav-right.mobile-open {
     display: flex;
     transform: translateX(0);
+    align-items: stretch;
+  }
+
+  /* Bouton Instagram et sélecteur de langue en pleine largeur sur mobile */
+  .nav-right.mobile-open .cta-header,
+  .nav-right.mobile-open .instagram-header {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-right.mobile-open .header-lang-dropdown {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .nav-right.mobile-open .header-lang-menu {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   /* Liens toujours lisibles dans le tiroir blanc (override accueil) */
