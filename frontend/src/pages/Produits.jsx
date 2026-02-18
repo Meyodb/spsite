@@ -30,6 +30,14 @@ const CATEGORY_I18N_KEYS = {
   "BOISSONS": "BOISSONS",
 };
 
+const DESSERT_SUBCATEGORIES_ORDER = ["PATISSERIES", "COOKIES", "CAKE", "FROMAGE_BLANC"];
+const DESSERT_SUBCATEGORY_PRICES = {
+  "COOKIES": "",
+  "CAKE": "",
+  "FROMAGE_BLANC": "",
+  "PATISSERIES": "4€",
+};
+
 /** Ordre d'affichage : ligne 1 Jus | Soupes | Plats chauds, ligne 2 Milkshakes | Booster | Salades, ligne 3 Desserts | Sandwich, puis Thé & Café */
 const FIRST_ROW_ORDER = ["JUS", "SOUPES", "PLATS CHAUDS"];
 const OTHER_CATEGORIES_ORDER = ["MILKSHAKES", "BOOSTERS", "SALADES", "DESSERTS", "THÉ & CAFÉ", "SANDWICH"];
@@ -200,14 +208,6 @@ export const Produits = () => {
       description: "Lait de coco, fraise, miel, datte, copeaux de noix de coco, collagène",
     },
     {
-      id: 22,
-      name: "SOUPE DU JOUR",
-      category: "SOUPES",
-      price: "Variable",
-      description: "Toutes nos recettes sont maison et nous sommes aussi distributeur depuis 2001",
-      isSpecial: true
-    },
-    {
       id: 57,
       name: "LENTILLES CORAIL AU LAIT DE COCO",
       category: "SOUPES",
@@ -251,64 +251,43 @@ export const Produits = () => {
       id: 26,
       name: "POULET TIKKA",
       category: "PLATS CHAUDS",
-      price: "7",
+      price: "7.5",
       description: "Riz, poulet, crème, oignons, tomates, yaourt, raisins, amandes."
     },
     {
       id: 43,
       name: "TIKKA VÉGÉTARIEN",
       category: "PLATS CHAUDS",
-      price: "7",
+      price: "7.5",
       description: "Riz basmati, tomates, lait de coco, pois chiches, légumes grillés."
     },
     {
       id: 27,
       name: "COUSCOUS POULET",
       category: "PLATS CHAUDS",
-      price: "7",
+      price: "7.5",
       description: "Semoule de blé, poulet, carottes, courgettes, navet, pois chiche, coriandre."
-    },
-    {
-      id: 41,
-      name: "SOUPE JAPONAISE",
-      category: "PLATS CHAUDS",
-      price: "7",
-      description: "Nouilles de riz, poulet, champignons, coriandre, citronnelle, bouillon de soja."
     },
     {
       id: 42,
       name: "TORTELLINI PESTO ROUGE",
       category: "PLATS CHAUDS",
-      price: "7",
+      price: "7.5",
       description: "Pâtes, pesto basilic, courgettes grillées, amandes, pignons, tomates séchées, parmesan."
     },
     {
       id: 28,
       name: "QUICHE CHÈVRE ÉPINARDS",
       category: "PLATS CHAUDS",
-      price: "7",
+      price: "7.5",
       description: "Épinards, chèvre, œuf, crème, farine de blé."
     },
     {
       id: 39,
       name: "QUICHE PATATE DOUCE FETA",
       category: "PLATS CHAUDS",
-      price: "7",
+      price: "7.5",
       description: "Patate douce, feta, pistou, œuf, crème, farine de blé."
-    },
-    {
-      id: 29,
-      name: "SALADE RISONI PESTO POIVRON",
-      category: "SALADES",
-      price: "6.5",
-      description: "Pate risoni de blé dur, paprika, poulet, roquette, courgettes grillées, parmesan, pesto poivron-tomates, huile de colza."
-    },
-    {
-      id: 30,
-      name: "SALADE CHOUX ROUGE",
-      category: "SALADES",
-      price: "6.5",
-      description: "Chou rouge, poulet aux épices Italiennes, Féta AOP au lait Grec de brebis pasteurisé, jambon Serrano, noix, Emmental, pousses d'épinards, sel, vinaigre, sésame."
     },
     {
       id: 32,
@@ -324,6 +303,20 @@ export const Produits = () => {
       price: "7.5",
       description: "Mix boulgour & quinoa rouge, courgettes & butternuts grillés, Féta AOP au lait Grec de brebis pasteurisé, canneberges, amandes, roquette, coriandre, persil.",
       extraPrice: "+1€"
+    },
+    {
+      id: 29,
+      name: "SALADE RISONI PESTO",
+      category: "SALADES",
+      price: "6.5",
+      description: "Pate risoni de blé dur, paprika, poulet, roquette, courgettes grillées, parmesan, pesto poivron-tomates, huile de colza."
+    },
+    {
+      id: 30,
+      name: "SALADE CHOUX ROUGE",
+      category: "SALADES",
+      price: "6.5",
+      description: "Chou rouge, poulet aux épices Italiennes, Féta AOP au lait Grec de brebis pasteurisé, jambon Serrano, noix, Emmental, pousses d'épinards, sel, vinaigre, sésame."
     },
     {
       id: 33,
@@ -370,50 +363,33 @@ export const Produits = () => {
     },
     {
       id: 44,
-      name: "COOKIE CHOCOLAT AU LAIT",
+      name: "COOKIES AU CHOCOLAT",
       category: "DESSERTS",
+      subCategory: "COOKIES",
       price: "3",
-      description: "Pépites de chocolat au lait, cassonade, vanille."
+      description: "Chocolat noir /ou au lait /ou blanc"
     },
     {
-      id: 54,
-      name: "COOKIE CHOCOLAT NOIR",
+      id: 64,
+      name: "CAKE",
       category: "DESSERTS",
+      subCategory: "CAKE",
       price: "3",
-      description: "Pépites de chocolat noir, cassonade, vanille."
-    },
-    {
-      id: 55,
-      name: "COOKIE CHOCOLAT BLANC",
-      category: "DESSERTS",
-      price: "3",
-      description: "Pépites de chocolat blanc, cassonade, vanille."
+      description: "Chocolat /ou marbré chocolat /ou pomme noix /ou banane /ou carotte"
     },
     {
       id: 45,
-      name: "FROMAGE BLANC COULIS FRUITS ROUGES ET COOKIES",
+      name: "FROMAGE BLANC",
       category: "DESSERTS",
-      price: "4.5",
-      description: "Coulis de fraises, cookies, matière grasse < 3.5%."
-    },
-    {
-      id: 46,
-      name: "FROMAGE BLANC MUESLI MIEL",
-      category: "DESSERTS",
-      price: "4.5",
-      description: "Miel, muesli, matière grasse < 3.5%."
-    },
-    {
-      id: 56,
-      name: "FROMAGE BLANC CRÈME DE MARRONS SPECULOOS",
-      category: "DESSERTS",
-      price: "4.5",
-      description: "Crème de marrons, speculoos, matière grasse < 3.5%."
+      subCategory: "FROMAGE_BLANC",
+      price: "3.5",
+      description: "Coulis fraise /ou coulis mangue muesli /ou acai bowl /ou miel muesli. Matière grasse < 3.5%."
     },
     {
       id: 47,
       name: "MOUSSE AU CHOCOLAT",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Œufs, chocolat noir, beurre, lait écrémé, cacao en poudre."
     },
@@ -421,6 +397,7 @@ export const Produits = () => {
       id: 48,
       name: "TIRAMISU",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Crème, mascarpone, génoise, arôme naturel de vanille, bourbon, sucre, lait écrémé, café et cacao."
     },
@@ -428,6 +405,7 @@ export const Produits = () => {
       id: 49,
       name: "MI CUIT FONDANT",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Œuf, huile de colza, sucre, chocolat noir 22%, farine de blé."
     },
@@ -435,6 +413,7 @@ export const Produits = () => {
       id: 50,
       name: "BROWNIE",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Huile de colza, sucre, chocolat noir 22%, farine de blé, sucre, noix de pécan, œuf."
     },
@@ -442,6 +421,7 @@ export const Produits = () => {
       id: 51,
       name: "CRUMBLE POMME SPECULOOS",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Pomme, farine de blé, speculoos concassé, beurre, cannelle."
     },
@@ -449,6 +429,7 @@ export const Produits = () => {
       id: 52,
       name: "TARTE AUX NOIX DE PÉCAN",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Farine de blé, margarine végétale, arôme naturel, sucre roux, jaune d'œuf, noix de pécan, sirop de glucose, œufs, beurre."
     },
@@ -456,6 +437,7 @@ export const Produits = () => {
       id: 53,
       name: "GRAINES DE CHIA FRAMBOISE",
       category: "DESSERTS",
+      subCategory: "PATISSERIES",
       price: "4",
       description: "Lait de coco, framboise, sucre blond de canne, graines de chia, coco râpée."
     },
@@ -665,7 +647,7 @@ export const Produits = () => {
                         </span>
                       )}
                       {category === "PLATS CHAUDS" && (
-                        <span className="section-price">7€</span>
+                        <span className="section-price">7,5€</span>
                       )}
                       {category === "SALADES" && (
                         <span className="section-price">6,50€</span>
@@ -674,7 +656,7 @@ export const Produits = () => {
                         <span className="section-price">6€</span>
                       )}
                       {category === "DESSERTS" && (
-                        <span className="section-price">3,50€</span>
+                        <span className="section-price"></span>
                       )}
                       {category === "THÉ & CAFÉ" && (
                         <span className="section-price">2.5€</span>
@@ -684,25 +666,66 @@ export const Produits = () => {
                       )}
                     </h2>
                   </div>
+                  {(category === "PLATS CHAUDS" || category === "SALADES" || category === "SANDWICH" || category === "SOUPES") && (
+                    <p className="section-season-message">
+                      {category === "PLATS CHAUDS" && t("products.sectionSeasonMessageWinterSummer", { winter: 10, summer: 6, category: t("products.sectionCategoryLabel.platsChauds") })}
+                      {category === "SALADES" && t("products.sectionSeasonMessageWinterSummer", { winter: 7, summer: 10, category: t("products.sectionCategoryLabel.salades") })}
+                      {category === "SANDWICH" && t("products.sectionSeasonMessageSandwich")}
+                      {category === "SOUPES" && t("products.sectionSeasonMessageSoupes")}
+                    </p>
+                  )}
                   <div className="section-content">
-                    {categoryProducts.map((product) => (
-                      <div 
-                        key={product.id} 
-                        className={`product-item ${product.isSpecial ? 'product-special' : ''}`}
-                        onClick={() => {
-                          console.log('Produit sélectionné:', product.name);
-                        }}
-                      >
-                        <span className="product-name">
-                          {t(`products.items.${product.id}.name`)}
-                          {product.isPopular && <span className="product-badge-popular">{t("products.popular")}</span>}
-                          {product.isVegetarian && <span className="product-badge-vegetarian">{t("products.vegetarian")}</span>}
-                          {product.isVegan && <span className="product-badge-vegan">{t("products.vegan")}</span>}
-                          {product.extraPrice && <span className="product-extra-price">{product.extraPrice}</span>}
-                        </span>
-                        <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
-                      </div>
-                    ))}
+                    {category === "DESSERTS" ? (
+                      DESSERT_SUBCATEGORIES_ORDER.map((subCat) => {
+                        const subProducts = categoryProducts.filter((p) => p.subCategory === subCat);
+                        if (subProducts.length === 0) return null;
+                        const hasHeader = subCat !== "COOKIES" && subCat !== "CAKE" && subCat !== "FROMAGE_BLANC";
+                        return (
+                          <div key={subCat} className={`dessert-subcategory${!hasHeader ? " dessert-subcategory--compact" : ""}`}>
+                            {hasHeader && (
+                              <div className="dessert-subcategory-header">
+                                <span className="dessert-subcategory-title">{t(`products.dessertSub.${subCat}`)}</span>
+                                <span className="dessert-subcategory-price">{DESSERT_SUBCATEGORY_PRICES[subCat]}</span>
+                              </div>
+                            )}
+                            {subProducts.map((product) => (
+                              <div
+                                key={product.id}
+                                className="product-item"
+                                onClick={() => console.log('Produit sélectionné:', product.name)}
+                              >
+                                <span className="product-name">
+                                  {t(`products.items.${product.id}.name`)}
+                                  {product.id === 44 && <span className="product-price">3€</span>}
+                                  {product.id === 64 && <span className="product-price">3€</span>}
+                                  {product.id === 45 && <span className="product-price">3,5€</span>}
+                                </span>
+                                <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
+                              </div>
+                            ))}
+                          </div>
+                        );
+                      })
+                    ) : (
+                      categoryProducts.map((product) => (
+                        <div 
+                          key={product.id} 
+                          className={`product-item ${product.isSpecial ? 'product-special' : ''}`}
+                          onClick={() => {
+                            console.log('Produit sélectionné:', product.name);
+                          }}
+                        >
+                          <span className="product-name">
+                            {t(`products.items.${product.id}.name`)}
+                            {product.isPopular && <span className="product-badge-popular">{t("products.popular")}</span>}
+                            {product.isVegetarian && <span className="product-badge-vegetarian">{t("products.vegetarian")}</span>}
+                            {product.isVegan && <span className="product-badge-vegan">{t("products.vegan")}</span>}
+                            {product.extraPrice && <span className="product-extra-price">{product.extraPrice}</span>}
+                          </span>
+                          <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
+                        </div>
+                      ))
+                    )}
                   </div>
                   {category === "MILKSHAKES" && (
                     <div className="section-photo section-photo-portrait section-photo-milkshake">
