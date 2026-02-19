@@ -1,5 +1,6 @@
 /* Style inspiré de Wild & Moon - Design minimaliste */
 .produits-page {
+  --category-gap: 32px;
   min-height: 100vh;
   background: var(--bg);
   padding: 0;
@@ -331,11 +332,11 @@
 }
 
 .menu-content .menu-sections:not(:first-child) {
-  margin-top: 35px;
+  margin-top: var(--category-gap);
 }
 
 .section-sub {
-  margin-top: 30px;
+  margin-top: var(--category-gap);
 }
 
 .section-sub .section-header {
@@ -346,7 +347,7 @@
 .menu-sections {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
+  gap: var(--category-gap);
   margin-top: 30px;
   margin-bottom: 30px;
   align-items: stretch;
@@ -362,15 +363,11 @@
 .menu-column {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: var(--category-gap);
 }
 
 .menu-column .menu-section {
   width: 100%;
-}
-
-.menu-column .menu-section:not(:last-child) {
-  margin-bottom: 12px;
 }
 
 .menu-section {
@@ -718,13 +715,13 @@
   padding-left: 12px;
 }
 
-/* Sous-catégories desserts */
+/* Sous-catégories desserts – espacement uniforme */
 .dessert-subcategory {
-  margin-bottom: 18px;
+  margin-bottom: var(--category-gap);
 }
 
 .dessert-subcategory--compact {
-  margin-bottom: 4px;
+  margin-bottom: var(--category-gap);
 }
 
 .dessert-subcategory:last-child,
@@ -741,6 +738,13 @@
   background: var(--bg-light);
   border-left: 3px solid var(--green);
   border-radius: 0 4px 4px 0;
+}
+
+.dessert-subcategory-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .dessert-subcategory-title {
@@ -767,7 +771,7 @@
   font-size: 11px;
   font-weight: 600;
   color: #000;
-  margin: 0 0 8px 13px;
+  margin: 0;
   font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
   font-style: italic;
 }
@@ -885,7 +889,7 @@
 @media (max-width: 1200px) {
   .menu-sections {
     grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    gap: var(--category-gap);
   }
   
   /* Layout colonnes : masquer bordure sur colonnes 2 et 3 */
@@ -911,9 +915,32 @@
     gap: 16px;
   }
 
+  /* Diaporama horizontal des 3 photos (mobile uniquement) */
   .formulas-photos-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 16px;
+    margin-top: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 8px;
+  }
+
+  .formulas-photos-grid .formula-photo-item {
+    flex-shrink: 0;
+    width: 85%;
+    min-width: 250px;
+    max-width: 310px;
+    aspect-ratio: 4 / 3;
+    scroll-snap-align: start;
+  }
+
+  .formulas-photos-grid .formula-photo-item:hover {
+    transform: none;
   }
 
   .formula-name {
@@ -940,12 +967,16 @@
 
   .menu-sections {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: var(--category-gap);
     margin-top: 35px;
   }
 
   .section-photo {
     margin-top: 16px;
+    max-width: 92%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .menu-section::after {
