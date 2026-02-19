@@ -39,8 +39,10 @@ const DESSERT_SUBCATEGORY_PRICES = {
   "PATISSERIE": "4,5€",
 };
 
-/** Ordre d'affichage : JUS → SOUPES → PLATS CHAUDS → SALADES → SANDWICH → MILKSHAKES → BOOSTERS → DESSERTS → THÉ & CAFÉ */
-const CATEGORIES_ORDER = ["JUS", "SOUPES", "PLATS CHAUDS", "SALADES", "SANDWICH", "MILKSHAKES", "BOOSTERS", "DESSERTS", "THÉ & CAFÉ"];
+/** Ordre version web uniquement */
+const CATEGORIES_ORDER_WEB = ["JUS", "SOUPES", "PLATS CHAUDS", "MILKSHAKES", "BOOSTERS", "SALADES", "DESSERTS", "THÉ & CAFÉ", "SANDWICH"];
+/** Ordre version mobile */
+const CATEGORIES_ORDER_MOBILE = ["JUS", "SOUPES", "PLATS CHAUDS", "SALADES", "SANDWICH", "MILKSHAKES", "BOOSTERS", "DESSERTS", "THÉ & CAFÉ"];
 
 export const Produits = () => {
   const { t } = useTranslation();
@@ -544,11 +546,12 @@ export const Produits = () => {
     productsByCategory["DESSERTS"] = [];
   }
 
-  // Ordre d'affichage des catégories
-  const orderedCategories = CATEGORIES_ORDER.filter((cat) => productsByCategory[cat]);
-
   const [isReady, setIsReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Ordre d'affichage : version web vs mobile
+  const categoriesOrder = isMobile ? CATEGORIES_ORDER_MOBILE : CATEGORIES_ORDER_WEB;
+  const orderedCategories = categoriesOrder.filter((cat) => productsByCategory[cat]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
