@@ -726,12 +726,13 @@ export const Produits = () => {
                       )}
                     </h2>
                   </div>
-                  {(category === "PLATS CHAUDS" || category === "SALADES" || category === "SANDWICH" || category === "SOUPES") && (
+                  {(category === "PLATS CHAUDS" || category === "SALADES" || category === "SANDWICH" || category === "SOUPES" || category === "MILKSHAKES") && (
                     <p className="section-season-message">
                       {category === "PLATS CHAUDS" && t("products.sectionSeasonMessageWinterSummer", { winter: 10, summer: 6, category: t("products.sectionCategoryLabel.platsChauds") })}
                       {category === "SALADES" && t("products.sectionSeasonMessageWinterSummer", { winter: 7, summer: 10, category: t("products.sectionCategoryLabel.salades") })}
                       {category === "SANDWICH" && t("products.sectionSeasonMessageSandwich")}
                       {category === "SOUPES" && t("products.sectionSeasonMessageSoupes")}
+                      {category === "MILKSHAKES" && t("products.sectionSeasonMessageMilkshakes")}
                     </p>
                   )}
                   <div className="section-content">
