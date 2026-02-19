@@ -39,9 +39,8 @@ const DESSERT_SUBCATEGORY_PRICES = {
   "PATISSERIE": "4,5€",
 };
 
-/** Ordre d'affichage : ligne 1 Jus | Soupes | Plats chauds, ligne 2 Milkshakes | Booster | Salades, ligne 3 Desserts | Sandwich, puis Thé & Café */
-const FIRST_ROW_ORDER = ["JUS", "SOUPES", "PLATS CHAUDS"];
-const OTHER_CATEGORIES_ORDER = ["MILKSHAKES", "BOOSTERS", "SALADES", "DESSERTS", "THÉ & CAFÉ", "SANDWICH"];
+/** Ordre d'affichage : JUS → SOUPES → PLATS CHAUDS → SALADES → SANDWICH → MILKSHAKES → BOOSTERS → DESSERTS → THÉ & CAFÉ */
+const CATEGORIES_ORDER = ["JUS", "SOUPES", "PLATS CHAUDS", "SALADES", "SANDWICH", "MILKSHAKES", "BOOSTERS", "DESSERTS", "THÉ & CAFÉ"];
 
 export const Produits = () => {
   const { t } = useTranslation();
@@ -545,18 +544,24 @@ export const Produits = () => {
     productsByCategory["DESSERTS"] = [];
   }
 
-  // Ordre d'affichage : Jus | Soupes | Plat chaud en première ligne, puis le reste
-  const orderedCategories = [
-    ...FIRST_ROW_ORDER.filter((cat) => productsByCategory[cat]),
-    ...OTHER_CATEGORIES_ORDER.filter((cat) => productsByCategory[cat]),
-  ];
+  // Ordre d'affichage des catégories
+  const orderedCategories = CATEGORIES_ORDER.filter((cat) => productsByCategory[cat]);
 
   const [isReady, setIsReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const t = setTimeout(() => setIsReady(true), 50);
     return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   return (
@@ -741,11 +746,13 @@ export const Produits = () => {
                               <>
                                 <div className={`dessert-subcategory-header${subCat === "DOUCEURS" || subCat === "PATISSERIE" ? " dessert-subcategory-header--black-price" : ""}`}>
                                   <span className="dessert-subcategory-title">{t(`products.dessertSub.${subCat}`)}</span>
-                                  <span className="dessert-subcategory-price">{DESSERT_SUBCATEGORY_PRICES[subCat]}</span>
+                                  <span className="dessert-subcategory-header-right">
+                                    {subCat === "PATISSERIE" && (
+                                      <span className="dessert-subcategory-formula-note">{t("products.dessertSub.formulaNotePatisserie")}</span>
+                                    )}
+                                    <span className="dessert-subcategory-price">{DESSERT_SUBCATEGORY_PRICES[subCat]}</span>
+                                  </span>
                                 </div>
-                                {subCat === "PATISSERIE" && (
-                                  <p className="dessert-subcategory-formula-note">{t("products.dessertSub.formulaNotePatisserie")}</p>
-                                )}
                               </>
                             )}
                             {subProducts.map((product) => (
@@ -832,7 +839,17 @@ export const Produits = () => {
               );
             };
 
-            /* Layout en colonnes : col1 = JUS,MILKSHAKES,DESSERTS | col2 = SOUPES,BOOSTERS,THÉ&CAFÉ | col3 = PLATS CHAUDS,SALADES,SANDWICH */
+            /* Mobile : ordre linéaire comme la version web */
+            if (isMobile) {
+              return (
+                <div className="menu-sections menu-sections-mobile">
+                  {orderedCategories.map((category) =>
+                    renderSection(category, true)
+                  )}
+                </div>
+              );
+            }
+            /* Desktop : layout en colonnes */
             const columnCount = 3;
             const columns = [];
             for (let col = 0; col < columnCount; col++) {
