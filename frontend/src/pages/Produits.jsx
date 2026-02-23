@@ -27,22 +27,21 @@ const CATEGORY_I18N_KEYS = {
   "THÉ & CAFÉ": "THE_CAFE",
   "BOOSTERS SPÉCIAUX": "BOOSTERS_SPECIAL",
   "BOISSONS": "BOISSONS",
+  "GOODIES": "GOODIES",
 };
 
-const DESSERT_SUBCATEGORIES_ORDER = ["DOUCEURS", "PATISSERIE", "SALADE_FRUIT", "COOKIES", "CAKE", "FROMAGE_BLANC"];
+const DESSERT_SUBCATEGORIES_ORDER = ["DOUCEURS", "PATISSERIE", "COOKIES", "CAKE"];
 const DESSERT_SUBCATEGORY_PRICES = {
-  "COOKIES": "",
-  "CAKE": "",
-  "FROMAGE_BLANC": "",
+  "COOKIES": "3€",
+  "CAKE": "3€",
   "DOUCEURS": "3,5€",
-  "SALADE_FRUIT": "4€",
   "PATISSERIE": "4,5€",
 };
 
 /** Ordre version web uniquement */
-const CATEGORIES_ORDER_WEB = ["JUS", "SOUPES", "PLATS CHAUDS", "MILKSHAKES", "BOOSTERS", "SALADES", "DESSERTS", "THÉ & CAFÉ", "SANDWICH"];
+const CATEGORIES_ORDER_WEB = ["JUS", "SOUPES", "PLATS CHAUDS", "MILKSHAKES", "BOOSTERS", "SALADES", "DESSERTS", "BOISSONS", "SANDWICH", "GOODIES"];
 /** Ordre version mobile */
-const CATEGORIES_ORDER_MOBILE = ["JUS", "SOUPES", "PLATS CHAUDS", "SALADES", "SANDWICH", "MILKSHAKES", "BOOSTERS", "DESSERTS", "THÉ & CAFÉ"];
+const CATEGORIES_ORDER_MOBILE = ["JUS", "SOUPES", "PLATS CHAUDS", "SALADES", "SANDWICH", "MILKSHAKES", "BOOSTERS", "DESSERTS", "BOISSONS", "GOODIES"];
 
 export const Produits = () => {
   const { t } = useTranslation();
@@ -236,14 +235,14 @@ export const Produits = () => {
     {
       id: 23,
       name: "THÉ",
-      category: "THÉ & CAFÉ",
+      category: "BOISSONS",
       price: "2.5",
       description: "Sélection de thés premium"
     },
     {
       id: 24,
       name: "CAFÉ",
-      category: "THÉ & CAFÉ",
+      category: "BOISSONS",
       price: "2.5",
       description: "Café arabica bio"
     },
@@ -378,18 +377,10 @@ export const Produits = () => {
       description: "Chocolat noir /ou au lait /ou blanc"
     },
     {
-      id: 64,
-      name: "CAKE",
-      category: "DESSERTS",
-      subCategory: "CAKE",
-      price: "3",
-      description: "Chocolat /ou marbré chocolat /ou pomme noix /ou banane /ou carotte"
-    },
-    {
       id: 45,
       name: "FROMAGE BLANC",
       category: "DESSERTS",
-      subCategory: "FROMAGE_BLANC",
+      subCategory: "DOUCEURS",
       price: "3.5",
       description: "Coulis fraise /ou coulis mangue muesli /ou acai bowl /ou miel muesli /ou crème de marrons speculoos. Matière grasse < 3.5%."
     },
@@ -461,8 +452,9 @@ export const Produits = () => {
       id: 65,
       name: "SALADE FRUIT",
       category: "DESSERTS",
-      subCategory: "SALADE_FRUIT",
+      subCategory: "DOUCEURS",
       price: "4",
+      extraPrice: "+0,5€",
       description: "Variété de fruits de saison."
     },
     {
@@ -524,6 +516,34 @@ export const Produits = () => {
       category: "BOISSONS",
       price: "2.5",
       description: "Canette 33cl"
+    },
+    {
+      id: 75,
+      name: "VITAMINE WELL",
+      category: "BOISSONS",
+      price: "3.80",
+      description: "Boisson vitaminée"
+    },
+    {
+      id: 76,
+      name: "JOMO",
+      category: "BOISSONS",
+      price: "3.80",
+      description: "Grenade litchi, mangue, passion citron vert, pêche hibiscus, gingembre"
+    },
+    {
+      id: 140,
+      name: "MUG BAMBOU",
+      category: "GOODIES",
+      price: "12",
+      description: "Mug réutilisable en bambou"
+    },
+    {
+      id: 141,
+      name: "TOTE BAG",
+      category: "GOODIES",
+      price: "8",
+      description: "Sac en coton réutilisable"
     }
   ]);
 
@@ -560,7 +580,7 @@ export const Produits = () => {
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia("(max-width: 992px)");
     setIsMobile(mq.matches);
     const handler = (e) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
@@ -721,11 +741,8 @@ export const Produits = () => {
                       {category === "DESSERTS" && (
                         <span className="section-price"></span>
                       )}
-                      {category === "THÉ & CAFÉ" && (
-                        <span className="section-price">2.5€</span>
-                      )}
                       {category === "BOISSONS" && (
-                        <span className="section-price">2€</span>
+                        <span className="section-price">2€ - 3,80€</span>
                       )}
                     </h2>
                   </div>
@@ -743,12 +760,12 @@ export const Produits = () => {
                       DESSERT_SUBCATEGORIES_ORDER.map((subCat) => {
                         const subProducts = categoryProducts.filter((p) => p.subCategory === subCat);
                         if (subProducts.length === 0) return null;
-                        const hasHeader = subCat !== "COOKIES" && subCat !== "CAKE" && subCat !== "FROMAGE_BLANC" && subCat !== "SALADE_FRUIT";
+                        const hasHeader = true;
                         return (
                           <div key={subCat} className={`dessert-subcategory${!hasHeader ? " dessert-subcategory--compact" : ""}`}>
                             {hasHeader && (
                               <>
-                                <div className={`dessert-subcategory-header${subCat === "DOUCEURS" || subCat === "PATISSERIE" ? " dessert-subcategory-header--black-price" : ""}`}>
+                                <div className={`dessert-subcategory-header${subCat === "DOUCEURS" || subCat === "PATISSERIE" || subCat === "COOKIES" || subCat === "CAKE" ? " dessert-subcategory-header--black-price" : ""}`}>
                                   <span className="dessert-subcategory-title">{t(`products.dessertSub.${subCat}`)}</span>
                                   <span className="dessert-subcategory-header-right">
                                     {subCat === "PATISSERIE" && (
@@ -765,14 +782,13 @@ export const Produits = () => {
                                 className="product-item"
                                 onClick={() => console.log('Produit sélectionné:', product.name)}
                               >
-                                <span className="product-name">
-                                  {t(`products.items.${product.id}.name`)}
-                                  {product.id === 44 && <span className="product-price">3€</span>}
-                                  {product.id === 64 && <span className="product-price">3€</span>}
-                                  {product.id === 45 && <span className="product-price">3,5€</span>}
-                                  {product.id === 65 && <span className="product-price">4€</span>}
-                                </span>
-                                <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
+                                <div className="product-item-content">
+                                  <span className="product-name">
+                                    {t(`products.items.${product.id}.name`)}
+                                    {product.id === 65 && product.extraPrice && <span className="product-extra-price">{product.extraPrice}</span>}
+                                  </span>
+                                  <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
+                                </div>
                               </div>
                             ))}
                           </div>
@@ -787,14 +803,16 @@ export const Produits = () => {
                             console.log('Produit sélectionné:', product.name);
                           }}
                         >
-                          <span className="product-name">
-                            {t(`products.items.${product.id}.name`)}
-                            {product.isPopular && <span className="product-badge-popular">{t("products.popular")}</span>}
-                            {product.isVegetarian && <span className="product-badge-vegetarian">{t("products.vegetarian")}</span>}
-                            {product.isVegan && <span className="product-badge-vegan">{t("products.vegan")}</span>}
-                            {product.extraPrice && <span className="product-extra-price">{product.extraPrice}</span>}
-                          </span>
-                          <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
+                          <div className="product-item-content">
+                            <span className="product-name">
+                              {t(`products.items.${product.id}.name`)}
+                              {product.isPopular && <span className="product-badge-popular">{t("products.popular")}</span>}
+                              {product.isVegetarian && <span className="product-badge-vegetarian">{t("products.vegetarian")}</span>}
+                              {product.isVegan && <span className="product-badge-vegan">{t("products.vegan")}</span>}
+                              {product.extraPrice && <span className="product-extra-price">{product.extraPrice}</span>}
+                            </span>
+                            <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
+                          </div>
                         </div>
                       ))
                     )}
@@ -817,26 +835,6 @@ export const Produits = () => {
                   {category === "SALADES" && (
                     <div className="section-photo section-photo-portrait">
                       <img src={photoSaladesBowls} alt="Salades" className="section-photo-img" />
-                    </div>
-                  )}
-                  {category === "THÉ & CAFÉ" && productsByCategory["BOISSONS"] && (
-                    <div className="section-sub">
-                      <div className="section-header">
-                        <h2 className="section-title">
-                          <span>{t("products.categories.BOISSONS")}</span>
-                          <span className="section-price">2€</span>
-                        </h2>
-                      </div>
-                      <div className="section-content">
-                        {productsByCategory["BOISSONS"].map((product) => (
-                          <div key={product.id} className="product-item">
-                            <span className="product-name">
-                              {t(`products.items.${product.id}.name`)}
-                            </span>
-                            <span className="product-description">{t(`products.items.${product.id}.description`)}</span>
-                          </div>
-                        ))}
-                      </div>
                     </div>
                   )}
                 </div>

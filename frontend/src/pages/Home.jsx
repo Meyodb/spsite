@@ -67,13 +67,6 @@ export const Home = () => {
               <span className="home-stat-value" aria-hidden="true">2001</span>
             </div>
           </AnimatedItem>
-          <div className="home-stats-divider" aria-hidden="true" />
-          <AnimatedItem animation="fadeInUp" delay={200}>
-            <div className="home-stat-item">
-              <span className="home-stat-value" aria-hidden="true">9</span>
-              <span className="home-stat-label">{t("home.statRestaurants")}</span>
-            </div>
-          </AnimatedItem>
         </div>
       </AnimatedSection>
 

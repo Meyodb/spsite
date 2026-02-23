@@ -1,0 +1,332 @@
+.product-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  animation: product-sheet-fadeIn 0.25s ease-out forwards;
+  overflow-y: auto;
+}
+
+@keyframes product-sheet-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.product-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: product-sheet-scaleIn 0.3s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+@keyframes product-sheet-scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.product-sheet-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  color: #333;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.product-sheet-close:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.product-sheet-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.product-sheet-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(180deg, #e8f0f6 0%, #f0f5f9 100%);
+  flex-shrink: 0;
+}
+
+.product-sheet-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-sheet-image-zoom {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-sheet-image-zoom:hover {
+  background: #fff;
+  transform: scale(1.05);
+}
+
+.product-sheet-body {
+  padding: 28px;
+}
+
+.product-sheet-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+.product-sheet-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.product-sheet-category {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green, #82907B);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-sheet-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.product-sheet-description {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 18px 0;
+  padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+}
+
+.product-sheet-block {
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.product-sheet-block:last-child {
+  margin-bottom: 0;
+}
+
+.product-sheet-block--allergens {
+  background: rgba(130, 144, 123, 0.08);
+  border: 1px solid rgba(130, 144, 123, 0.2);
+  margin: 0 -28px -28px -28px;
+  padding: 20px 28px 28px;
+  border-radius: 0 0 16px 16px;
+}
+
+.product-sheet-block-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green-dark, #5a6654);
+  margin: 0 0 10px 0;
+}
+
+.product-sheet-why-good {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.product-sheet-benefits,
+.product-sheet-ingredients,
+.product-sheet-formulas {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
+}
+
+.product-sheet-benefits li,
+.product-sheet-ingredients li,
+.product-sheet-formulas li {
+  margin-bottom: 4px;
+}
+
+.product-sheet-ingredients li strong {
+  color: #1a1a1a;
+}
+
+.product-sheet-diet {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.product-sheet-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.product-sheet-badge--vegan {
+  background: #2d6a4f;
+  color: #fff;
+}
+
+.product-sheet-badge--vegetarian {
+  background: #4a7c3f;
+  color: #fff;
+}
+
+.product-sheet-badge--standard {
+  background: #f0f0f0;
+  color: #555;
+}
+
+.product-sheet-allergens {
+  margin-bottom: 12px;
+}
+
+.product-sheet-allergen-pictograms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.product-sheet-allergen-pictograms .allergen-pictogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.product-sheet-allergens-empty {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+  margin: 8px 0 0 0;
+}
+
+.product-sheet-allergens-link {
+  font-size: 12px;
+  color: var(--green, #82907B);
+  text-decoration: underline;
+}
+
+.product-sheet-allergens-link:hover {
+  color: var(--green-dark, #5a6654);
+}
+
+@media (max-width: 600px) {
+  .product-sheet {
+    max-height: 85vh;
+    border-radius: 12px;
+  }
+
+  .product-sheet-body {
+    padding: 20px;
+  }
+
+  .product-sheet-block {
+    margin-bottom: 14px;
+    padding: 14px 16px;
+  }
+
+  .product-sheet-block--allergens {
+    margin: 0 -20px -20px -20px;
+    padding: 16px 20px 24px;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .product-sheet-description {
+    padding: 12px 14px;
+  }
+
+  .product-sheet-name {
+    font-size: 18px;
+  }
+
+  .product-sheet-description {
+    font-size: 13px;
+  }
+
+  .product-sheet-close {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .product-sheet-image-zoom {
+    width: 40px;
+    height: 40px;
+    bottom: 10px;
+    right: 10px;
+  }
+}

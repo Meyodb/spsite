@@ -8,6 +8,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { Home } from "./pages/Home";
 import { ADN } from "./pages/ADN";
 import { Produits } from "./pages/Produits";
+import { ProduitsMenuTest } from "./pages/ProduitsMenuTest";
 import { Contact } from "./pages/Contact";
 import { Allergenes } from "./pages/Allergenes";
 
@@ -51,6 +52,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/produits" element={<Produits />} />
+          <Route path="/produits-test" element={<ProduitsMenuTest />} />
           <Route path="/adn" element={<ADN />} />
           <Route path="/restaurants" element={<Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}><LoadingFallback /></div>}><Restaurants /></Suspense>} />
           <Route path="/contact" element={<Contact />} />

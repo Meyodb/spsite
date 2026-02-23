@@ -88,6 +88,16 @@ export const Header = () => {
           onClick={(e) => e.stopPropagation()}
         >
           <Link 
+            to="/" 
+            className="nav-link" 
+            onClick={() => {
+              setMobileMenuOpen(false);
+              window.scrollTo({ top: 0, behavior: 'instant' });
+            }}
+          >
+            {t("header.navHome")}
+          </Link>
+          <Link 
             to="/produits" 
             className="nav-link" 
             onClick={() => {

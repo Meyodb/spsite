@@ -39,6 +39,9 @@ export const MentionsLegales = () => {
                   <strong>Vercel Inc.</strong> — 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis.<br />
                   <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="legal-link">https://vercel.com</a>
                 </p>
+                <p>
+                  <strong>{t("legal.serverLocation")}</strong> — {t("legal.serverLocationContent")}
+                </p>
               </div>
             </section>
 

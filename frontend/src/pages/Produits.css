@@ -1,6 +1,6 @@
 /* Style inspiré de Wild & Moon - Design minimaliste */
 .produits-page {
-  --category-gap: 32px;
+  --category-gap: 36px;
   min-height: 100vh;
   background: var(--bg);
   padding: 0;
@@ -115,7 +115,6 @@
   text-align: center;
   margin-bottom: 40px;
   padding-bottom: 16px;
-  border-bottom: 2px dotted var(--text);
 }
 
 /* Section Formules GOOD DAY */
@@ -364,10 +363,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--category-gap);
+  position: relative;
 }
 
 .menu-column .menu-section {
   width: 100%;
+}
+
+/* Trait vertical entre colonnes désactivé */
+.menu-column:not(:last-child)::after {
+  display: none;
 }
 
 .menu-section {
@@ -378,24 +383,14 @@
   flex-direction: column;
 }
 
-.menu-section:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -18px;
-  width: 1px;
-  height: 100%;
-  border-right: 1px dotted #000;
-}
-
-.menu-section.no-right-border::after {
-  display: none;
+.menu-section.no-right-border {
+  /* Conservé pour compatibilité, bordure gérée sur colonne */
 }
 
 /* Header de section */
 .section-header {
   padding: 0;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   height: 70px;
   display: flex;
   align-items: flex-end;
@@ -404,13 +399,9 @@
   position: relative;
 }
 
+/* Trait horizontal sous les titres désactivé */
 .section-header::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  border-bottom: 2px dotted #000;
+  display: none;
 }
 
 .section-season-message {
@@ -454,6 +445,8 @@
   align-items: flex-end;
   gap: 16px;
   width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .section-price {
@@ -574,12 +567,14 @@
 /* Contenu */
 .section-content {
   padding: 0;
+  min-width: 0;
+  overflow: visible;
 }
 
-/* PRODUITS - Format vertical */
+/* PRODUITS - Format vertical avec photo */
 .product-item {
-  margin-bottom: 4px;
-  padding: 10px 12px;
+  margin-bottom: 2px;
+  padding: 8px 12px;
   margin-left: -12px;
   margin-right: -12px;
   border-radius: 4px;
@@ -587,8 +582,41 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  overflow: visible;
+}
+
+.product-item-image-wrap {
+  flex-shrink: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-item-image {
+  width: 64px;
+  height: 48px;
+  min-width: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f0f0f0;
+  display: block;
+}
+
+.product-item-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+}
+
+.product-item:not(:last-child) {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .product-item:last-child {
@@ -623,6 +651,10 @@
   height: 70%;
 }
 
+.product-item-content .product-name {
+  align-self: flex-start;
+}
+
 .product-name {
   font-size: 14px;
   font-weight: 700;
@@ -641,6 +673,10 @@
   color: #000;
 }
 
+.product-item-content .product-description {
+  align-self: flex-start;
+}
+
 .product-description {
   font-size: 11px;
   font-weight: 400;
@@ -651,6 +687,11 @@
   transition: color 0.3s ease;
   text-align: left;
   align-self: flex-start;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .product-item:hover .product-description {
@@ -702,7 +743,10 @@
 .product-name:has(.product-extra-price) {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   width: 100%;
+  min-width: 0;
+  gap: 8px;
 }
 
 .product-extra-price {
@@ -733,11 +777,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 10px;
-  margin-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  padding-bottom: 8px;
   background: var(--bg-light);
   border-left: 3px solid var(--green);
   border-radius: 0 4px 4px 0;
+  min-width: 0;
+  overflow: visible;
 }
 
 .dessert-subcategory-header-right {
@@ -754,6 +803,8 @@
   letter-spacing: 0.5px;
   color: #000;
   font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+  min-width: 0;
+  word-wrap: break-word;
 }
 
 .dessert-subcategory-price {
@@ -891,11 +942,24 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--category-gap);
   }
+}
+
+/* Tablette et mobile : une seule colonne pour une meilleure lisibilité */
+@media (max-width: 992px) {
+  .menu-sections {
+    grid-template-columns: 1fr;
+  }
   
-  /* Layout colonnes : masquer bordure sur colonnes 2 et 3 */
-  .menu-sections-columns .menu-column:nth-child(2) .menu-section::after,
-  .menu-sections-columns .menu-column:nth-child(3) .menu-section::after {
+  .menu-column::after {
     display: none;
+  }
+  
+  .menu-container {
+    padding: 18px 28px 40px 28px;
+  }
+  
+  .section-title {
+    flex-wrap: wrap;
   }
 }
 
@@ -1091,13 +1155,27 @@
   }
 
   .product-item {
-    margin-bottom: 4px;
-    padding: 10px;
     margin-left: 0;
     margin-right: 0;
+    padding: 10px;
     gap: 6px;
     max-width: 100%;
     box-sizing: border-box;
+  }
+
+  .product-item:not(:last-child) {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+
+  .product-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Réaligner le trait sous les titres (pas de marges négatives sur mobile) */
+  .section-header::after {
+    left: 0;
+    width: 100%;
   }
 
   .product-special {
@@ -1286,13 +1364,17 @@
   }
 
   .product-item {
-    margin-bottom: 4px;
-    padding: 10px 8px;
     margin-left: 0;
     margin-right: 0;
+    padding: 10px 8px;
     gap: 6px;
     max-width: 100%;
     box-sizing: border-box;
+  }
+
+  .product-item:not(:last-child) {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
   }
 
   .product-special {
