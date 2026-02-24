@@ -52,7 +52,9 @@ function AppContent() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/produits" element={<ProduitsMenuTest />} />
+          {/* Temporaire : page archive en page principale produits, test conservée sur /produits-test */}
+          <Route path="/produits" element={<ProduitsArchive />} />
+          <Route path="/produits-test" element={<ProduitsMenuTest />} />
           <Route path="/produits-archive" element={<ProduitsArchive />} />
           <Route path="/adn" element={<ADN />} />
           <Route path="/nos-piliers" element={<NosPiliers />} />
