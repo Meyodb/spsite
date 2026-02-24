@@ -8,7 +8,7 @@ const CLOSE_DURATION_MS = 280;
  * Lightbox pour afficher la photo d'un produit en grand.
  * Fermeture : clic sur le fond, sur le bouton ou touche Échap.
  */
-export function ProductImageLightbox({ open, onClose, productId, alt }) {
+export function ProductImageLightbox({ open, onClose, productId, alt, imageCount }) {
   const [isClosing, setIsClosing] = useState(false);
   const handleCloseRef = useRef(() => {});
 
@@ -69,6 +69,7 @@ export function ProductImageLightbox({ open, onClose, productId, alt }) {
           productId={productId}
           alt={alt ?? ""}
           className="product-image-lightbox-img"
+          imageCount={imageCount}
         />
       </div>
     </div>

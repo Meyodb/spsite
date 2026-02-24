@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import "./Produits.css";
+import "./ProduitsArchive.css";
 import jus from "../assets/images/jus.png";
 import soupe from "../assets/images/soupe.png";
 import citron from "../assets/images/citron.png";
@@ -43,7 +43,7 @@ const CATEGORIES_ORDER_WEB = ["JUS", "SOUPES", "PLATS CHAUDS", "MILKSHAKES", "BO
 /** Ordre version mobile */
 const CATEGORIES_ORDER_MOBILE = ["JUS", "SOUPES", "PLATS CHAUDS", "SALADES", "SANDWICH", "MILKSHAKES", "BOOSTERS", "DESSERTS", "BOISSONS", "GOODIES"];
 
-export const Produits = () => {
+export const ProduitsArchive = () => {
   const { t } = useTranslation();
   const [products] = useState([
     {

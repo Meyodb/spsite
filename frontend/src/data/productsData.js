@@ -130,6 +130,8 @@ export const PRODUCTS = [
   { id: 76, name: "JOMO", category: "BOISSONS", price: "3.80", description: "Grenade litchi, mangue, passion citron vert, pêche hibiscus, gingembre" },
   { id: 140, name: "MUG BAMBOU", category: "GOODIES", price: "12", description: "Mug réutilisable en bambou" },
   { id: 141, name: "TOTE BAG", category: "GOODIES", price: "8", description: "Sac en coton réutilisable" },
+  { id: 143, name: "THERMOS", category: "GOODIES", price: "15", description: "Thermos isotherme réutilisable" },
+  { id: 144, name: "GOURDE", category: "GOODIES", price: "12", description: "Gourde réutilisable", imageCount: 2 },
 ];
 
 export const DESSERT_SUBCATEGORIES_ORDER = ["DOUCEURS", "PATISSERIE", "COOKIES", "CAKE"];

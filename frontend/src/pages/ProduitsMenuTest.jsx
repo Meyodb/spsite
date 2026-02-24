@@ -311,6 +311,7 @@ export const ProduitsMenuTest = () => {
                                 productId={product.id}
                                 alt={name}
                                 className="menu-test-product-image"
+                                imageCount={product.imageCount}
                               />
                             </div>
                             <div className="menu-test-product-body">
@@ -359,6 +360,7 @@ export const ProduitsMenuTest = () => {
                             productId={product.id}
                             alt={name}
                             className="menu-test-product-image"
+                            imageCount={product.imageCount}
                           />
                         </div>
                         <div className="menu-test-product-body">
@@ -398,11 +400,12 @@ export const ProduitsMenuTest = () => {
                     aria-label={t("products.viewProduct", { name })}
                   >
                     <div className="menu-test-product-image-wrap">
-                      <ProductImage
-                        productId={product.id}
-                        alt={name}
-                        className="menu-test-product-image"
-                      />
+                        <ProductImage
+                          productId={product.id}
+                          alt={name}
+                          className="menu-test-product-image"
+                          imageCount={product.imageCount}
+                        />
                     </div>
                     <div className="menu-test-product-body">
                       <h3 className="menu-test-product-name">
@@ -447,8 +450,8 @@ export const ProduitsMenuTest = () => {
         open={!!sheetProduct}
         onClose={() => setSheetProduct(null)}
         product={sheetProduct}
-        onViewImage={(id, alt) => {
-          setLightboxProduct({ id, name: alt });
+        onViewImage={(product, displayName) => {
+          setLightboxProduct({ id: product.id, name: displayName ?? product.name, imageCount: product.imageCount });
           setSheetProduct(null);
         }}
       />
@@ -457,6 +460,7 @@ export const ProduitsMenuTest = () => {
         onClose={() => setLightboxProduct(null)}
         productId={lightboxProduct?.id}
         alt={lightboxProduct?.name}
+        imageCount={lightboxProduct?.imageCount}
       />
     </main>
   );

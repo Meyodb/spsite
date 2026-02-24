@@ -1,0 +1,153 @@
+.product-image-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Grille produits : aspect-ratio et coins arrondis */
+.menu-test-product-image-wrap .product-image-carousel {
+  aspect-ratio: 4 / 3;
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+}
+
+.product-image-carousel-track {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.product-image-carousel-slide {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.product-image-carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Lightbox : object-fit contain pour voir l'image en entier */
+.product-image-lightbox-content .product-image-carousel-img {
+  object-fit: contain;
+}
+
+/* Flèches */
+.product-image-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image-carousel-arrow:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.product-image-carousel-arrow:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+.product-image-carousel-arrow--prev {
+  left: 6px;
+}
+
+.product-image-carousel-arrow--next {
+  right: 6px;
+}
+
+/* Grille : flèches plus discrètes */
+.menu-test-product-image-wrap .product-image-carousel-arrow {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.menu-test-product-image-wrap .product-image-carousel-arrow--prev {
+  left: 4px;
+}
+
+.menu-test-product-image-wrap .product-image-carousel-arrow--next {
+  right: 4px;
+}
+
+/* Points indicateurs */
+.product-image-carousel-dots {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px;
+  flex-shrink: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent);
+  pointer-events: none;
+}
+
+.product-image-carousel-dots .product-image-carousel-dot {
+  pointer-events: auto;
+}
+
+.product-image-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.product-image-carousel-dot:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.product-image-carousel-dot.active {
+  background: #333;
+  transform: scale(1.2);
+}
+
+/* Grille : points intégrés en bas de l'image */
+.menu-test-product-image-wrap .product-image-carousel-dots {
+  padding: 4px;
+}
+
+.menu-test-product-image-wrap .product-image-carousel-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.menu-test-product-image-wrap .product-image-carousel-dot.active {
+  background: #fff;
+}

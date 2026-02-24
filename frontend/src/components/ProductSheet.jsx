@@ -74,12 +74,13 @@ export function ProductSheet({ open, onClose, product, onViewImage }) {
               productId={product.id}
               alt={name}
               className="product-sheet-image"
+              imageCount={product.imageCount}
             />
             {onViewImage && (
               <button
                 type="button"
                 className="product-sheet-image-zoom"
-                onClick={() => onViewImage(product.id, name)}
+                onClick={() => onViewImage(product, name)}
                 aria-label={`Voir ${name} en grand`}
               >
                 <ZoomIn size={22} strokeWidth={2} />
