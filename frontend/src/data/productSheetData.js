@@ -809,18 +809,6 @@ export const PRODUCT_SHEET_DATA = {
     isVegan: false,
     whyGood: "Wrap ras el hanout au yaourt grec, citron confit et grenade. Saveurs orientales.",
   },
-  110: {
-    benefits: ["Avocat : acides gras essentiels et potassium", "Cheddar : calcium et protéines pour la satiété", "Tapenade poivrons : légumes et saveur méditerranéenne"],
-    keyIngredients: [
-      { name: "Pita", benefit: "Glucides" },
-      { name: "Crème cheese", benefit: "Onctuosité" },
-      { name: "Avocat", benefit: "Bons gras" },
-    ],
-    formulas: F_SANDWICH,
-    isVegetarian: false,
-    isVegan: false,
-    whyGood: "Wrap mexicain : tapenade, avocat, cheddar et bacon. Exotique et rassasiant.",
-  },
   111: {
     benefits: ["Feta : calcium et protéines laitières", "Tzatziki : yaourt et concombre (fraîcheur, probiotiques)", "Olives : bons lipides méditerranéens"],
     keyIngredients: [
@@ -832,18 +820,6 @@ export const PRODUCT_SHEET_DATA = {
     isVegetarian: true,
     isVegan: false,
     whyGood: "Wrap végétarien feta, olives et tzatziki. Fraîcheur grecque.",
-  },
-  112: {
-    benefits: ["Falafel BIO : protéines végétales et fibres", "Houmous : satiété et protéines de pois chiches", "Aubergines grillées : fibres et antioxydants"],
-    keyIngredients: [
-      { name: "Pita avocat", benefit: "Glucides, avocat" },
-      { name: "Falafel BIO", benefit: "Protéines" },
-      { name: "Aubergines grillées", benefit: "Fibres" },
-    ],
-    formulas: F_SANDWICH,
-    isVegetarian: true,
-    isVegan: true,
-    whyGood: "Wrap végétalien falafel et houmous. Protéines végétales et saveurs.",
   },
   113: {
     benefits: ["Thon : oméga 3 (cœur, cerveau) et protéines", "Œuf : protéines complètes et vitamine B12", "Olives et radis : antioxydants et croquant"],
