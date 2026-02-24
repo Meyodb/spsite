@@ -6,7 +6,7 @@
     "build": "cd frontend && npm run build",
     "start": "cd server && node server.js",
     "start:tunnel": "node scripts/start-with-tunnel.js",
-    "deploy": "./deploy.sh",
+    "deploy": "./scripts/deploy.sh",
     "deploy:server": "npm run build && npm run start",
     "restart": "npm run build && pm2 restart spsite || npm run start"
   },

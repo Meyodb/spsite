@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
-import qualiteImage from "../assets/images/photo menu/Photoroom_20250704_124732.JPG";
+import qualiteImage from "../assets/images/photo-menu/Photoroom_20250704_124732.JPG";
 
 export const NosPiliers = () => {
   const { t } = useTranslation();

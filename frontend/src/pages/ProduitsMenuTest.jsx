@@ -19,9 +19,9 @@ import backImage from "../assets/images/back.png";
 import citron from "../assets/images/citron.png";
 import ananas from "../assets/images/ananas.png";
 import palmier from "../assets/images/palmier.png";
-import photoMenu1 from "../assets/images/photo menu/photo-sandwich.jpg";
-import photoMenu2 from "../assets/images/photo menu/photo-salade.jpg";
-import photoMenu3 from "../assets/images/photo menu/photo-platchaud.jpg";
+import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.jpg";
+import photoMenu2 from "../assets/images/photo-menu/photo-salade.jpg";
+import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.jpg";
 
 export const ProduitsMenuTest = () => {
   const { t } = useTranslation();

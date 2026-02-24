@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import logoVert from "../assets/images/logo vert.png";
+import logoVert from "../assets/images/logo-vert.png";
 
 const LANGUAGES = [
   { code: "fr", label: "Français", flag: "🇫🇷" },

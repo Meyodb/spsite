@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
-import recetteImage from "../assets/images/photo menu/photo-qualite-recettes.jpg";
-import logoSoupJuice from "../assets/images/logo vert.png";
+import recetteImage from "../assets/images/photo-menu/photo-qualite-recettes.jpg";
+import logoSoupJuice from "../assets/images/logo-vert.png";
 
 export const ADN = () => {
   const { t } = useTranslation();

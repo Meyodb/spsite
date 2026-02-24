@@ -5,7 +5,7 @@ import { Map, Marker, Popup } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Restaurants.css";
 import deliveroLogo from "../assets/images/delivero.svg";
-import logoVert from "../assets/images/logo vert.png";
+import logoVert from "../assets/images/logo-vert.png";
 import metroLogo from "../assets/images/metro-logo.png";
 import photoEcuries from "../assets/images/restaurants/photo_Ecuries.jpg";
 import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";

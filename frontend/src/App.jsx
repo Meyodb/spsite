@@ -9,7 +9,6 @@ import { Home } from "./pages/Home";
 import { ADN } from "./pages/ADN";
 import { NosPiliers } from "./pages/NosPiliers";
 import { ProduitsMenuTest } from "./pages/ProduitsMenuTest";
-import { ProduitsArchive } from "./pages/_archive/ProduitsArchive";
 import { Contact } from "./pages/Contact";
 import { Allergenes } from "./pages/Allergenes";
 
@@ -52,10 +51,7 @@ function AppContent() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* Temporaire : page archive en page principale produits, test conservée sur /produits-test */}
-          <Route path="/produits" element={<ProduitsArchive />} />
-          <Route path="/produits-test" element={<ProduitsMenuTest />} />
-          <Route path="/produits-archive" element={<ProduitsArchive />} />
+          <Route path="/produits" element={<ProduitsMenuTest />} />
           <Route path="/adn" element={<ADN />} />
           <Route path="/nos-piliers" element={<NosPiliers />} />
           <Route path="/restaurants" element={<Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}><LoadingFallback /></div>}><Restaurants /></Suspense>} />
