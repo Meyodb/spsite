@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./ProduitsArchive.css";
-import jus from "../assets/images/jus.png";
-import soupe from "../assets/images/soupe.png";
-import citron from "../assets/images/citron.png";
-import ananas from "../assets/images/ananas.png";
-import palmier from "../assets/images/palmier.png";
-import backImage from "../assets/images/back.png";
-import photoMenu1 from "../assets/images/photo menu/photo-sandwich.jpg";
-import photoMenu2 from "../assets/images/photo menu/photo-salade.jpg";
-import photoMenu3 from "../assets/images/photo menu/photo-platchaud.jpg";
-import photoMilkshake from "../assets/images/photo menu/photo-milkshak.jpg";
-import photoBooster from "../assets/images/photo menu/photo-booster.jpg";
-import photoSoupe from "../assets/images/photo menu/photo-soupe.png";
-import photoSaladesBowls from "../assets/images/photo menu/photo-salades-bowls.jpg";
+import jus from "../../assets/images/jus.png";
+import soupe from "../../assets/images/soupe.png";
+import citron from "../../assets/images/citron.png";
+import ananas from "../../assets/images/ananas.png";
+import palmier from "../../assets/images/palmier.png";
+import backImage from "../../assets/images/back.png";
+import photoMenu1 from "../../assets/images/photo menu/photo-sandwich.jpg";
+import photoMenu2 from "../../assets/images/photo menu/photo-salade.jpg";
+import photoMenu3 from "../../assets/images/photo menu/photo-platchaud.jpg";
+import photoMilkshake from "../../assets/images/photo menu/photo-milkshak.jpg";
+import photoBooster from "../../assets/images/photo menu/photo-booster.jpg";
+import photoSoupe from "../../assets/images/photo menu/photo-soupe.png";
+import photoSaladesBowls from "../../assets/images/photo menu/photo-salades-bowls.jpg";
 
 const CATEGORY_I18N_KEYS = {
   "JUS": "JUS",

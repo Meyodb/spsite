@@ -1,4 +1,4 @@
-/* Style inspiré de Cojean - Design épuré et moderne */
+/* Style SJ - Design épuré et moderne */
 
 :root {
   --green: #82907B;
@@ -175,7 +175,7 @@ body {
   line-height: 1.6;
 }
 
-.cojean-style {
+.sj-style {
   min-height: 100vh;
   background: var(--bg);
 }
@@ -186,10 +186,13 @@ body {
   background: var(--bg);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1100;
+  isolation: isolate;
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
   animation: fadeIn 0.5s ease;
   overflow-x: hidden;
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .main-header:hover {
@@ -203,12 +206,21 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  background: transparent;
+  border-bottom: none;
+  box-shadow: none;
+  overflow: visible;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* backdrop-filter sur la barre uniquement (évite que le menu burger fixe soit limité au header) */
+.page-is-home .header-bar {
   background: rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-bottom: none;
-  box-shadow: none;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  margin: -16px -20px -16px -20px;
+  padding: 16px 20px;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .page-is-home .main-header:hover {
@@ -270,11 +282,15 @@ body {
 /* ----- Accueil scrollé : top bar opaque, boutons lisibles ----- */
 .page-is-home .main-header.header-past-hero {
   background: var(--bg);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-is-home .main-header.header-past-hero .header-bar {
+  background: var(--bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .page-is-home .main-header.header-past-hero:hover {
@@ -353,6 +369,15 @@ body {
   min-width: 0;
 }
 
+.header-bar {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  gap: 16px;
+}
+
 .nav-left {
   display: flex;
   align-items: center;
@@ -398,7 +423,7 @@ body {
   border: none;
   cursor: pointer;
   padding: 8px;
-  z-index: 102;
+  z-index: 1102;
   position: relative;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -450,7 +475,7 @@ body {
   height: 100dvh;
   min-height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 99;
+  z-index: 1099;
   animation: fadeIn 0.3s ease;
   -webkit-tap-highlight-color: transparent;
 }
@@ -535,7 +560,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
   list-style: none;
-  z-index: 100;
+  z-index: 1101;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -758,6 +783,9 @@ body {
   height: 100dvh;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  /* Empêche le hero de recouvrir le header (z-index 1100) */
 }
 
 .hero-video {
@@ -771,6 +799,7 @@ body {
   object-fit: cover;
   object-position: center;
   z-index: 0;
+  pointer-events: none;
   /* Amélioration de la qualité de rendu - évite la pixelisation */
   image-rendering: auto;
   image-rendering: -webkit-optimize-contrast;
@@ -799,6 +828,7 @@ body {
   bottom: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: 1;
+  pointer-events: none;
 }
 
 .hero-content {
@@ -829,6 +859,13 @@ body {
   justify-content: center;
   text-align: center;
   box-sizing: border-box;
+  /* Laisse passer les clics vers le header (menu) - seuls titre et CTA sont cliquables */
+  pointer-events: none;
+}
+
+.page-is-home .hero-content .hero-title,
+.page-is-home .hero-content .cta-hero {
+  pointer-events: auto;
 }
 
 /* Phrase : largeur limitée, retour à la ligne possible */
@@ -2766,6 +2803,11 @@ body {
     position: relative;
   }
 
+  .page-is-home .header-bar {
+    margin: -12px -16px -12px -16px;
+    padding: 12px 16px;
+  }
+
   .logo {
     font-size: 20px;
     line-height: 1;
@@ -2803,7 +2845,7 @@ body {
     gap: 0;
     box-shadow: none;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 100;
+    z-index: 1100;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;

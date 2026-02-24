@@ -19,6 +19,9 @@ import backImage from "../assets/images/back.png";
 import citron from "../assets/images/citron.png";
 import ananas from "../assets/images/ananas.png";
 import palmier from "../assets/images/palmier.png";
+import photoMenu1 from "../assets/images/photo menu/photo-sandwich.jpg";
+import photoMenu2 from "../assets/images/photo menu/photo-salade.jpg";
+import photoMenu3 from "../assets/images/photo menu/photo-platchaud.jpg";
 
 export const ProduitsMenuTest = () => {
   const { t } = useTranslation();
@@ -91,28 +94,39 @@ export const ProduitsMenuTest = () => {
             <span className="menu-test-formulas-volume-note">{t("products.formulaNote")}</span>
           </div>
           <div className="menu-test-formulas-grid">
-          <div className="menu-test-formula-item">
-            <div className="menu-test-formula-header">
-              <span className="menu-test-formula-name">{t("products.menuSandwich")}</span>
-              <span className="menu-test-formula-price">13,50€</span>
+            <div className="menu-test-formula-item">
+              <div className="menu-test-formula-header">
+                <span className="menu-test-formula-name">{t("products.menuSandwich")}</span>
+                <span className="menu-test-formula-price">13,50€</span>
+              </div>
+              <div className="menu-test-formula-details">{t("products.menuSandwichDesc")}</div>
             </div>
-            <div className="menu-test-formula-details">{t("products.menuSandwichDesc")}</div>
-          </div>
-          <div className="menu-test-formula-item">
-            <div className="menu-test-formula-header">
-              <span className="menu-test-formula-name">{t("products.menuSalad")}</span>
-              <span className="menu-test-formula-price">14€</span>
+            <div className="menu-test-formula-item">
+              <div className="menu-test-formula-header">
+                <span className="menu-test-formula-name">{t("products.menuSalad")}</span>
+                <span className="menu-test-formula-price">14€</span>
+              </div>
+              <div className="menu-test-formula-details">{t("products.menuSaladDesc")}</div>
             </div>
-            <div className="menu-test-formula-details">{t("products.menuSaladDesc")}</div>
-          </div>
-          <div className="menu-test-formula-item">
-            <div className="menu-test-formula-header">
-              <span className="menu-test-formula-name">{t("products.menuHot")}</span>
-              <span className="menu-test-formula-price">14,50€</span>
+            <div className="menu-test-formula-item">
+              <div className="menu-test-formula-header">
+                <span className="menu-test-formula-name">{t("products.menuHot")}</span>
+                <span className="menu-test-formula-price">14,50€</span>
+              </div>
+              <div className="menu-test-formula-details">{t("products.menuHotDesc")}</div>
             </div>
-            <div className="menu-test-formula-details">{t("products.menuHotDesc")}</div>
           </div>
-        </div>
+          <div className="menu-test-formulas-photos-grid">
+            <div className="menu-test-formula-photo-item">
+              <img src={photoMenu1} alt="Menu Sandwich" className="menu-test-formula-photo" />
+            </div>
+            <div className="menu-test-formula-photo-item">
+              <img src={photoMenu2} alt="Menu Salade" className="menu-test-formula-photo" />
+            </div>
+            <div className="menu-test-formula-photo-item">
+              <img src={photoMenu3} alt="Menu Plat chaud" className="menu-test-formula-photo" />
+            </div>
+          </div>
         </div>
       </div>
 

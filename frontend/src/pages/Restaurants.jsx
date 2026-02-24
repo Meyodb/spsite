@@ -8,9 +8,10 @@ import deliveroLogo from "../assets/images/delivero.svg";
 import logoVert from "../assets/images/logo vert.png";
 import metroLogo from "../assets/images/metro-logo.png";
 import photoEcuries from "../assets/images/restaurants/photo_Ecuries.jpg";
-import photoAnjou from "../assets/images/restaurants/photo_anjou.jpeg";
+import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";
 import photoLondre from "../assets/images/restaurants/photo_londre.jpg";
 import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
+import photoHonore from "../assets/images/restaurants/photo_honore.png";
 import iconMonumentEiffel from "../assets/images/monuments/paris-eiffel.svg";
 import iconMonumentArcTriomphe from "../assets/images/monuments/paris-arc-de-triomphe.svg";
 import iconMonumentNotreDame from "../assets/images/monuments/paris-notre-dame.svg";
@@ -36,7 +37,8 @@ const restaurantPhotos = {
   1: photoLondre,   // ST LAZARE - Rue de Londres
   4: photoEcuries,  // ÉCURIES
   7: photoNeuilly,  // NEUILLY
-  9: photoAnjou,    // ANJOU
+  8: photoHonore,   // HONORÉ - Saint Honoré
+  9: photoMadeleine,    // MADELEINE
 };
 
 // Coordonnées vérifiées via géocodage OSM (Nominatim) — [longitude, latitude]
@@ -49,7 +51,7 @@ const restaurants = [
   { id: 6, name: "SOUP & JUICE OPÉRA", address: "24 Rue du 4 septembre, 75002 Paris", coordinates: [2.33515, 48.86994], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
   { id: 7, name: "SOUP & JUICE NEUILLY", address: "38 Rue Ybry, 92200 Neuilly-sur-Seine", coordinates: [2.26032, 48.88753], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "06 37 79 03 01", deliverooUrl: "https://deliveroo.fr/fr/menu/paris/neuilly-sur-seine/soup-and-juice-neuilly" },
   { id: 8, name: "SOUP & JUICE HONORÉ", address: "38 Rue de Berri, 75008 Paris", coordinates: [2.30700, 48.87390], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 9, name: "SOUP & JUICE ANJOU", address: "24 Rue d'Anjou, 75008 Paris", coordinates: [2.32175, 48.87125], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
+  { id: 9, name: "SOUP & JUICE MADELEINE", address: "24 Rue d'Anjou, 75008 Paris", coordinates: [2.32175, 48.87125], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
 ];
 
 const center = [

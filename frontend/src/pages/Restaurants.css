@@ -71,7 +71,7 @@
   grid-template-columns: 400px 380px 1fr;
 }
 
-/* Panneau détail restaurant à droite de la liste (style Cojean) */
+/* Panneau détail restaurant à droite de la liste (style SJ) */
 .restaurant-detail-panel {
   position: relative;
   background: #fff;
@@ -240,7 +240,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Section recherche style Cojean */
+/* Section recherche style SJ */
 .restaurants-search-section {
   background: white;
   border-radius: 12px;

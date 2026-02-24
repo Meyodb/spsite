@@ -47,7 +47,7 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
-      <div className={`cojean-style ${isHome ? "page-is-home" : ""}`}>
+      <div className={`sj-style ${isHome ? "page-is-home" : ""}`}>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

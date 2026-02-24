@@ -196,9 +196,36 @@
   font-weight: 500;
   color: #555;
   line-height: 1.5;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
+}
+
+.menu-test-formulas-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.menu-test-formula-photo-item {
+  background: #fff;
+  padding: 0;
+  border: 1px solid var(--border, #e0e0e0);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  aspect-ratio: 2 / 1;
+}
+
+.menu-test-formula-photo-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md, 0 4px 16px rgba(130, 144, 123, 0.15));
+  border-color: var(--green, #82907B);
+}
+
+.menu-test-formula-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ── Mobile select ───────────────────────────────── */
@@ -745,6 +772,12 @@
     max-width: 100%;
   }
 
+  .menu-test-formulas-photos-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
   .menu-test-formula-item {
     padding: 14px 16px;
   }
@@ -861,6 +894,12 @@
     font-size: 11px;
     flex-wrap: wrap;
     margin-bottom: 18px;
+  }
+
+  .menu-test-formulas-photos-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 16px;
   }
 
   .menu-test-formula-name {

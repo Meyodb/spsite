@@ -56,6 +56,7 @@ export const Header = () => {
   return (
     <header className={headerClasses}>
       <nav className="main-nav">
+        <div className="header-bar">
         <div className="nav-left">
           <Link to="/" className="logo">
             <img src={logoVert} alt="Soup & Juice" />
@@ -76,6 +77,7 @@ export const Header = () => {
           <span></span>
           <span></span>
         </button>
+        </div>
         {mobileMenuOpen && (
           <div 
             className="mobile-overlay"
