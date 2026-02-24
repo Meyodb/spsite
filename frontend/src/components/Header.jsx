@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import logoVert from "../assets/images/logo-vert.png";
 
 const LANGUAGES = [
-  { code: "fr", label: "Français", flag: "🇫🇷" },
-  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "fr", flag: "🇫🇷" },
+  { code: "en", flag: "🇬🇧" },
 ];
 
 export const Header = () => {
@@ -15,18 +15,16 @@ export const Header = () => {
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const { pathname } = useLocation();
   const isHome = pathname === "/" || pathname === "";
-  const currentLang = LANGUAGES.find((l) => l.code === (i18n.language || "fr")) || LANGUAGES[0];
+  const currentLangCode = (i18n.language || "fr").split("-")[0];
+  const currentLang = LANGUAGES.find((l) => l.code === currentLangCode) || LANGUAGES[0];
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    const lockScroll = mobileMenuOpen || langDropdownOpen;
+    document.body.style.overflow = lockScroll ? "hidden" : "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, langDropdownOpen]);
 
   useEffect(() => {
     if (!langDropdownOpen) return;
@@ -127,7 +125,7 @@ export const Header = () => {
               </svg>
               <span>Instagram</span>
             </a>
-            <div className={`header-lang-dropdown ${langDropdownOpen ? "is-open" : ""}`}>
+            <div className={`header-lang-dropdown header-lang-discret ${langDropdownOpen ? "is-open" : ""}`}>
             <button
               type="button"
               className="header-lang-trigger"
@@ -137,7 +135,7 @@ export const Header = () => {
               }}
               aria-expanded={langDropdownOpen}
               aria-haspopup="true"
-              aria-label={currentLang.label}
+              aria-label={t("header.ariaLang")}
             >
               <span className="header-lang-code">{currentLang.code.toUpperCase()}</span>
               <svg className="header-lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -146,12 +144,12 @@ export const Header = () => {
             </button>
             {langDropdownOpen && (
               <ul className="header-lang-menu" role="menu">
-                {LANGUAGES.map((lang) => (
+                {LANGUAGES.filter((lang) => lang.code !== currentLangCode).map((lang) => (
                   <li key={lang.code} role="none">
                     <button
                       type="button"
                       role="menuitem"
-                      className={`header-lang-option ${i18n.language === lang.code ? "active" : ""}`}
+                      className="header-lang-option"
                       onClick={(e) => {
                         e.stopPropagation();
                         localStorage.setItem("soup-juice-lang", lang.code);
@@ -160,7 +158,7 @@ export const Header = () => {
                       }}
                     >
                       <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
-                      <span>{lang.label}</span>
+                      {lang.code.toUpperCase()}
                     </button>
                   </li>
                 ))}
