@@ -200,27 +200,23 @@ body {
   border-bottom-color: var(--green-light);
 }
 
-/* ----- Accueil : top bar superposée à la vidéo, sans fond blanc ----- */
+/* ----- Accueil : top bar superposée à la vidéo, flou sur toute la largeur ----- */
 .page-is-home .main-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background: transparent;
-  border-bottom: none;
-  box-shadow: none;
-  overflow: visible;
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* backdrop-filter sur la barre uniquement (évite que le menu burger fixe soit limité au header) */
-.page-is-home .header-bar {
   background: rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  margin: -16px -20px -16px -20px;
-  padding: 16px 20px;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  border-bottom: none;
+  box-shadow: none;
+  overflow: visible;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.page-is-home .header-bar {
+  transition: none;
 }
 
 .page-is-home .main-header:hover {
@@ -279,18 +275,14 @@ body {
   color: #fff;
 }
 
-/* ----- Accueil scrollé : top bar opaque, boutons lisibles ----- */
+/* ----- Accueil scrollé : top bar verre dépoli, boutons lisibles ----- */
 .page-is-home .main-header.header-past-hero {
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.page-is-home .main-header.header-past-hero .header-bar {
-  background: var(--bg);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .page-is-home .main-header.header-past-hero:hover {
@@ -1476,15 +1468,18 @@ body {
   text-align: center;
 }
 
-#adn-forme-title {
+#adn-forme-title,
+#piliers-forme-title {
   color: #f4a4ec;
 }
 
-#adn-regime-title {
-  color: #f7e85c;
+#adn-regime-title,
+#piliers-regime-title {
+  color: #d4a02c;
 }
 
-#adn-sante-title {
+#adn-sante-title,
+#piliers-sante-title {
   color: #7CA843;
 }
 
@@ -1537,6 +1532,241 @@ body {
   border-top: 1px solid rgba(130, 144, 123, 0.15);
 }
 
+/* Section CTA piliers (teaser sur page ADN) */
+.adn-pillars-cta-section {
+  padding: 72px 24px 80px;
+  background: var(--bg-section);
+  position: relative;
+}
+
+.adn-pillars-cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--green-dark) 100%);
+  border-radius: 0 0 4px 4px;
+}
+
+.adn-pillars-cta-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(90, 102, 84, 0.08), 0 0 0 1px rgba(130, 144, 123, 0.08);
+  border: 1px solid rgba(130, 144, 123, 0.1);
+}
+
+.adn-pillars-cta-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  margin: 0 0 1.5rem;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+.adn-pillars-cta-intro {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  margin: 0 auto 1.5rem;
+  line-height: 1.6;
+}
+
+.adn-pillars-cta-link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--green);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  font-size: 1rem;
+  box-shadow: 0 2px 12px rgba(90, 102, 84, 0.2);
+}
+
+.adn-pillars-cta-link:hover {
+  background: var(--green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(90, 102, 84, 0.25);
+}
+
+/* Page Nos Piliers */
+.piliers-page {
+  overflow-x: hidden;
+  padding-bottom: 0;
+  background: var(--bg-light);
+}
+
+.piliers-hero {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 80px 24px 60px;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: white;
+  overflow: hidden;
+}
+
+.piliers-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.piliers-hero-content {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.piliers-hero-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+.piliers-hero-subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.95;
+  line-height: 1.55;
+  margin: 0;
+  letter-spacing: 0.02em;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+/* Section contenu - page Nos Piliers */
+.piliers-page .adn-pillars-section {
+  padding: 72px 24px 80px;
+  background: var(--bg-light);
+}
+
+.piliers-page .adn-pillars-container {
+  max-width: 1100px;
+}
+
+.piliers-page .adn-pillars-section-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  margin: 0 0 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: -0.01em;
+}
+
+.piliers-page .adn-pillars-photo {
+  width: 85%;
+  max-width: 900px;
+  height: 300px;
+  border-radius: 16px;
+  margin: 0 auto 3rem;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(130, 144, 123, 0.06);
+  overflow: hidden;
+}
+
+.piliers-page .adn-pillars-photo .adn-photo {
+  height: 100%;
+  object-position: center 65%;
+}
+
+.piliers-page .adn-pillars-grid {
+  gap: 1.75rem;
+}
+
+.piliers-page .adn-pillar-card {
+  padding: 2rem 1.75rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(90, 102, 84, 0.06), 0 0 0 1px rgba(130, 144, 123, 0.06);
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.35s ease;
+}
+
+.piliers-page .adn-pillar-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 36px rgba(90, 102, 84, 0.12), 0 0 0 1px rgba(130, 144, 123, 0.08);
+}
+
+.piliers-page .adn-pillar-title {
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+
+.piliers-page .adn-pillar-intro {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.piliers-page .adn-pillar-body {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.piliers-page .adn-pillar-tagline {
+  font-size: 0.9rem;
+  padding-top: 1.5rem;
+}
+
+/* Accent couleur sur les cartes */
+.piliers-page .adn-pillar-card[aria-labelledby="piliers-forme-title"] {
+  border-top: 4px solid #e895df;
+}
+
+.piliers-page .adn-pillar-card[aria-labelledby="piliers-regime-title"] {
+  border-top: 4px solid #e8b54a;
+}
+
+.piliers-page .adn-pillar-card[aria-labelledby="piliers-sante-title"] {
+  border-top: 4px solid #7CA843;
+}
+
+.piliers-cta {
+  padding: 48px 24px 72px;
+  text-align: center;
+  background: var(--bg-light);
+}
+
+.piliers-cta-link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: transparent;
+  color: var(--green);
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  font-size: 1rem;
+}
+
+.piliers-cta-link:hover {
+  background: var(--green);
+  color: white;
+  transform: translateY(-2px);
+}
+
 /* Section Qualité & Savoir-faire */
 .adn-quality-section {
   padding: 60px 24px;
@@ -1553,12 +1783,11 @@ body {
 }
 
 .adn-quality-container .adn-quality-image {
-  order: 1;
+  order: 2;
 }
 
-
 .adn-quality-container .adn-quality-content {
-  order: 2;
+  order: 1;
 }
 
 .adn-quality-title {
@@ -1713,9 +1942,51 @@ body {
   
   .adn-identity-section,
   .adn-pillars-section,
+  .adn-pillars-cta-section,
   .adn-quality-section,
   .adn-engagements-section {
     padding: 40px 16px;
+  }
+  
+  .adn-pillars-cta-section {
+    padding: 56px 16px 64px;
+  }
+  
+  .adn-pillars-cta-container {
+    padding: 2rem 1.5rem;
+  }
+  
+  .piliers-hero {
+    padding: 60px 20px 48px;
+  }
+  
+  .piliers-hero-title {
+    font-size: 1.9rem;
+  }
+  
+  .piliers-hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .piliers-page .adn-pillars-section {
+    padding: 48px 16px 56px;
+  }
+  
+  .piliers-page .adn-pillars-section-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .piliers-page .adn-pillars-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+  }
+  
+  .piliers-page .adn-pillar-card {
+    padding: 1.75rem 1.5rem;
   }
   
   .adn-identity-container,
@@ -1725,11 +1996,11 @@ body {
   }
   
   .adn-quality-container .adn-quality-image {
-    order: 1;
+    order: 2;
   }
   
   .adn-quality-container .adn-quality-content {
-    order: 2;
+    order: 1;
   }
   
   .adn-identity-title,
@@ -1802,6 +2073,22 @@ body {
 }
 
 @media (max-width: 480px) {
+  .piliers-hero {
+    padding: 48px 16px 40px;
+  }
+  
+  .piliers-hero-title {
+    font-size: 1.65rem;
+  }
+  
+  .piliers-hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .piliers-page .adn-pillars-section {
+    padding: 40px 16px 48px;
+  }
+  
   .adn-hero {
     padding: 40px 16px 32px;
   }
@@ -1833,6 +2120,10 @@ body {
   .adn-pillars-section-intro {
     font-size: 0.95rem;
     margin-bottom: 1.5rem;
+  }
+  
+  .piliers-page .adn-pillars-section-title {
+    font-size: 1.35rem;
   }
   
   /* Photos sur petits écrans */

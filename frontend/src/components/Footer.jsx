@@ -9,6 +9,7 @@ export const Footer = () => {
           <h4 className="footer-title">{t("footer.titleYou")}</h4>
           <ul className="footer-links">
             <li><a href="#/adn">{t("footer.engagements")}</a></li>
+            <li><a href="#/nos-piliers">{t("footer.piliers")}</a></li>
             <li><a href="#/restaurants">{t("footer.restaurants")}</a></li>
           </ul>
         </div>

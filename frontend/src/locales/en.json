@@ -14,6 +14,7 @@
     "navProducts": "OUR PRODUCTS",
     "navRestaurants": "OUR RESTAURANTS",
     "navAdn": "OUR DNA",
+    "navPiliers": "OUR PILLARS",
     "navContact": "CONTACT",
     "ariaMenu": "Menu",
     "ariaInstagram": "Follow us on Instagram"
@@ -21,6 +22,7 @@
   "footer": {
     "titleYou": "Soup & Juice and you",
     "engagements": "Our commitments",
+    "piliers": "Our pillars",
     "restaurants": "Our restaurants",
     "support": "Support",
     "contact": "Contact",
@@ -257,7 +259,8 @@
     },
     "pillars": {
       "title": "What eating at Soup & Juice really brings you",
-      "intro": "Three fundamental pillars for your wellbeing"
+      "intro": "Three fundamental pillars for your wellbeing",
+      "cta": "Discover our three pillars"
     },
     "qualite": {
       "label": "QUALITY & KNOW-HOW",
@@ -307,6 +310,12 @@
       "body": "For over 25 years we have favoured raw, varied and digestible ingredients. Seasonal vegetables, pulses, grains, herbs and spices are used to support digestion, nutritional balance and overall wellbeing. Our recipes avoid unnecessary excess and rely on simple, effective combinations known for their benefits.",
       "tagline": "Because good nutrition isn't theory. It's daily practice."
     }
+  },
+  "piliers": {
+    "heroTitle": "OUR PILLARS",
+    "heroSubtitle": "Three fundamental pillars for your wellbeing",
+    "ariaHero": "Our pillars",
+    "ctaBack": "Back to Our DNA"
   },
   "contact": {
     "title": "CONTACT US",

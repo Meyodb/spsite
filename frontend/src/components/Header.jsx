@@ -111,6 +111,7 @@ export const Header = () => {
           </Link>
           <Link to="/restaurants" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navRestaurants")}</Link>
           <Link to="/adn" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navAdn")}</Link>
+          <Link to="/nos-piliers" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navPiliers")}</Link>
           <Link to="/contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navContact")}</Link>
           <div className="nav-right-bottom">
             <a

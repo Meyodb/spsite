@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
-import qualiteImage from "../assets/images/photo menu/Photoroom_20250704_124732.JPG";
 import recetteImage from "../assets/images/photo menu/photo-qualite-recettes.jpg";
 import logoSoupJuice from "../assets/images/logo vert.png";
 
@@ -10,18 +10,6 @@ export const ADN = () => {
   return (
     <main className="adn-page">
       <AnimatedSection id="adn" animation="fadeInUp" className="adn-section">
-        {/* Hero Section */}
-        <section className="adn-hero" aria-label={t("adn.ariaHero")}>
-          <div className="adn-hero-content">
-            <AnimatedItem animation="fadeInUp" delay={100}>
-              <h1 className="adn-hero-title">{t("adn.heroTitle")}</h1>
-            </AnimatedItem>
-            <AnimatedItem animation="fadeInUp" delay={200}>
-              <p className="adn-hero-subtitle">{t("adn.heroSubtitle")}</p>
-            </AnimatedItem>
-          </div>
-        </section>
-
         {/* Section Identité & Vision */}
         <section className="adn-identity-section">
           <div className="adn-identity-container">
@@ -35,59 +23,6 @@ export const ADN = () => {
                 <span className="adn-section-label">{t("adn.identite.label")}</span>
                 <h2 className="adn-identity-title">{t("adn.identite.title")}</h2>
                 <p className="adn-identity-text">{t("adn.identite.text")}</p>
-              </AnimatedItem>
-            </div>
-          </div>
-        </section>
-
-        {/* Section Les 3 piliers : FORME, RÉGIME, SANTÉ */}
-        <section className="adn-pillars-section">
-          <div className="adn-pillars-container">
-            <AnimatedItem animation="fadeInUp" delay={100}>
-              <h2 className="adn-pillars-section-title">{t("adn.pillars.title")}</h2>
-              <p className="adn-pillars-section-intro">{t("adn.pillars.intro")}</p>
-            </AnimatedItem>
-
-            <AnimatedItem animation="fadeInUp" delay={120}>
-              <div className="adn-pillars-photo">
-                <img src={qualiteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" />
-              </div>
-            </AnimatedItem>
-            
-            <div className="adn-pillars-grid">
-              <AnimatedItem animation="fadeInUp" delay={150} className="adn-pillar">
-                <article className="adn-pillar-card" aria-labelledby="adn-forme-title">
-                  <h3 id="adn-forme-title" className="adn-pillar-title">{t("adn.forme.title")}</h3>
-                  <p className="adn-pillar-intro">{t("adn.forme.intro")}</p>
-                  <p className="adn-pillar-body">{t("adn.forme.body")}</p>
-                  <div className="adn-pillar-results">
-                    <p className="adn-pillar-result-label">{t("adn.forme.resultLabel")}</p>
-                    <ul className="adn-pillar-list">
-                      <li>{t("adn.forme.bullet1")}</li>
-                      <li>{t("adn.forme.bullet2")}</li>
-                      <li>{t("adn.forme.bullet3")}</li>
-                    </ul>
-                  </div>
-                  <p className="adn-pillar-tagline">{t("adn.forme.tagline")}</p>
-                </article>
-              </AnimatedItem>
-
-              <AnimatedItem animation="fadeInUp" delay={200} className="adn-pillar">
-                <article className="adn-pillar-card" aria-labelledby="adn-regime-title">
-                  <h3 id="adn-regime-title" className="adn-pillar-title">{t("adn.regime.title")}</h3>
-                  <p className="adn-pillar-intro">{t("adn.regime.intro")}</p>
-                  <p className="adn-pillar-body">{t("adn.regime.body")}</p>
-                  <p className="adn-pillar-tagline">{t("adn.regime.tagline")}</p>
-                </article>
-              </AnimatedItem>
-
-              <AnimatedItem animation="fadeInUp" delay={250} className="adn-pillar">
-                <article className="adn-pillar-card" aria-labelledby="adn-sante-title">
-                  <h3 id="adn-sante-title" className="adn-pillar-title">{t("adn.sante.title")}</h3>
-                  <p className="adn-pillar-intro">{t("adn.sante.intro")}</p>
-                  <p className="adn-pillar-body">{t("adn.sante.body")}</p>
-                  <p className="adn-pillar-tagline">{t("adn.sante.tagline")}</p>
-                </article>
               </AnimatedItem>
             </div>
           </div>
@@ -147,6 +82,18 @@ export const ADN = () => {
                 </article>
               </AnimatedItem>
             </div>
+          </div>
+        </section>
+
+        {/* Section Nos piliers - CTA vers page dédiée */}
+        <section className="adn-pillars-cta-section">
+          <div className="adn-pillars-cta-container">
+            <AnimatedItem animation="fadeInUp" delay={100}>
+              <h2 className="adn-pillars-cta-title">{t("adn.pillars.title")}</h2>
+              <Link to="/nos-piliers" className="adn-pillars-cta-link">
+                {t("adn.pillars.cta")}
+              </Link>
+            </AnimatedItem>
           </div>
         </section>
       </AnimatedSection>

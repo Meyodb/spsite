@@ -14,6 +14,7 @@
     "navProducts": "NOS PRODUITS",
     "navRestaurants": "NOS RESTAURANTS",
     "navAdn": "NOTRE ADN",
+    "navPiliers": "NOS PILIERS",
     "navContact": "CONTACT",
     "ariaMenu": "Menu",
     "ariaInstagram": "Suivre sur Instagram"
@@ -21,6 +22,7 @@
   "footer": {
     "titleYou": "Soup & Juice et vous",
     "engagements": "Nos engagements",
+    "piliers": "Nos piliers",
     "restaurants": "Nos restaurants",
     "support": "Support",
     "contact": "Contact",
@@ -294,7 +296,8 @@
     },
     "pillars": {
       "title": "Ce que manger chez Soup & Juice apporte vraiment",
-      "intro": "Trois piliers fondamentaux pour votre bien-être"
+      "intro": "Trois piliers fondamentaux pour votre bien-être",
+      "cta": "Découvrir nos trois piliers"
     },
     "qualite": {
       "label": "QUALITÉ & SAVOIR-FAIRE",
@@ -344,6 +347,12 @@
       "body": "Depuis plus de 25 ans, nous privilégions des ingrédients bruts, variés et digestes. Légumes de saison, légumineuses, céréales, herbes et épices sont utilisés pour soutenir la digestion, l'équilibre nutritionnel et le bien-être global. Nos recettes évitent les excès inutiles et misent sur des associations simples, efficaces et reconnues pour leurs bienfaits.",
       "tagline": "Parce qu'une bonne alimentation, ce n'est pas une théorie. C'est une pratique quotidienne."
     }
+  },
+  "piliers": {
+    "heroTitle": "NOS PILIERS",
+    "heroSubtitle": "Trois piliers fondamentaux pour votre bien-être",
+    "ariaHero": "Nos piliers",
+    "ctaBack": "Retour à Notre ADN"
   },
   "contact": {
     "title": "CONTACTEZ-NOUS",
