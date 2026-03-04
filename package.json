@@ -8,7 +8,8 @@
     "start:tunnel": "node scripts/start-with-tunnel.js",
     "deploy": "./scripts/deploy.sh",
     "deploy:server": "npm run build && npm run start",
-    "restart": "npm run build && pm2 restart spsite || npm run start"
+    "restart": "npm run build && pm2 restart spsite || npm run start",
+    "sync:jdc": "node server/scripts/sync-jdc-visibility.js"
   },
   "devDependencies": {
     "sharp": "^0.34.5"

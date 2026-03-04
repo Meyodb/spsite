@@ -42,9 +42,25 @@ app.use(express.json());
 // Stockage temporaire des emails (en production, utilisez une base de données)
 const newsletterSubscribers = [];
 
+const visibilityPath = path.join(__dirname, "data", "visible-products.json");
+
 app.get("/api/menu", (_, res) => res.json(menu));
 app.get("/api/promos", (_, res) => res.json(promos));
 app.get("/api/stores", (_, res) => res.json(stores));
+
+// Visibilité des produits (synchro JDC) : utilisé par la page Nos produits
+app.get("/api/products/visibility", (_, res) => {
+  try {
+    const raw = fs.readFileSync(visibilityPath, "utf8");
+    const data = JSON.parse(raw);
+    res.json({ visibleIds: data.visibleIds || [], lastSync: data.lastSync ?? null });
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      return res.json({ visibleIds: [], lastSync: null });
+    }
+    res.status(500).json({ error: "Erreur lecture visibilité produits" });
+  }
+});
 
 // Route pour s'inscrire à la newsletter
 app.post("/api/newsletter/subscribe", (req, res) => {

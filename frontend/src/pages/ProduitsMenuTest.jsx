@@ -23,17 +23,36 @@ import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.jpg";
 import photoMenu2 from "../assets/images/photo-menu/photo-salade.jpg";
 import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.jpg";
 
+const getApiBase = () => {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  return "";
+};
+
 export const ProduitsMenuTest = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [lightboxProduct, setLightboxProduct] = useState(null);
   const [sheetProduct, setSheetProduct] = useState(null);
+  const [visibleIdsFromApi, setVisibleIdsFromApi] = useState(null);
 
-  const visibleProducts = useMemo(
-    () => PRODUCTS.filter((p) => p.afficher !== false),
-    []
-  );
+  useEffect(() => {
+    fetch(`${getApiBase()}/api/products/visibility`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => setVisibleIdsFromApi(data.visibleIds ?? []))
+      .catch(() => setVisibleIdsFromApi(undefined));
+  }, []);
+
+  const visibleProducts = useMemo(() => {
+    if (visibleIdsFromApi === undefined) {
+      return PRODUCTS.filter((p) => p.afficher !== false);
+    }
+    if (Array.isArray(visibleIdsFromApi)) {
+      const set = new Set(visibleIdsFromApi);
+      return PRODUCTS.filter((p) => set.has(p.id));
+    }
+    return PRODUCTS.filter((p) => p.afficher !== false);
+  }, [visibleIdsFromApi]);
 
   const productsByCategory = useMemo(() => {
     const acc = {};

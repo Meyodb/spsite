@@ -24,6 +24,14 @@ Projet frontend (Vite/React) + serveur Node.js.
 - **Déploiement** : `npm run deploy` (exécute `scripts/deploy.sh`). Voir `docs/DEPLOY.md`.
 - **Rapports** : ex. `docs/rapport-allergenes.md`.
 
+### Synchro visibilité produits (JDC)
+
+La page « Nos produits » affiche les produits selon la visibilité synchronisée avec la base JDC (`dc_product`, `fr_visible_user = 1`). Correspondance par nom normalisé.
+
+- **Fichiers** : `server/data/visible-products.json` (résultat de la synchro), `server/data/products-soup-juice.json` (liste id/nom pour le matching).
+- **API** : `GET /api/products/visibility` renvoie `{ visibleIds, lastSync }`.
+- **Lancer une synchro** : définir les variables MySQL (voir `.env.example`), puis `npm run sync:jdc`. À planifier en cron si besoin (ex. toutes les heures).
+
 ## Versionnement Git / GitHub
 
 Le dépôt Git est initialisé avec une branche `main` et un premier commit.
