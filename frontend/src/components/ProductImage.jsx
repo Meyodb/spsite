@@ -6,6 +6,7 @@ import { ProductImageCarousel } from "./ProductImageCarousel";
  */
 const IMAGE_ID_ALIAS = {
   1: 222,
+  42: 90, // Tortellini pesto rouge : affiche la photo des pâtes au pesto (fusion)
 };
 
 function resolveImageProductId(productId) {

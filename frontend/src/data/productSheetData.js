@@ -220,16 +220,18 @@ export const PRODUCT_SHEET_DATA = {
     whyGood: "Un couscous traditionnel réconfortant, généreux en légumes et protéines. Parfait en hiver.",
   },
   42: {
-    benefits: ["Pâtes : énergie", "Pesto : saveur méditerranéenne", "Courgettes grillées"],
+    benefits: ["Pâtes : énergie", "Pesto basilic : saveur méditerranéenne", "Courgettes grillées", "Pignons et amandes : oméga, magnésium", "Tomates séchées : lycopène"],
     keyIngredients: [
       { name: "Tortellini", benefit: "Glucides, protéines" },
-      { name: "Pesto", benefit: "Basilic, huile d'olive" },
-      { name: "Courgettes", benefit: "Fibres, hydratation" },
+      { name: "Pesto basilic", benefit: "Basilic, huile d'olive" },
+      { name: "Courgettes grillées", benefit: "Fibres, hydratation" },
+      { name: "Pignons et amandes", benefit: "Oméga, magnésium" },
+      { name: "Tomates séchées", benefit: "Lycopène, saveur" },
     ],
     formulas: F_PLATS,
-    isVegetarian: false,
+    isVegetarian: true,
     isVegan: false,
-    whyGood: "Des pâtes farcies au pesto rouge, relevées par les courgettes grillées. Un plat italien généreux.",
+    whyGood: "Tortellini au pesto rouge, courgettes grillées, amandes, pignons et tomates séchées. Fraîcheur méditerranéenne et générosité.",
   },
   28: {
     benefits: ["Épinards : fer et vitamines", "Chèvre : calcium", "Œuf et crème : protéines"],
@@ -422,18 +424,6 @@ export const PRODUCT_SHEET_DATA = {
     isVegetarian: false,
     isVegan: false,
     whyGood: "Pâtes farcies aux épinards et fromage, sauce pesto rouge. L'Italie dans l'assiette.",
-  },
-  90: {
-    benefits: ["Pesto basilic", "Pignons et amandes", "Tomates séchées"],
-    keyIngredients: [
-      { name: "Pâtes", benefit: "Glucides" },
-      { name: "Pesto", benefit: "Basilic, huile d'olive" },
-      { name: "Pignons", benefit: "Oméga, magnésium" },
-    ],
-    formulas: F_PLATS,
-    isVegetarian: false,
-    isVegan: false,
-    whyGood: "Pâtes au pesto traditionnel, courgettes grillées et parmesan. Fraîcheur méditerranéenne.",
   },
   91: {
     benefits: ["Bolognaise maison", "Fromage gratiné", "Lasagnes fraîches"],

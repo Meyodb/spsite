@@ -3413,6 +3413,18 @@ body {
     font-size: 16px;
   }
 
+  /* Sur mobile : le trait vert au survol ne fait que la longueur du titre */
+  .nav-right.mobile-open .nav-link {
+    width: fit-content;
+    max-width: 100%;
+    padding: 16px 12px 16px 0;
+    box-sizing: content-box;
+  }
+
+  .nav-right.mobile-open .nav-link:hover::after {
+    width: 100%;
+  }
+
   .cta-header {
     width: 100%;
     max-width: 100%;
