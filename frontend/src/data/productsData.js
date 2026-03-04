@@ -8,6 +8,8 @@ export const PRODUCTS = [
   { id: 6, name: "C++", category: "JUS", price: "5.8", volume: "47 cl", description: "Orange, carotte, gingembre, curcuma" },
   { id: 7, name: "PURA VIDA", category: "JUS", price: "5.8", volume: "47 cl", description: "Concombre, citron, pomme, graine de chia" },
   { id: 8, name: "SHREK", category: "JUS", price: "5.8", volume: "47 cl", description: "Pomme, citron vert, épinard" },
+  { id: 221, name: "PINK SUMMER DELIGHT", category: "JUS", price: "5.8", volume: "47 cl", description: "Pomme, framboise, menthe" },
+  { id: 222, name: "MISS SLIM", category: "JUS", price: "5.8", volume: "47 cl", description: "Ananas, citron vert, orange, menthe" },
   { id: 9, name: "SPIRULINE", category: "BOOSTERS", price: "1", description: "Macro et micronutriments, complément alimentaire" },
   { id: 10, name: "CURCUMA", category: "BOOSTERS", price: "1", description: "Bon pour la santé digestive et hépatique" },
   { id: 11, name: "AÇAÏ", category: "BOOSTERS", price: "1", description: "Acides gras oméga, vitamines C, E, antioxydants" },

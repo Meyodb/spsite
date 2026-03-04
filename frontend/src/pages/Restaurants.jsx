@@ -12,6 +12,9 @@ import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";
 import photoLondre from "../assets/images/restaurants/photo_londre.jpg";
 import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
 import photoHonore from "../assets/images/restaurants/photo_honore.png";
+import photoKleber from "../assets/images/restaurants/photo_kleber.png";
+import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
+import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
 import iconMonumentEiffel from "../assets/images/monuments/paris-eiffel.svg";
 import iconMonumentArcTriomphe from "../assets/images/monuments/paris-arc-de-triomphe.svg";
 import iconMonumentNotreDame from "../assets/images/monuments/paris-notre-dame.svg";
@@ -34,11 +37,13 @@ const MONUMENT_VISIBLE_ZOOM = 13; // monuments visibles à partir de ce zoom (un
 
 // Photos des restaurants (fallback: logo)
 const restaurantPhotos = {
-  1: photoLondre,   // ST LAZARE - Rue de Londres
-  4: photoEcuries,  // ÉCURIES
-  7: photoNeuilly,  // NEUILLY
-  8: photoHonore,   // HONORÉ - Saint Honoré
-  9: photoMadeleine,    // MADELEINE
+  1: photoLondre,      // ST LAZARE - Rue de Londres
+  3: photoHaussmann,   // HAUSSMANN
+  4: photoEcuries,     // ÉCURIES
+  5: photoEtoile,      // ÉTOILE - Avenue Kléber
+  7: photoNeuilly,     // NEUILLY
+  8: photoHonore,      // HONORÉ - Saint Honoré
+  9: photoMadeleine,   // MADELEINE
 };
 
 // Coordonnées vérifiées via géocodage OSM (Nominatim) — [longitude, latitude]

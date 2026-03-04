@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import logoVert from "../assets/images/logo-vert.png";
 
 const LANGUAGES = [
-  { code: "fr", flag: "🇫🇷" },
-  { code: "en", flag: "🇬🇧" },
+  { code: "fr", flag: "FR" },
+  { code: "en", flag: "EN" },
 ];
 
 export const Header = () => {
@@ -157,8 +157,9 @@ export const Header = () => {
                         setLangDropdownOpen(false);
                       }}
                     >
-                      <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
-                      {lang.code.toUpperCase()}
+                      <span className="header-lang-option-flag" aria-hidden="true">
+                        {lang.flag}
+                      </span>
                     </button>
                   </li>
                 ))}

@@ -131,6 +131,7 @@
   max-width: none;
   max-height: none;
   object-fit: cover;
+  object-position: top center;
   filter: none;
 }
 

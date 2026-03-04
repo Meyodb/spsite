@@ -21,7 +21,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -43,7 +43,7 @@
     transform: scale(1);
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
 }
 
@@ -80,29 +80,29 @@
 }
 
 .animate-fadeInUp {
-  animation: fadeInUpScroll 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeInUpScroll 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 .animate-fadeInLeft {
-  animation: fadeInLeftScroll 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeInLeftScroll 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 .animate-fadeInRight {
-  animation: fadeInRightScroll 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeInRightScroll 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 .animate-scaleIn {
-  animation: scaleInScroll 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: scaleInScroll 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 .animate-slideUp {
-  animation: slideUpScroll 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideUpScroll 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 @keyframes fadeInUpScroll {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(28px);
   }
   to {
     opacity: 1;
@@ -113,7 +113,7 @@
 @keyframes fadeInLeftScroll {
   from {
     opacity: 0;
-    transform: translateX(-40px);
+    transform: translateX(-28px);
   }
   to {
     opacity: 1;
@@ -124,7 +124,7 @@
 @keyframes fadeInRightScroll {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(28px);
   }
   to {
     opacity: 1;
@@ -135,7 +135,7 @@
 @keyframes scaleInScroll {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.96);
   }
   to {
     opacity: 1;
@@ -146,7 +146,7 @@
 @keyframes slideUpScroll {
   from {
     opacity: 0;
-    transform: translateY(60px);
+    transform: translateY(36px);
   }
   to {
     opacity: 1;
@@ -1531,7 +1531,7 @@ body {
 .adn-pillars-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .adn-pillar {
@@ -1545,8 +1545,8 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 12px rgba(90, 102, 84, 0.08);
-  border: 1px solid rgba(130, 144, 123, 0.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  border: none;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1568,12 +1568,12 @@ body {
 
 #adn-forme-title,
 #piliers-forme-title {
-  color: #f4a4ec;
+  color: #D81B8C;
 }
 
 #adn-regime-title,
 #piliers-regime-title {
-  color: #d4a02c;
+  color: #F4D03F;
 }
 
 #adn-sante-title,
@@ -1635,18 +1635,6 @@ body {
   padding: 72px 24px 80px;
   background: var(--bg-section);
   position: relative;
-}
-
-.adn-pillars-cta-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--green) 0%, var(--green-dark) 100%);
-  border-radius: 0 0 4px 4px;
 }
 
 .adn-pillars-cta-container {
@@ -1754,7 +1742,7 @@ body {
 /* Section contenu - page Nos Piliers */
 .piliers-page .adn-pillars-section {
   padding: 72px 24px 80px;
-  background: var(--bg-light);
+  background: var(--bg-section);
 }
 
 .piliers-page .adn-pillars-container {
@@ -1789,20 +1777,20 @@ body {
 }
 
 .piliers-page .adn-pillars-grid {
-  gap: 1.75rem;
+  gap: 2.5rem;
 }
 
 .piliers-page .adn-pillar-card {
   padding: 2rem 1.75rem;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(90, 102, 84, 0.06), 0 0 0 1px rgba(130, 144, 123, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.08);
   border: none;
   transition: transform 0.3s ease, box-shadow 0.35s ease;
 }
 
 .piliers-page .adn-pillar-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 36px rgba(90, 102, 84, 0.12), 0 0 0 1px rgba(130, 144, 123, 0.08);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 .piliers-page .adn-pillar-title {
@@ -1825,19 +1813,6 @@ body {
 .piliers-page .adn-pillar-tagline {
   font-size: 0.9rem;
   padding-top: 1.5rem;
-}
-
-/* Accent couleur sur les cartes */
-.piliers-page .adn-pillar-card[aria-labelledby="piliers-forme-title"] {
-  border-top: 4px solid #e895df;
-}
-
-.piliers-page .adn-pillar-card[aria-labelledby="piliers-regime-title"] {
-  border-top: 4px solid #e8b54a;
-}
-
-.piliers-page .adn-pillar-card[aria-labelledby="piliers-sante-title"] {
-  border-top: 4px solid #7CA843;
 }
 
 .piliers-cta {
@@ -2171,6 +2146,13 @@ body {
 }
 
 @media (max-width: 480px) {
+  /* Très petits écrans : Instagram + langue restent côte à côte, avec un petit gap */
+  .nav-right.mobile-open .nav-right-bottom {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
   .piliers-hero {
     padding: 48px 16px 40px;
   }
@@ -2438,25 +2420,9 @@ body {
   overflow: hidden;
 }
 
-.featured-product-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--green), var(--green-bright));
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
 .featured-product-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
-}
-
-.featured-product-card:hover::before {
-  transform: scaleX(1);
 }
 
 .product-badge {
@@ -2816,18 +2782,6 @@ body {
   box-sizing: border-box;
 }
 
-.newsletter-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green) 0%, var(--green-bright) 50%, var(--green) 100%);
-  background-size: 200% 100%;
-  animation: gradient-shift 3s ease infinite;
-}
-
 .newsletter-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(130, 144, 123, 0.2);
@@ -2968,18 +2922,6 @@ body {
   box-sizing: border-box;
 }
 
-.join-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--green) 0%, var(--green-bright) 50%, var(--green) 100%);
-  background-size: 200% 100%;
-  animation: gradient-shift 3s ease infinite;
-}
-
 .join-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(130, 144, 123, 0.2);
@@ -3075,16 +3017,25 @@ body {
 
 .footer-content {
   max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 32px;
-  margin-bottom: 32px;
+  margin: 0 auto 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px 48px;
 }
 
 .footer-column {
   display: flex;
   flex-direction: column;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+/* Web : Suivez-nous en marge à droite */
+.footer-column:last-child {
+  margin-left: auto;
 }
 
 .footer-title {
@@ -3251,37 +3202,43 @@ body {
     min-width: 0;
   }
 
-  /* Ligne Instagram + Langue côte à côte dans le menu mobile */
+  /* Bloc Instagram + Langue : sous CONTACT, Instagram à gauche, langue juste à droite */
   .nav-right.mobile-open .nav-right-bottom {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    flex-wrap: wrap;
+    padding-top: 8px; /* petit espace par rapport à la ligne CONTACT */
+    margin-top: 0;
+    border-top: none;
+    flex-wrap: nowrap;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible; /* laisse le sous-menu langue déborder sous CONTACT */
   }
 
   .nav-right.mobile-open .instagram-header {
     display: inline-flex !important;
+    align-items: center;
     width: auto;
     min-width: 0;
-    max-width: calc(100% - 60px);
+    max-width: 100%;
     box-sizing: border-box;
-    justify-content: flex-start;
-    padding: 10px 16px;
+    justify-content: center;
+    padding: 12px 22px;
     margin: 0;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    gap: 12px;
+    gap: 10px;
     text-align: left;
+    flex-shrink: 0;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   .nav-right.mobile-open .cta-header {
@@ -3289,29 +3246,42 @@ body {
     min-width: 0;
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+  }
+
+  /* Bouton Instagram : taille fixe (pas étiré), prioritaire sur .cta-header */
+  .nav-right.mobile-open .nav-right-bottom .instagram-header {
+    width: auto;
+    min-width: 0;
   }
 
   .nav-right.mobile-open .header-lang-dropdown {
     display: flex;
     flex-direction: column;
     min-width: 0;
+    width: auto;
   }
 
-  /* Sélecteur de langue à côté du bouton Instagram (menu mobile) */
   .nav-right.mobile-open .nav-right-bottom .header-lang-dropdown {
-    width: auto;
-    margin-left: 0;
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: none;
     flex-shrink: 0;
+    align-self: center;
   }
 
   .nav-right.mobile-open .nav-right-bottom .header-lang-trigger {
     width: auto;
-    justify-content: flex-start;
-    padding: 10px 0;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: none;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: none;
+    text-align: left;
+    transition: color 0.2s ease;
   }
 
   .nav-right.mobile-open .header-lang-menu {
@@ -3367,7 +3337,7 @@ body {
   .nav-right.mobile-open .header-lang-trigger {
     width: 100%;
     justify-content: space-between;
-    padding: 14px 0;
+    padding: 16px 0;
     font-size: 16px;
     opacity: 1;
     color: var(--text);
@@ -3390,20 +3360,31 @@ body {
   }
 
   .nav-right.mobile-open .header-lang-menu {
-    position: static;
-    margin: 8px 0 0;
-    min-width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 4px 0 0;
+    min-width: 0;
+    width: auto;
+    padding: 0;
+    background: transparent;
     box-shadow: none;
-    border: 1px solid var(--border);
+    border: none;
+    border-radius: 0;
+    overflow: visible;
   }
 
   .nav-right.mobile-open .header-lang-option {
-    padding: 14px 16px;
-    font-size: 16px;
+    padding: 4px 0;
+    font-size: 15px;
+    text-align: left;
+    justify-content: flex-start;
   }
 
   .nav-right.mobile-open .header-lang-option-flag {
-    font-size: 22px;
+    font-size: 15px;
+    font-weight: 500;
   }
 
   .nav-link {
@@ -3542,9 +3523,16 @@ body {
   }
 
   .footer-content {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px 32px;
     margin-bottom: 28px;
+  }
+
+  .footer-column {
+    flex: 0 1 auto;
+    min-width: 140px;
   }
 
   .footer-title {
@@ -3751,6 +3739,27 @@ body {
     padding: 12px 24px;
     font-size: 13px;
     max-width: none;
+  }
+
+  /* Footer : une colonne sur très petit écran */
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .footer-column {
+    min-width: 0;
+    align-items: center;
+  }
+
+  .footer-column:last-child {
+    margin-left: 0;
+  }
+
+  .footer-links {
+    align-items: center;
   }
 }
 
