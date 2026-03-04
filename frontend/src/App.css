@@ -160,6 +160,25 @@
   box-sizing: border-box;
 }
 
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+.cta-header,
+.cta-primary,
+.promo-btn,
+.newsletter-btn,
+.join-button,
+.product-card-btn,
+.cta-hero {
+  border-radius: 999px !important;
+}
+
 html {
   /* Réserve l’espace de la scrollbar pour garder les marges gauche/droite identiques */
   scrollbar-gutter: stable;

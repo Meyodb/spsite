@@ -30,14 +30,19 @@ export const ProduitsMenuTest = () => {
   const [lightboxProduct, setLightboxProduct] = useState(null);
   const [sheetProduct, setSheetProduct] = useState(null);
 
+  const visibleProducts = useMemo(
+    () => PRODUCTS.filter((p) => p.afficher !== false),
+    []
+  );
+
   const productsByCategory = useMemo(() => {
     const acc = {};
-    PRODUCTS.forEach((p) => {
+    visibleProducts.forEach((p) => {
       if (!acc[p.category]) acc[p.category] = [];
       acc[p.category].push(p);
     });
     return acc;
-  }, []);
+  }, [visibleProducts]);
 
   const orderedCategories = useMemo(() => {
     return CATEGORIES_ORDER.filter((cat) => productsByCategory[cat]?.length > 0);
@@ -45,7 +50,7 @@ export const ProduitsMenuTest = () => {
 
   const displayProducts = activeCategory
     ? (productsByCategory[activeCategory] || [])
-    : PRODUCTS;
+    : visibleProducts;
 
   useEffect(() => {
     if (orderedCategories.length > 0 && !activeCategory) {
@@ -428,15 +433,6 @@ export const ProduitsMenuTest = () => {
                           <span className="menu-test-product-extra-inline">{product.extraPrice}</span>
                         )}
                       </h3>
-                      <div className="menu-test-product-pictograms" aria-label={t("products.pictogramsLabel")}>
-                        {(activeCategory === "PLATS CHAUDS" || activeCategory === "SALADES" || activeCategory === "SANDWICH") && (
-                          <AllergenPictograms
-                            allergens={getAllergensForProduct(product.name)}
-                            size={20}
-                            className="menu-test-allergen-pictograms"
-                          />
-                        )}
-                      </div>
                       {description && (
                         <p className="menu-test-product-desc">{description}</p>
                       )}
