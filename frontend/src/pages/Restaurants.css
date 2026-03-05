@@ -132,7 +132,7 @@
   max-width: none;
   max-height: none;
   object-fit: cover;
-  object-position: top center;
+  object-position: center 75%;
   filter: none;
 }
 

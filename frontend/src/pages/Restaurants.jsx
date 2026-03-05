@@ -42,7 +42,7 @@ const MONUMENT_VISIBLE_ZOOM = 13; // monuments visibles à partir de ce zoom (un
 const restaurantPhotos = {
   1: [photoLondre],                    // ST LAZARE - Rue de Londres
   3: [photoHaussmann],                 // HAUSSMANN
-  4: [photoEcuries, photoEcuries2],    // ÉCURIES
+  4: [photoEcuries2, photoEcuries],    // ÉCURIES
   5: [photoEtoile, photoKleber2],      // ÉTOILE - Avenue Kléber (boutique Keleber)
   7: [photoNeuilly],                   // NEUILLY
   8: [photoHonore],                    // HONORÉ - Saint Honoré
