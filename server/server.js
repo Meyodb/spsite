@@ -43,12 +43,13 @@ app.use(express.json());
 const newsletterSubscribers = [];
 
 const visibilityPath = path.join(__dirname, "data", "visible-products.json");
+const productsPath = path.join(__dirname, "data", "products-soup-juice.json");
 
 app.get("/api/menu", (_, res) => res.json(menu));
 app.get("/api/promos", (_, res) => res.json(promos));
 app.get("/api/stores", (_, res) => res.json(stores));
 
-// Visibilité des produits (synchro JDC) : utilisé par la page Nos produits
+// Visibilité des produits : utilisé par la page Nos produits. Si visible-products.json n'existe pas, tous les produits sont visibles.
 app.get("/api/products/visibility", (_, res) => {
   try {
     const raw = fs.readFileSync(visibilityPath, "utf8");
@@ -56,7 +57,13 @@ app.get("/api/products/visibility", (_, res) => {
     res.json({ visibleIds: data.visibleIds || [], lastSync: data.lastSync ?? null });
   } catch (err) {
     if (err.code === "ENOENT") {
-      return res.json({ visibleIds: [], lastSync: null });
+      try {
+        const products = JSON.parse(fs.readFileSync(productsPath, "utf8"));
+        const allIds = Array.isArray(products) ? products.map((p) => p.id) : [];
+        return res.json({ visibleIds: allIds, lastSync: null });
+      } catch (_) {
+        return res.json({ visibleIds: [], lastSync: null });
+      }
     }
     res.status(500).json({ error: "Erreur lecture visibilité produits" });
   }
