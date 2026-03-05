@@ -116,6 +116,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
 }
 
 .restaurant-detail-panel-logo {
@@ -133,6 +134,83 @@
   object-fit: cover;
   object-position: top center;
   filter: none;
+}
+
+/* Carrousel photo restaurant (panneau détail) */
+.restaurant-photo-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.restaurant-photo-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 20px;
+  line-height: 1;
+  padding: 0;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.restaurant-photo-carousel-arrow--prev {
+  left: 12px;
+}
+
+.restaurant-photo-carousel-arrow--next {
+  right: 12px;
+}
+
+.restaurant-photo-carousel-arrow:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.restaurant-photo-carousel img.restaurant-detail-panel-photo {
+  width: 100%;
+  height: 100%;
+}
+
+.restaurant-photo-carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.restaurant-photo-carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.restaurant-photo-carousel-dot.active {
+  background: #fff;
 }
 
 .restaurant-detail-panel-body {
@@ -323,7 +401,13 @@
   background: var(--green-light);
 }
 
-/* Marqueurs personnalisés MapLibre */
+/* Marqueurs personnalisés MapLibre — garder les bords arrondis (override du reset global) */
+.restaurants-page .map-container .custom-marker,
+.restaurants-page .map-container .custom-marker > div,
+.restaurants-page .map-container .custom-marker > div > div {
+  border-radius: 8px !important;
+}
+
 .custom-marker {
   position: relative;
   animation: markerAppear 0.4s ease-out;

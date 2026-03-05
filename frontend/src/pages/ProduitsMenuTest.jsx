@@ -185,11 +185,6 @@ export const ProduitsMenuTest = () => {
                 aria-current={activeCategory === cat ? "true" : undefined}
               >
                 {t(`products.categories.${CATEGORY_I18N_KEYS[cat] || cat}`)}
-                {productsByCategory[cat] && (
-                  <span className="menu-test-nav-count">
-                    {productsByCategory[cat].length}
-                  </span>
-                )}
               </button>
             ))}
           </nav>

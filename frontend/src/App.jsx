@@ -11,6 +11,7 @@ import { NosPiliers } from "./pages/NosPiliers";
 import { ProduitsMenuTest } from "./pages/ProduitsMenuTest";
 import { Contact } from "./pages/Contact";
 import { Allergenes } from "./pages/Allergenes";
+import { Catering } from "./pages/Catering";
 
 const Restaurants = lazy(() => import("./pages/Restaurants").then((m) => ({ default: m.Restaurants })));
 
@@ -54,6 +55,7 @@ function AppContent() {
           <Route path="/produits" element={<ProduitsMenuTest />} />
           <Route path="/adn" element={<ADN />} />
           <Route path="/nos-piliers" element={<NosPiliers />} />
+          <Route path="/catering" element={<Catering />} />
           <Route path="/restaurants" element={<Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}><LoadingFallback /></div>}><Restaurants /></Suspense>} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/allergenes" element={<Allergenes />} />

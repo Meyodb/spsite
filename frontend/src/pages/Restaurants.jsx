@@ -7,7 +7,8 @@ import "./Restaurants.css";
 import deliveroLogo from "../assets/images/delivero.svg";
 import logoVert from "../assets/images/logo-vert.png";
 import metroLogo from "../assets/images/metro-logo.png";
-import photoEcuries from "../assets/images/restaurants/photo_Ecuries.jpg";
+import photoEcuries from "../assets/images/restaurants/photo_Ecuries.png";
+import photoEcuries2 from "../assets/images/restaurants/photo_Ecuries_2.png";
 import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";
 import photoLondre from "../assets/images/restaurants/photo_londre.jpg";
 import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
@@ -36,14 +37,76 @@ const METRO_VISIBLE_ZOOM = 14;   // logos métro visibles à partir de ce zoom
 const MONUMENT_VISIBLE_ZOOM = 13; // monuments visibles à partir de ce zoom (un peu moins loin que 12)
 
 // Photos des restaurants (fallback: logo)
+// Tableau pour permettre plusieurs photos par restaurant.
 const restaurantPhotos = {
-  1: photoLondre,      // ST LAZARE - Rue de Londres
-  3: photoHaussmann,   // HAUSSMANN
-  4: photoEcuries,     // ÉCURIES
-  5: photoEtoile,      // ÉTOILE - Avenue Kléber
-  7: photoNeuilly,     // NEUILLY
-  8: photoHonore,      // HONORÉ - Saint Honoré
-  9: photoMadeleine,   // MADELEINE
+  1: [photoLondre],                    // ST LAZARE - Rue de Londres
+  3: [photoHaussmann],                 // HAUSSMANN
+  4: [photoEcuries, photoEcuries2],    // ÉCURIES
+  5: [photoEtoile],                    // ÉTOILE - Avenue Kléber
+  7: [photoNeuilly],                   // NEUILLY
+  8: [photoHonore],                    // HONORÉ - Saint Honoré
+  9: [photoMadeleine],                 // MADELEINE
+};
+
+const RestaurantPhotoCarousel = ({ photos }) => {
+  const [index, setIndex] = useState(0);
+
+  if (!photos || photos.length === 0) {
+    return null;
+  }
+  if (photos.length === 1) {
+    return (
+      <img
+        src={photos[0]}
+        alt=""
+        className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
+      />
+    );
+  }
+
+  const goPrev = () => {
+    setIndex((i) => (i - 1 + photos.length) % photos.length);
+  };
+
+  const goNext = () => {
+    setIndex((i) => (i + 1) % photos.length);
+  };
+
+  return (
+    <div className="restaurant-photo-carousel">
+      <button
+        type="button"
+        className="restaurant-photo-carousel-arrow restaurant-photo-carousel-arrow--prev"
+        onClick={goPrev}
+        aria-label="Photo précédente du restaurant"
+      >
+        ‹
+      </button>
+      <img
+        src={photos[index]}
+        alt=""
+        className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
+      />
+      <button
+        type="button"
+        className="restaurant-photo-carousel-arrow restaurant-photo-carousel-arrow--next"
+        onClick={goNext}
+        aria-label="Photo suivante du restaurant"
+      >
+        ›
+      </button>
+      <div className="restaurant-photo-carousel-dots" aria-hidden="true">
+        {photos.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            className={`restaurant-photo-carousel-dot ${i === index ? "active" : ""}`}
+            onClick={() => setIndex(i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 // Coordonnées vérifiées via géocodage OSM (Nominatim) — [longitude, latitude]
@@ -202,11 +265,15 @@ export const Restaurants = () => {
                 <X size={20} strokeWidth={2.5} aria-hidden />
               </button>
               <div className="restaurant-detail-panel-image">
-                <img
-                  src={restaurantPhotos[selectedRestaurant.id] ?? logoVert}
-                  alt=""
-                  className={`restaurant-detail-panel-logo ${restaurantPhotos[selectedRestaurant.id] ? "restaurant-detail-panel-photo" : ""}`}
-                />
+                {restaurantPhotos[selectedRestaurant.id] ? (
+                  <RestaurantPhotoCarousel photos={restaurantPhotos[selectedRestaurant.id]} />
+                ) : (
+                  <img
+                    src={logoVert}
+                    alt=""
+                    className="restaurant-detail-panel-logo"
+                  />
+                )}
               </div>
               <div className="restaurant-detail-panel-body">
                 <h2 className="restaurant-detail-panel-name">{selectedRestaurant.name}</h2>
