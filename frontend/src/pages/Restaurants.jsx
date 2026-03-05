@@ -49,8 +49,12 @@ const restaurantPhotos = {
   9: [photoMadeleine],                 // MADELEINE
 };
 
-const RestaurantPhotoCarousel = ({ photos }) => {
-  const [index, setIndex] = useState(0);
+const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
+  const [index, setIndex] = useState(initialIndex);
+
+  useEffect(() => {
+    setIndex(initialIndex);
+  }, [photos, initialIndex]);
 
   if (!photos || photos.length === 0) {
     return null;
@@ -267,7 +271,10 @@ export const Restaurants = () => {
               </button>
               <div className="restaurant-detail-panel-image">
                 {restaurantPhotos[selectedRestaurant.id] ? (
-                  <RestaurantPhotoCarousel photos={restaurantPhotos[selectedRestaurant.id]} />
+                  <RestaurantPhotoCarousel
+                    photos={restaurantPhotos[selectedRestaurant.id]}
+                    initialIndex={selectedRestaurant.id === 5 ? 1 : 0}
+                  />
                 ) : (
                   <img
                     src={logoVert}
