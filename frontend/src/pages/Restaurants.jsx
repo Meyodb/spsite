@@ -14,6 +14,7 @@ import photoLondre from "../assets/images/restaurants/photo_londre.jpg";
 import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
 import photoHonore from "../assets/images/restaurants/photo_honore.png";
 import photoKleber from "../assets/images/restaurants/photo_kleber.png";
+import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
 import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
 import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
 import iconMonumentEiffel from "../assets/images/monuments/paris-eiffel.svg";
@@ -42,7 +43,7 @@ const restaurantPhotos = {
   1: [photoLondre],                    // ST LAZARE - Rue de Londres
   3: [photoHaussmann],                 // HAUSSMANN
   4: [photoEcuries, photoEcuries2],    // ÉCURIES
-  5: [photoEtoile],                    // ÉTOILE - Avenue Kléber
+  5: [photoEtoile, photoKleber2],      // ÉTOILE - Avenue Kléber (boutique Keleber)
   7: [photoNeuilly],                   // NEUILLY
   8: [photoHonore],                    // HONORÉ - Saint Honoré
   9: [photoMadeleine],                 // MADELEINE
