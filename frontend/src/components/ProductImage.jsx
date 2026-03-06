@@ -7,6 +7,10 @@ import { ProductImageCarousel } from "./ProductImageCarousel";
 const IMAGE_ID_ALIAS = {
   1: 222,
   42: 90, // Tortellini pesto rouge : affiche la photo des pâtes au pesto (fusion)
+  // Soupes : partage d'images pour recettes similaires
+  186: 185, // CHAMPIGNONS MIEL → CHAMPIGNONS
+  191: 190, // CAROTTE ORANGE → CAROTTES POMMES ET CURRY
+  212: 211, // POTIMARRON AU LAIT DE COCO → POTIMARRON
 };
 
 function resolveImageProductId(productId) {

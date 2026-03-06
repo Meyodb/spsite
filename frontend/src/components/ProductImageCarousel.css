@@ -37,7 +37,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   display: block;
+}
+
+/* Grille produits : cadrage pour voir totalement le haut de la soupe (surface, bord du gobelet) */
+.menu-test-product-image-wrap .product-image-carousel-img {
+  object-position: center 35%;
 }
 
 /* Lightbox : object-fit contain pour voir l'image en entier */
