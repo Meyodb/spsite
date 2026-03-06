@@ -281,18 +281,6 @@ export const PRODUCT_SHEET_DATA = {
     isVegan: false,
     whyGood: "La quiche lorraine classique : emmental, lardons et crème. Un incontournable de la cuisine française.",
   },
-  145: {
-    benefits: ["Emmental, comté, chèvre : calcium et protéines", "Trois fromages : saveurs variées", "Gratiné au fromage"],
-    keyIngredients: [
-      { name: "Emmental", benefit: "Calcium, protéines" },
-      { name: "Comté", benefit: "Calcium, goût fruité" },
-      { name: "Chèvre", benefit: "Calcium, onctuosité" },
-    ],
-    formulas: F_PLATS,
-    isVegetarian: true,
-    isVegan: false,
-    whyGood: "Quiche gratinée aux trois fromages : emmental, comté et chèvre. Gourmandise et réconfort.",
-  },
   79: {
     benefits: ["Épinards : fer", "Chèvre : calcium", "Sésame : oméga"],
     keyIngredients: [

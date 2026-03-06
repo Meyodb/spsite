@@ -77,7 +77,6 @@ const DOC_ROWS = [
   { category: "Plats chauds (fiches)", product: "FAGOTTINI", allergens: ["gluten", "oeufs", "lait"] },
   { category: "Plats chauds (fiches)", product: "PÂTES AU PESTO", allergens: ["gluten", "lait", "fruitsacoque"] },
   { category: "Quiches & tartes (fiches)", product: "QUICHE LORRAINE", allergens: ["gluten", "oeufs", "lait", "fruitsacoque"] },
-  { category: "Quiches & tartes (fiches)", product: "QUICHE 3 FROMAGES", allergens: ["gluten", "oeufs", "lait"] },
   { category: "Quiches & tartes (fiches)", product: "QUICHE RICOTTA TOMATO CERISE", allergens: ["gluten", "oeufs", "lait"] },
   { category: "Quiches & tartes (fiches)", product: "TARTE SAUMON ÉPINARDS", allergens: ["gluten", "oeufs", "poissons", "lait", "fruitsacoque"] },
   { category: "Quiches & tartes (fiches)", product: "TARTE CHÈVRE ÉPINARDS", allergens: ["gluten", "oeufs", "lait", "fruitsacoque", "sesame"] },
@@ -106,9 +105,6 @@ const DOC_ROWS = [
   { category: "Wraps & bagels (fiches)", product: "BAGEL MOZZARELLA", allergens: ["gluten", "lait", "sesame"] },
   { category: "Wraps & bagels (fiches)", product: "BAGEL SAUMON", allergens: ["gluten", "lait", "sesame"] },
   { category: "Wraps & bagels (fiches)", product: "BATBOUT THON", allergens: ["gluten", "poissons"] },
-  { category: "Desserts (fiches)", product: "COMPOTE POMME BANANE", allergens: [] },
-  { category: "Desserts (fiches)", product: "COMPOTE POMME FRAISE", allergens: [] },
-  { category: "Desserts (fiches)", product: "CRUMBLE POMME FRAISE", allergens: ["gluten", "lait"] },
   { category: "Desserts (fiches)", product: "PERLES CHIA FRAMBOISE", allergens: [] },
   { category: "Desserts (fiches)", product: "PANACOTTA FRAISE FRAMBOISE", allergens: ["lait"] },
   { category: "Desserts (fiches)", product: "PERLES CHIA MANGUE PASSION", allergens: ["lait"] },
@@ -118,15 +114,9 @@ const DOC_ROWS = [
   { category: "Desserts (fiches)", product: "CAKE MARBRÉ CHOCOLAT", allergens: ["gluten", "oeufs", "lait"] },
   { category: "Desserts (fiches)", product: "CAKE POMME NOIX", allergens: ["gluten", "oeufs", "fruitsacoque"] },
   { category: "Desserts (fiches)", product: "CAKE BANANE", allergens: ["gluten", "oeufs", "fruitsacoque"] },
-  { category: "Desserts (fiches)", product: "CAKE ANANAS", allergens: ["gluten", "oeufs"] },
-  { category: "Desserts (fiches)", product: "CAKE ORANGE", allergens: ["gluten", "oeufs", "lait"] },
-  { category: "Desserts (fiches)", product: "CAKE CHOCOLAT BLANC NOISETTE", allergens: ["gluten", "oeufs", "soja", "lait", "fruitsacoque"] },
-  { category: "Desserts (fiches)", product: "CAKE GRIOTTE AMANDE", allergens: ["gluten", "oeufs", "fruitsacoque"] },
-  { category: "Desserts (fiches)", product: "CAKE PISTACHE CAFÉ", allergens: ["gluten", "oeufs", "soja", "lait", "fruitsacoque"] },
   { category: "Desserts (fiches)", product: "TARTE CITRON MERINGUÉE", allergens: ["gluten", "oeufs", "lait", "fruitsacoque"] },
   { category: "Desserts (fiches)", product: "CHEESECAKE KEYLIME", allergens: ["gluten", "oeufs", "lait"] },
   { category: "Desserts (fiches)", product: "TARTE MYRTILLE", allergens: ["gluten", "oeufs", "lait"] },
-  { category: "Desserts (fiches)", product: "TARTE AUX ABRICOTS", allergens: ["gluten", "oeufs", "lait", "fruitsacoque"] },
 ];
 
 export const Allergenes = () => {

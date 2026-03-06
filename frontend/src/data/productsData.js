@@ -7,7 +7,7 @@ const PRODUCT_IDS_WITH_PHOTO = new Set([
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 17, 18, 19, 20, 21,
   26, 27, 28, 30, 31, 32, 33, 34, 35, 36, 38, 43, 45, 47, 51, 60, 61, 62, 63,
   65, 67, 74, 75, 76, 78, 89, 90, 91, 93, 94, 99, 109, 111, 119, 123, 124,
-  141, 142, 143, 144, 145, 146, 147, 221, 222,
+  141, 142, 143, 144, 146, 147, 221, 222,
 ]);
 
 function resolveImageProductId(productId) {
@@ -96,7 +96,6 @@ export const PRODUCTS = [
   { id: 39, name: "QUICHE PATATE DOUCE FETA", category: "PLATS CHAUDS", price: "7.5", description: "Patate douce, feta, pistou", afficher: false },
   { id: 77, name: "QUICHE RICOTTA TOMATO CERISE", category: "PLATS CHAUDS", price: "7.5", description: "Tomates cerises, ricotta, lait, crème, farine de blé, œuf, ciboulette", afficher: false },
   { id: 78, name: "QUICHE LORRAINE", category: "PLATS CHAUDS", price: "7.5", description: "Emmental, lardons, lait, crème, farine de blé, œuf" },
-  { id: 145, name: "QUICHE 3 FROMAGES", category: "PLATS CHAUDS", price: "7.5", description: "Emmental, comté, chèvre, lait, crème, farine de blé, œuf", afficher: false },
   { id: 79, name: "TARTE CHÈVRE ÉPINARDS", category: "PLATS CHAUDS", price: "7.5", description: "Épinards, chèvre, lait, crème, farine de blé, œuf, sésame", afficher: false },
   { id: 80, name: "TARTE SAUMON ÉPINARDS", category: "PLATS CHAUDS", price: "7.5", description: "Épinards, saumon fumé, lait, crème, farine de blé, œuf", afficher: false },
   { id: 81, name: "POULET KORMA", category: "PLATS CHAUDS", price: "7.5", description: "Riz basmati, poulet, crème, yaourt, lait de coco, carottes, poivrons, épices", afficher: false },
@@ -186,7 +185,6 @@ export const PRODUCTS = [
   { id: 63, name: "COCA COLA ZERO", category: "BOISSONS", price: "2.5", description: "Canette 33cl" },
   { id: 75, name: "VITAMINE WELL", category: "BOISSONS", price: "3.80", description: "Boost myrtille/framboise, Antioxidant pêche, Reload citron/citron vert, Refresh kiwi/citron, Hydrate rhubarbe/fraise", imageCount: 5 },
   { id: 76, name: "JOMO", category: "BOISSONS", price: "3.80", description: "Grenade litchi, mangue, passion citron vert, pêche hibiscus, gingembre" },
-  { id: 140, name: "MUG BAMBOU", category: "GOODIES", price: "12", description: "Mug réutilisable en bambou", afficher: false },
   { id: 141, name: "TOTE BAG", category: "GOODIES", price: "8", description: "Sac en coton réutilisable" },
   { id: 143, name: "THERMOS", category: "GOODIES", price: "15", description: "Thermos isotherme réutilisable", imageCount: 2 },
   { id: 144, name: "GOURDE", category: "GOODIES", price: "12", description: "Gourde réutilisable", imageCount: 2 },

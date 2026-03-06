@@ -84,7 +84,6 @@ export const ALLERGEN_BY_PRODUCT = {
   "FAGOTTINI": ["gluten", "oeufs", "lait"],
   "PÂTES AU PESTO": ["gluten", "lait", "fruitsacoque"],
   "QUICHE LORRAINE": ["gluten", "oeufs", "lait", "fruitsacoque"],
-  "QUICHE 3 FROMAGES": ["gluten", "oeufs", "lait"],
   "QUICHE RICOTTA TOMATO CERISE": ["gluten", "oeufs", "lait"],
   "TARTE SAUMON ÉPINARDS": ["gluten", "oeufs", "poissons", "lait", "fruitsacoque"],
   "TARTE CHÈVRE ÉPINARDS": ["gluten", "oeufs", "lait", "fruitsacoque", "sesame"],

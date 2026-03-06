@@ -296,10 +296,6 @@
     "name": "QUICHE LORRAINE"
   },
   {
-    "id": 145,
-    "name": "QUICHE 3 FROMAGES"
-  },
-  {
     "id": 79,
     "name": "TARTE CHÈVRE ÉPINARDS"
   },
@@ -532,40 +528,12 @@
     "name": "CAKE BANANE"
   },
   {
-    "id": 134,
-    "name": "CAKE ANANAS"
-  },
-  {
-    "id": 135,
-    "name": "CAKE ORANGE"
-  },
-  {
-    "id": 136,
-    "name": "CAKE CHOCOLAT BLANC NOISETTE"
-  },
-  {
-    "id": 137,
-    "name": "CAKE GRIOTTE AMANDE"
-  },
-  {
-    "id": 138,
-    "name": "CAKE PISTACHE CAFÉ"
-  },
-  {
     "id": 45,
     "name": "FROMAGE BLANC"
   },
   {
     "id": 47,
     "name": "MOUSSE AU CHOCOLAT"
-  },
-  {
-    "id": 120,
-    "name": "COMPOTE POMME BANANE"
-  },
-  {
-    "id": 121,
-    "name": "COMPOTE POMME FRAISE"
   },
   {
     "id": 48,
@@ -584,16 +552,8 @@
     "name": "CRUMBLE POMME SPECULOOS"
   },
   {
-    "id": 122,
-    "name": "CRUMBLE POMME FRAISE"
-  },
-  {
     "id": 52,
     "name": "TARTE AUX NOIX DE PÉCAN"
-  },
-  {
-    "id": 53,
-    "name": "GRAINES DE CHIA FRAMBOISE"
   },
   {
     "id": 123,
@@ -636,10 +596,6 @@
     "name": "TARTE CITRON MERINGUÉE"
   },
   {
-    "id": 127,
-    "name": "TARTE AUX ABRICOTS"
-  },
-  {
     "id": 60,
     "name": "EVIAN"
   },
@@ -662,10 +618,6 @@
   {
     "id": 76,
     "name": "JOMO"
-  },
-  {
-    "id": 140,
-    "name": "MUG BAMBOU"
   },
   {
     "id": 141,
