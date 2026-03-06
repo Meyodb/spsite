@@ -212,7 +212,7 @@
       "61": { "name": "SAN PELLEGRINO", "description": "Bouteille 50cl" },
       "62": { "name": "COCA COLA", "description": "Canette 33cl" },
       "63": { "name": "COCA COLA ZERO", "description": "Canette 33cl" },
-      "75": { "name": "VITAMINE WELL", "description": "Boisson vitaminée" },
+      "75": { "name": "VITAMINE WELL", "description": "Boost myrtille/framboise, Antioxidant pêche, Reload citron/citron vert, Refresh kiwi/citron, Hydrate rhubarbe/fraise" },
       "76": { "name": "JOMO", "description": "Grenade litchi, mangue, passion citron vert, pêche hibiscus, gingembre" },
       "140": { "name": "MUG BAMBOU", "description": "Mug réutilisable en bambou" },
       "141": { "name": "TOTE BAG", "description": "Sac en coton réutilisable" },
@@ -540,7 +540,7 @@
     "imageBuffetAlt": "Mini salades et verrines pour un buffet traiteur Soup & Juice",
     "sectionFormatsLabel": "FORMATS & IDÉES",
     "sectionFormatsTitle": "Du petit déjeuner d’équipe au cocktail dînatoire",
-    "sectionFormatsText": "Plateau de wrap navettes, jus frais, mini salades, soupes, plats chauds, desserts et douceurs : nous imaginons avec vous un buffet qui reflète votre événement, vos contraintes et votre budget. Notre équipe vous accompagne pour construire une offre équilibrée, colorée et facile à déguster, quel que soit le format (réunion, séminaire, lancement de produit, anniversaire, afterwork…).",
+    "sectionFormatsText": "Plateaux de wraps ou navettes, jus frais, mini salades, soupes, plats chauds, desserts et douceurs : nous imaginons avec vous un buffet qui reflète votre événement, vos contraintes et votre budget. Notre équipe vous accompagne pour construire une offre équilibrée, colorée et facile à déguster, quel que soit le format (réunion, séminaire, lancement de produit, anniversaire, afterwork…).",
     "ctaTitle": "Un projet traiteur ? Parlons-en",
     "ctaContact": "Nous contacter"
   },

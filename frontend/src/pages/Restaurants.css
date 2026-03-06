@@ -131,9 +131,18 @@
   height: 100%;
   max-width: none;
   max-height: none;
-  object-fit: cover;
-  object-position: center 75%;
+  object-fit: contain;
+  object-position: center center;
   filter: none;
+}
+
+/* Mobile : afficher la photo en entier (comme sur le web) sans recadrage */
+@media (max-width: 768px) {
+  .restaurant-detail-panel-logo.restaurant-detail-panel-photo,
+  .restaurant-photo-carousel img.restaurant-detail-panel-photo {
+    object-fit: contain;
+    object-position: center center;
+  }
 }
 
 /* Carrousel photo restaurant (panneau détail) */
@@ -210,6 +219,164 @@
 }
 
 .restaurant-photo-carousel-dot.active {
+  background: #fff;
+}
+
+/* Wrapper cliquable pour ouvrir la lightbox plein écran */
+.restaurant-photo-carousel-photo-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.restaurant-photo-carousel-photo-wrap:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* Lightbox plein écran pour les photos de restaurant */
+.restaurant-photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  animation: restaurant-lightbox-fadeIn 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.restaurant-photo-lightbox--closing {
+  animation: restaurant-lightbox-fadeOut 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  pointer-events: none;
+}
+
+.restaurant-photo-lightbox--closing .restaurant-photo-lightbox-content {
+  animation: restaurant-lightbox-scaleOut 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+@keyframes restaurant-lightbox-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes restaurant-lightbox-fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes restaurant-lightbox-scaleOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0.8; transform: scale(0.96); }
+}
+
+.restaurant-photo-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1101;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.restaurant-photo-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.restaurant-photo-lightbox-content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: restaurant-lightbox-scaleIn 0.32s cubic-bezier(0.33, 1, 0.68, 1) 0.04s both;
+}
+
+@keyframes restaurant-lightbox-scaleIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.restaurant-photo-lightbox-img {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.restaurant-photo-lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s;
+}
+
+.restaurant-photo-lightbox-arrow:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.restaurant-photo-lightbox-arrow--prev {
+  left: 12px;
+}
+
+.restaurant-photo-lightbox-arrow--next {
+  right: 12px;
+}
+
+.restaurant-photo-lightbox-dots {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.restaurant-photo-lightbox-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.2s;
+}
+
+.restaurant-photo-lightbox-dot.active {
   background: #fff;
 }
 
@@ -1356,7 +1523,21 @@
   }
 
   .restaurant-detail-panel-image {
-    height: 220px;
+    /* Hauteur adaptative pour photos paysage : ratio 16/9 comme sur le web */
+    height: auto;
+    aspect-ratio: 16 / 9;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .restaurant-detail-panel-logo.restaurant-detail-panel-photo,
+  .restaurant-photo-carousel img.restaurant-detail-panel-photo {
+    object-fit: contain;
+    object-position: center center;
+    width: 100%;
+    height: 100%;
   }
 
   .restaurant-detail-panel-body {
@@ -1588,7 +1769,15 @@
   }
 
   .restaurant-detail-panel-image {
-    height: 200px;
+    aspect-ratio: 16 / 9;
+    min-height: 180px;
+  }
+
+  /* Photos visibles en entier sur très petits écrans */
+  .restaurant-detail-panel-logo.restaurant-detail-panel-photo,
+  .restaurant-photo-carousel img.restaurant-detail-panel-photo {
+    object-fit: contain;
+    object-position: center center;
   }
 
   .restaurant-detail-panel-body {

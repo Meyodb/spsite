@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./ProduitsMenuTest.css";
 import {
@@ -32,6 +32,7 @@ export const ProduitsMenuTest = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const [lightboxProduct, setLightboxProduct] = useState(null);
   const [sheetProduct, setSheetProduct] = useState(null);
   const [visibleIdsFromApi, setVisibleIdsFromApi] = useState(null);
@@ -84,6 +85,25 @@ export const ProduitsMenuTest = () => {
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
+
+  const mobileDropdownRef = useRef(null);
+  useEffect(() => {
+    if (!mobileDropdownOpen) return;
+    const handleClickOutside = (e) => {
+      if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(e.target)) {
+        setMobileDropdownOpen(false);
+      }
+    };
+    const handleEscape = (e) => {
+      if (e.key === "Escape") setMobileDropdownOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [mobileDropdownOpen]);
 
   const getProductDisplay = (product) => {
     const nameKey = `products.items.${product.id}.name`;
@@ -154,20 +174,40 @@ export const ProduitsMenuTest = () => {
         </div>
       </div>
 
-      {/* Mobile : sélecteur de catégorie en haut */}
+      {/* Mobile : sélecteur de catégorie personnalisé (thème vert) */}
       {isMobile && (
-        <div className="menu-test-mobile-select">
-          <select
-            value={activeCategory || ""}
-            onChange={(e) => setActiveCategory(e.target.value || null)}
+        <div className="menu-test-mobile-select" ref={mobileDropdownRef}>
+          <button
+            type="button"
+            className={`menu-test-mobile-select-trigger ${mobileDropdownOpen ? "is-open" : ""}`}
+            onClick={() => setMobileDropdownOpen((o) => !o)}
+            aria-expanded={mobileDropdownOpen}
+            aria-haspopup="listbox"
             aria-label="Choisir une catégorie"
           >
-            {orderedCategories.map((cat) => (
-              <option key={cat} value={cat}>
-                {t(`products.categories.${CATEGORY_I18N_KEYS[cat] || cat}`)}
-              </option>
-            ))}
-          </select>
+            <span>{activeCategory ? t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`) : ""}</span>
+            <svg className="menu-test-mobile-select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          {mobileDropdownOpen && (
+            <ul className="menu-test-mobile-select-dropdown" role="listbox">
+              {orderedCategories.map((cat) => (
+                <li key={cat} role="option" aria-selected={activeCategory === cat}>
+                  <button
+                    type="button"
+                    className={`menu-test-mobile-select-option ${activeCategory === cat ? "is-selected" : ""}`}
+                    onClick={() => {
+                      setActiveCategory(cat);
+                      setMobileDropdownOpen(false);
+                    }}
+                  >
+                    {t(`products.categories.${CATEGORY_I18N_KEYS[cat] || cat}`)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
 

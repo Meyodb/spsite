@@ -17,6 +17,7 @@ import photoKleber from "../assets/images/restaurants/photo_kleber.png";
 import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
 import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
 import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
+import photoBourse from "../assets/images/restaurants/photo_bourse.png";
 import iconMonumentEiffel from "../assets/images/monuments/paris-eiffel.svg";
 import iconMonumentArcTriomphe from "../assets/images/monuments/paris-arc-de-triomphe.svg";
 import iconMonumentNotreDame from "../assets/images/monuments/paris-notre-dame.svg";
@@ -41,6 +42,7 @@ const MONUMENT_VISIBLE_ZOOM = 13; // monuments visibles à partir de ce zoom (un
 // Tableau pour permettre plusieurs photos par restaurant.
 const restaurantPhotos = {
   1: [photoLondre],                    // ST LAZARE - Rue de Londres
+  2: [photoBourse],                    // BOURSE
   3: [photoHaussmann],                 // HAUSSMANN
   4: [photoEcuries2, photoEcuries],    // ÉCURIES
   5: [photoEtoile, photoKleber2],      // ÉTOILE - Avenue Kléber (boutique Keleber)
@@ -49,8 +51,111 @@ const restaurantPhotos = {
   9: [photoMadeleine],                 // MADELEINE
 };
 
+const CLOSE_DURATION_MS = 280;
+
+/** Lightbox plein écran pour les photos de restaurant */
+const RestaurantPhotoLightbox = ({ open, photos, initialIndex, onClose }) => {
+  const [index, setIndex] = useState(initialIndex);
+  const [isClosing, setIsClosing] = useState(false);
+  const handleCloseRef = useRef(() => {});
+
+  useEffect(() => {
+    if (open) setIndex(initialIndex);
+  }, [open, initialIndex]);
+
+  const handleClose = useCallback(() => {
+    setIsClosing((prev) => (prev ? prev : true));
+  }, []);
+  handleCloseRef.current = handleClose;
+
+  useEffect(() => {
+    if (!open) return;
+    const onEscape = (e) => { if (e.key === "Escape") handleCloseRef.current(); };
+    document.addEventListener("keydown", onEscape);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onEscape);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!isClosing) return;
+    const t = setTimeout(() => { onClose(); setIsClosing(false); }, CLOSE_DURATION_MS);
+    return () => clearTimeout(t);
+  }, [isClosing, onClose]);
+
+  const goPrev = (e) => {
+    e.stopPropagation();
+    setIndex((i) => (i - 1 + photos.length) % photos.length);
+  };
+  const goNext = (e) => {
+    e.stopPropagation();
+    setIndex((i) => (i + 1) % photos.length);
+  };
+
+  if (!open || !photos?.length) return null;
+
+  return (
+    <div
+      className={`restaurant-photo-lightbox ${isClosing ? "restaurant-photo-lightbox--closing" : ""}`}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo du restaurant en plein écran"
+      onClick={(e) => e.target === e.currentTarget && handleClose()}
+    >
+      <button
+        type="button"
+        className="restaurant-photo-lightbox-close"
+        onClick={handleClose}
+        aria-label="Fermer"
+      >
+        ×
+      </button>
+      <div className="restaurant-photo-lightbox-content" onClick={(e) => e.stopPropagation()}>
+        {photos.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="restaurant-photo-lightbox-arrow restaurant-photo-lightbox-arrow--prev"
+              onClick={goPrev}
+              aria-label="Photo précédente"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="restaurant-photo-lightbox-arrow restaurant-photo-lightbox-arrow--next"
+              onClick={goNext}
+              aria-label="Photo suivante"
+            >
+              ›
+            </button>
+          </>
+        )}
+        <img
+          src={photos[index]}
+          alt=""
+          className="restaurant-photo-lightbox-img"
+        />
+        {photos.length > 1 && (
+          <div className="restaurant-photo-lightbox-dots" aria-hidden="true">
+            {photos.map((_, i) => (
+              <span
+                key={i}
+                className={`restaurant-photo-lightbox-dot ${i === index ? "active" : ""}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
   const [index, setIndex] = useState(initialIndex);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     setIndex(initialIndex);
@@ -59,58 +164,94 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
   if (!photos || photos.length === 0) {
     return null;
   }
-  if (photos.length === 1) {
-    return (
-      <img
-        src={photos[0]}
-        alt=""
-        className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
-      />
-    );
-  }
 
-  const goPrev = () => {
+  const goPrev = (e) => {
+    e?.stopPropagation?.();
     setIndex((i) => (i - 1 + photos.length) % photos.length);
   };
 
-  const goNext = () => {
+  const goNext = (e) => {
+    e?.stopPropagation?.();
     setIndex((i) => (i + 1) % photos.length);
   };
 
-  return (
-    <div className="restaurant-photo-carousel">
-      <button
-        type="button"
-        className="restaurant-photo-carousel-arrow restaurant-photo-carousel-arrow--prev"
-        onClick={goPrev}
-        aria-label="Photo précédente du restaurant"
-      >
-        ‹
-      </button>
-      <img
-        src={photos[index]}
-        alt=""
-        className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
-      />
-      <button
-        type="button"
-        className="restaurant-photo-carousel-arrow restaurant-photo-carousel-arrow--next"
-        onClick={goNext}
-        aria-label="Photo suivante du restaurant"
-      >
-        ›
-      </button>
-      <div className="restaurant-photo-carousel-dots" aria-hidden="true">
-        {photos.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            className={`restaurant-photo-carousel-dot ${i === index ? "active" : ""}`}
-            onClick={() => setIndex(i)}
+  const openLightbox = () => setLightboxOpen(true);
+
+  const PhotoWrapper = ({ children }) => (
+    <button
+      type="button"
+      className="restaurant-photo-carousel-photo-wrap"
+      onClick={openLightbox}
+      aria-label="Voir la photo en plein écran"
+    >
+      {children}
+    </button>
+  );
+
+  if (photos.length === 1) {
+    return (
+      <>
+        <PhotoWrapper>
+          <img
+            src={photos[0]}
+            alt=""
+            className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
           />
-        ))}
+        </PhotoWrapper>
+        <RestaurantPhotoLightbox
+          open={lightboxOpen}
+          photos={photos}
+          initialIndex={0}
+          onClose={() => setLightboxOpen(false)}
+        />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="restaurant-photo-carousel">
+        <button
+          type="button"
+          className="restaurant-photo-carousel-arrow restaurant-photo-carousel-arrow--prev"
+          onClick={goPrev}
+          aria-label="Photo précédente du restaurant"
+        >
+          ‹
+        </button>
+        <PhotoWrapper>
+          <img
+            src={photos[index]}
+            alt=""
+            className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
+          />
+        </PhotoWrapper>
+        <button
+          type="button"
+          className="restaurant-photo-carousel-arrow restaurant-photo-carousel-arrow--next"
+          onClick={goNext}
+          aria-label="Photo suivante du restaurant"
+        >
+          ›
+        </button>
+        <div className="restaurant-photo-carousel-dots" aria-hidden="true">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`restaurant-photo-carousel-dot ${i === index ? "active" : ""}`}
+              onClick={(e) => { e.stopPropagation(); setIndex(i); }}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+      <RestaurantPhotoLightbox
+        open={lightboxOpen}
+        photos={photos}
+        initialIndex={index}
+        onClose={() => setLightboxOpen(false)}
+      />
+    </>
   );
 };
 
