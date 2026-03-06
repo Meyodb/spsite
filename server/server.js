@@ -120,10 +120,38 @@ app.get("/api/newsletter/subscribers", (req, res) => {
 // Servir le frontend buildé (optionnel : pour accès via IP de la box)
 const frontendDist = path.join(__dirname, "..", "frontend", "dist");
 if (fs.existsSync(frontendDist)) {
-  app.use(express.static(frontendDist));
-  // SPA : toute requête GET non-API renvoie index.html
+  // Redirection / vers /?v=timestamp pour forcer le rechargement (cache busting)
+  // La version = mtime de index.html, change à chaque build
+  app.get("/", (req, res, next) => {
+    if (req.query.v) return next();
+    const indexPath = path.join(frontendDist, "index.html");
+    const version = fs.statSync(indexPath).mtime.getTime();
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    return res.redirect(302, `/?v=${version}`);
+  });
+  // Fichiers statiques : cache long pour les assets hashés (JS, CSS), pas de cache pour index.html
+  app.use(
+    express.static(frontendDist, {
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith("index.html")) {
+          res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+          res.setHeader("Pragma", "no-cache");
+          res.setHeader("Expires", "0");
+        } else {
+          // Assets hashés (JS, CSS, images) : cache 1 an (le hash change à chaque build)
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        }
+      },
+    })
+  );
+  // SPA : toute requête GET non-API renvoie index.html (sans cache)
   app.use((req, res, next) => {
     if (req.method === "GET" && !req.path.startsWith("/api")) {
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
       res.sendFile(path.join(frontendDist, "index.html"));
     } else {
       next();

@@ -86,6 +86,9 @@ server {
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
+        # Éviter le cache pour index.html (SPA) — les navigateurs rechargent les mises à jour
+        proxy_no_cache 1;
+        proxy_cache_bypass 1;
     }
 }
 ```
