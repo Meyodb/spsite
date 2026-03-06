@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -14,14 +14,16 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const [langMenuPosition, setLangMenuPosition] = useState({ top: 0, left: 0, minWidth: 0 });
+  const desktopTriggerRef = useRef(null);
+  const mobileTriggerRef = useRef(null);
   const { pathname } = useLocation();
   const isHome = pathname === "/" || pathname === "";
   const currentLangCode = (i18n.language || "fr").split("-")[0];
   const currentLang = LANGUAGES.find((l) => l.code === currentLangCode) || LANGUAGES[0];
 
   useEffect(() => {
-    const lockScroll = mobileMenuOpen || langDropdownOpen;
-    if (lockScroll) {
+    if (mobileMenuOpen) {
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
       document.body.classList.add("burger-menu-open");
@@ -35,7 +37,7 @@ export const Header = () => {
       document.body.style.overflow = "";
       document.body.classList.remove("burger-menu-open");
     };
-  }, [mobileMenuOpen, langDropdownOpen]);
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     if (!langDropdownOpen) return;
@@ -47,6 +49,28 @@ export const Header = () => {
   useEffect(() => {
     if (!mobileMenuOpen) setLangDropdownOpen(false);
   }, [mobileMenuOpen]);
+
+  useLayoutEffect(() => {
+    if (!langDropdownOpen) return;
+    const trigger = mobileMenuOpen ? mobileTriggerRef.current : desktopTriggerRef.current;
+    if (trigger) {
+      const rect = trigger.getBoundingClientRect();
+      setLangMenuPosition({
+        top: rect.bottom + 6,
+        left: rect.left,
+        minWidth: rect.width,
+      });
+    }
+  }, [langDropdownOpen, mobileMenuOpen]);
+
+  useEffect(() => {
+    if (!langDropdownOpen) return;
+    const onEscape = (e) => {
+      if (e.key === "Escape") setLangDropdownOpen(false);
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, [langDropdownOpen]);
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -87,21 +111,10 @@ export const Header = () => {
           <span>Instagram</span>
         </a>
         <div className={`header-lang-dropdown header-lang-discret ${langDropdownOpen ? "is-open" : ""}`}>
-          <button type="button" className="header-lang-trigger" onClick={(e) => { e.stopPropagation(); setLangDropdownOpen((o) => !o); }} aria-expanded={langDropdownOpen} aria-haspopup="true" aria-label={t("header.ariaLang")}>
+          <button ref={mobileTriggerRef} type="button" className="header-lang-trigger" onClick={(e) => { e.stopPropagation(); setLangDropdownOpen((o) => !o); }} aria-expanded={langDropdownOpen} aria-haspopup="true" aria-label={t("header.ariaLang")}>
             <span className="header-lang-code">{currentLang.code.toUpperCase()}</span>
             <svg className="header-lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
           </button>
-          {langDropdownOpen && (
-            <ul className="header-lang-menu" role="menu">
-              {LANGUAGES.filter((l) => l.code !== currentLangCode).map((lang) => (
-                <li key={lang.code} role="none">
-                  <button type="button" role="menuitem" className="header-lang-option" onClick={(e) => { e.stopPropagation(); localStorage.setItem("soup-juice-lang", lang.code); i18n.changeLanguage(lang.code); setLangDropdownOpen(false); }}>
-                    <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
       </div>
     </>
@@ -190,6 +203,7 @@ export const Header = () => {
             </a>
             <div className={`header-lang-dropdown header-lang-discret ${langDropdownOpen ? "is-open" : ""}`}>
             <button
+              ref={desktopTriggerRef}
               type="button"
               className="header-lang-trigger"
               onClick={(e) => {
@@ -205,35 +219,45 @@ export const Header = () => {
                 <path d="M6 9l6 6 6-6" />
               </svg>
             </button>
-            {langDropdownOpen && (
-              <ul className="header-lang-menu" role="menu">
-                {LANGUAGES.filter((lang) => lang.code !== currentLangCode).map((lang) => (
-                  <li key={lang.code} role="none">
-                    <button
-                      type="button"
-                      role="menuitem"
-                      className="header-lang-option"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        localStorage.setItem("soup-juice-lang", lang.code);
-                        i18n.changeLanguage(lang.code);
-                        setLangDropdownOpen(false);
-                      }}
-                    >
-                      <span className="header-lang-option-flag" aria-hidden="true">
-                        {lang.flag}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
             </div>
           </div>
         </div>
       </nav>
     </header>
     {mobileMenuPortal}
+    {langDropdownOpen && createPortal(
+      <ul
+        className="header-lang-menu header-lang-menu--portal"
+        role="menu"
+        style={{
+          position: "fixed",
+          top: langMenuPosition.top,
+          left: langMenuPosition.left,
+          minWidth: langMenuPosition.minWidth,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {LANGUAGES.filter((l) => l.code !== currentLangCode).map((lang) => (
+          <li key={lang.code} role="none">
+            <button
+              type="button"
+              role="menuitem"
+              className="header-lang-option"
+              onClick={(e) => {
+                e.stopPropagation();
+                localStorage.setItem("soup-juice-lang", lang.code);
+                i18n.changeLanguage(lang.code);
+                setLangDropdownOpen(false);
+              }}
+            >
+              <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
+            </button>
+          </li>
+        ))}
+      </ul>,
+      document.body,
+      "lang-menu"
+    )}
     </>
   );
 };

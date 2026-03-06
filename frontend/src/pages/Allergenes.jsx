@@ -106,7 +106,6 @@ const DOC_ROWS = [
   { category: "Wraps & bagels (fiches)", product: "BAGEL SAUMON", allergens: ["gluten", "lait", "sesame"] },
   { category: "Wraps & bagels (fiches)", product: "BATBOUT THON", allergens: ["gluten", "poissons"] },
   { category: "Desserts (fiches)", product: "PERLES CHIA FRAMBOISE", allergens: [] },
-  { category: "Desserts (fiches)", product: "PANACOTTA FRAISE FRAMBOISE", allergens: ["lait"] },
   { category: "Desserts (fiches)", product: "PERLES CHIA MANGUE PASSION", allergens: ["lait"] },
   { category: "Desserts (fiches)", product: "CAKE CAROTTE", allergens: ["gluten", "oeufs"] },
   { category: "Desserts (fiches)", product: "CAKE CHOCOLAT EXTREME", allergens: ["gluten", "oeufs", "lait"] },

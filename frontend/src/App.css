@@ -680,7 +680,7 @@ body {
 
 .header-lang-discret .header-lang-option-flag {
   display: inline;
-  font-size: 1.25em;
+  font-size: 1em;
   line-height: 1;
 }
 
@@ -712,6 +712,14 @@ body {
   box-sizing: border-box;
 }
 
+/* Menu langue en portail : superposé à la page, au-dessus du menu mobile sur mobile */
+.header-lang-menu--portal {
+  position: fixed !important;
+  right: auto;
+  margin: 0;
+  z-index: 2147483647;
+}
+
 .header-lang-option {
   display: flex;
   align-items: center;
@@ -738,7 +746,7 @@ body {
 }
 
 .header-lang-option-flag {
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1;
 }
 
@@ -3507,7 +3515,7 @@ body {
   }
 
   .nav-right.mobile-open .header-lang-option-flag {
-    font-size: 15px;
+    font-size: 1em;
     font-weight: 500;
   }
 

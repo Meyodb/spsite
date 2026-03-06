@@ -161,8 +161,6 @@ export const PRODUCTS = [
   { id: 52, name: "TARTE AUX NOIX DE PÉCAN", category: "DESSERTS", subCategory: "DOUCEURS", price: "4", description: "Farine de blé, margarine végétale, arôme naturel, sucre roux, noix de pécan" },
   { id: 123, name: "PERLES CHIA FRAMBOISE", category: "DESSERTS", subCategory: "DOUCEURS", price: "4", description: "Lait de coco, framboise, graines de chia, coco râpée" },
   { id: 124, name: "PERLES CHIA MANGUE PASSION", category: "DESSERTS", subCategory: "DOUCEURS", price: "4", description: "Lait de coco, mangue, passion, graines de chia" },
-  { id: 125, name: "PANACOTTA FRAISE FRAMBOISE", category: "DESSERTS", subCategory: "DOUCEURS", price: "4", description: "Crème, fraise, framboise, gélatine" },
-  { id: 126, name: "TARTALETTE NOIX DE PÉCAN", category: "DESSERTS", subCategory: "DOUCEURS", price: "4", description: "Farine de blé, noix de pécan, beurre, œuf" },
   { id: 66, name: "MOUSSE DE SKYR FRUITS ROUGES", category: "DESSERTS", subCategory: "DOUCEURS", price: "3.5", description: "Skyr, pomme, crème, fraises, framboises, mélange de graines" },
   { id: 65, name: "SALADE FRUIT", category: "DESSERTS", subCategory: "DOUCEURS", price: "4", extraPrice: "+0,5€", description: "Fruits de saison" },
   { id: 67, name: "TARTE MYRTILLE", category: "DESSERTS", subCategory: "PATISSERIE", price: "4.5", description: "Myrtilles fraîches" },
