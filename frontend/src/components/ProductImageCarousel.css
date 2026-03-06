@@ -41,9 +41,10 @@
   display: block;
 }
 
-/* Grille produits : cadrage pour voir totalement le haut de la soupe (surface, bord du gobelet) */
+/* Grille produits : format 4:3, soupe centrée et visible en entier */
 .menu-test-product-image-wrap .product-image-carousel-img {
-  object-position: center 35%;
+  object-fit: contain;
+  object-position: center center;
 }
 
 /* Lightbox : object-fit contain pour voir l'image en entier */

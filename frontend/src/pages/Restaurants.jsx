@@ -18,6 +18,7 @@ import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
 import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
 import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
 import photoBourse from "../assets/images/restaurants/photo_bourse.png";
+import photoOpera from "../assets/images/restaurants/photo_opera.png";
 import iconMonumentEiffel from "../assets/images/monuments/paris-eiffel.svg";
 import iconMonumentArcTriomphe from "../assets/images/monuments/paris-arc-de-triomphe.svg";
 import iconMonumentNotreDame from "../assets/images/monuments/paris-notre-dame.svg";
@@ -46,6 +47,7 @@ const restaurantPhotos = {
   3: [photoHaussmann],                 // HAUSSMANN
   4: [photoEcuries2, photoEcuries],    // ÉCURIES
   5: [photoEtoile, photoKleber2],      // ÉTOILE - Avenue Kléber (boutique Keleber)
+  6: [photoOpera],                     // OPÉRA
   7: [photoNeuilly],                   // NEUILLY
   8: [photoHonore],                    // HONORÉ - Saint Honoré
   9: [photoMadeleine],                 // MADELEINE

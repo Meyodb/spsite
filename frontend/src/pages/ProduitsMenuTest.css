@@ -337,12 +337,14 @@
 /* ── Layout principal ────────────────────────────── */
 .menu-test-container {
   display: flex;
+  gap: 16px;
   max-width: 1400px;
   margin: 0 auto;
   min-height: calc(100vh - 80px);
   position: relative;
   z-index: 1;
   align-items: flex-start;
+  gap: 16px;
 }
 
 /* ── Sidebar ─────────────────────────────────────── */
@@ -358,6 +360,7 @@
   height: fit-content;
   max-height: calc(100vh - 70px);
   overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
 .menu-test-sidebar--hidden {
