@@ -465,12 +465,23 @@
 .menu-test-title-size-row {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   margin-bottom: 24px;
   padding-bottom: 18px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.menu-test-title-size-row .menu-test-content-title {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.menu-test-title-size-row .menu-test-size-price-block,
+.menu-test-title-size-row .menu-test-category-price {
+  flex-shrink: 0;
 }
 
 .menu-test-title-size-row .menu-test-content-title {
@@ -887,8 +898,8 @@
   }
 
   .menu-test-title-size-row {
-    flex-wrap: wrap;
-    gap: 14px;
+    flex-wrap: nowrap;
+    gap: 12px;
   }
 
   .menu-test-size-price-block,
@@ -1002,18 +1013,26 @@
   }
 
   .menu-test-title-size-row {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .menu-test-title-size-row .menu-test-content-title {
+    font-size: 18px;
   }
 
   .menu-test-size-price-block {
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
 
   .menu-test-size-option {
-    min-width: 75px;
-    padding: 0 10px;
+    min-width: 70px;
+    padding: 0 8px;
+    gap: 6px;
   }
 
   .menu-test-size-option:last-child {
