@@ -21,9 +21,19 @@ export const Header = () => {
 
   useEffect(() => {
     const lockScroll = mobileMenuOpen || langDropdownOpen;
-    document.body.style.overflow = lockScroll ? "hidden" : "";
-    return () => {
+    if (lockScroll) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      document.body.classList.add("burger-menu-open");
+    } else {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.classList.remove("burger-menu-open");
+    }
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.classList.remove("burger-menu-open");
     };
   }, [mobileMenuOpen, langDropdownOpen]);
 
@@ -36,6 +46,15 @@ export const Header = () => {
 
   useEffect(() => {
     if (!mobileMenuOpen) setLangDropdownOpen(false);
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onEscape = (e) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
   }, [mobileMenuOpen]);
 
   useEffect(() => {
@@ -88,10 +107,20 @@ export const Header = () => {
     </>
   );
 
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
   const mobileMenuPortal = mobileMenuOpen && createPortal(
     <div className="mobile-menu-portal" aria-hidden="false">
-      <div className="mobile-overlay" onClick={() => setMobileMenuOpen(false)} aria-hidden="true" />
+      <div className="mobile-overlay" onClick={closeMobileMenu} aria-hidden="true" />
       <div className="nav-right mobile-open mobile-menu-panel" onClick={(e) => e.stopPropagation()}>
+        <button
+          type="button"
+          className="mobile-menu-close-btn"
+          onClick={closeMobileMenu}
+          aria-label={t("header.ariaCloseMenu")}
+        >
+          <span aria-hidden="true">×</span>
+        </button>
         {navLinks}
       </div>
     </div>,
@@ -101,7 +130,6 @@ export const Header = () => {
 
   return (
     <>
-      {mobileMenuPortal}
       <header className={headerClasses}>
         <nav className="main-nav">
           <div className="header-bar">
@@ -206,6 +234,6 @@ export const Header = () => {
       </nav>
     </header>
     {mobileMenuPortal}
-  </>
+    </>
   );
 };
