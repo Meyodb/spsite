@@ -8,6 +8,7 @@ import {
   DESSERT_SUBCATEGORIES_ORDER,
   DESSERT_SUBCATEGORIES_COMPACT_ORDER,
   DESSERT_SUBCATEGORY_PRICES,
+  productHasPhoto,
 } from "../data/productsData";
 import { AllergenPictograms, getAllergensForProduct } from "../components/AllergenPictograms";
 import { ProductImage } from "../components/ProductImage";
@@ -57,7 +58,9 @@ export const ProduitsMenuTest = () => {
 
   const productsByCategory = useMemo(() => {
     const acc = {};
+    const categoriesRequiringPhoto = ["PLATS CHAUDS", "SALADES", "SANDWICH"];
     visibleProducts.forEach((p) => {
+      if (categoriesRequiringPhoto.includes(p.category) && !productHasPhoto(p)) return;
       if (!acc[p.category]) acc[p.category] = [];
       acc[p.category].push(p);
     });
