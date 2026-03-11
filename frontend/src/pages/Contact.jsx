@@ -88,11 +88,17 @@ export const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // Ici vous pouvez ajouter l'appel API pour envoyer le formulaire
-      // await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
-      
-      // Simulation d'envoi
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       setSubmitSuccess(true);
       setFormData({
@@ -332,8 +338,8 @@ export const Contact = () => {
                   <h3 className="info-title">Informations de contact</h3>
                   <div className="info-item">
                     <span className="info-label">Email</span>
-                    <a href="mailto:contact@soup-juice.fr" className="info-value">
-                      contact@soup-juice.fr
+                    <a href="mailto:contact@soup-juice.com" className="info-value">
+                      contact@soup-juice.com
                     </a>
                   </div>
                   <div className="info-item">

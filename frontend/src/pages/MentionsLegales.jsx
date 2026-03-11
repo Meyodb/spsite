@@ -28,7 +28,7 @@ export const MentionsLegales = () => {
             <section className="legal-block">
               <h2 className="legal-block-title">{t("common.contact")}</h2>
               <div className="legal-block-content">
-                <p>contact@soup-juice.fr</p>
+                <p>contact@soup-juice.com</p>
               </div>
             </section>
 

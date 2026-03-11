@@ -3,6 +3,8 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import { saveContactMessage, listContactMessages } from "./db.js";
+import { sendContactEmail } from "./mail.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -48,6 +50,82 @@ const productsPath = path.join(__dirname, "data", "products-soup-juice.json");
 app.get("/api/menu", (_, res) => res.json(menu));
 app.get("/api/promos", (_, res) => res.json(promos));
 app.get("/api/stores", (_, res) => res.json(stores));
+
+app.post("/api/contact", async (req, res) => {
+  const {
+    sujet,
+    nom,
+    prenom,
+    email,
+    telephone,
+    entreprise,
+    fonction,
+    message,
+  } = req.body || {};
+
+  // Validation basique côté serveur (le frontend valide déjà, mais on revérifie)
+  const errors = [];
+
+  if (!sujet) errors.push("sujet");
+  if (!nom || !String(nom).trim()) errors.push("nom");
+  if (!prenom || !String(prenom).trim()) errors.push("prenom");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) errors.push("email");
+  if (!telephone || !String(telephone).trim()) errors.push("telephone");
+  if (!message || String(message).trim().length < 10) errors.push("message");
+
+  if (sujet === "pro") {
+    if (!entreprise || !String(entreprise).trim()) errors.push("entreprise");
+    if (!fonction || !String(fonction).trim()) errors.push("fonction");
+  }
+
+  if (errors.length > 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Champs manquants ou invalides",
+      invalidFields: errors,
+    });
+  }
+
+  const storedMessage = {
+    sujet,
+    nom,
+    prenom,
+    email,
+    telephone,
+    entreprise: entreprise || null,
+    fonction: fonction || null,
+    message,
+    created_at: new Date().toISOString(),
+    ip: req.ip,
+    user_agent: req.get("user-agent") || null,
+  };
+
+  const id = saveContactMessage(storedMessage);
+
+  console.log("---- Nouveau message de contact (DB) ----");
+  console.log({ id, ...storedMessage });
+
+  // Envoi d'email non bloquant pour le client : on essaie, mais on ne casse pas la réponse en cas d'erreur
+  try {
+    await sendContactEmail({ id, ...storedMessage });
+  } catch (err) {
+    console.error("Erreur lors de l'envoi de l'email de contact:", err);
+  }
+
+  return res.status(201).json({
+    success: true,
+    message: "Message reçu, merci pour votre contact.",
+    id,
+  });
+});
+
+// (Optionnel) route d'admin pour lister les derniers messages
+app.get("/api/contact/messages", (req, res) => {
+  const limit = Number(req.query.limit) || 100;
+  const safeLimit = Number.isFinite(limit) && limit > 0 && limit <= 500 ? limit : 100;
+  const messages = listContactMessages(safeLimit);
+  res.json({ count: messages.length, messages });
+});
 
 // Visibilité des produits : utilisé par la page Nos produits. Si visible-products.json n'existe pas, tous les produits sont visibles.
 app.get("/api/products/visibility", (_, res) => {

@@ -8,6 +8,9 @@ frontend/dist/
 frontend/dist-ssr/
 *.local
 
+# Bases de données locales
+server/data/*.db
+
 # Logs
 logs/
 *.log
