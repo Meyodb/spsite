@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "../components/PageSEO";
 import "./Allergenes.css";
 
 const ALLERGEN_KEYS = [
@@ -136,6 +137,12 @@ export const Allergenes = () => {
 
   return (
     <main className="allergenes-page">
+      <PageSEO
+        title="Allergènes"
+        description="Consultez la liste complète des allergènes présents dans les produits Soup & Juice. Informations détaillées pour chaque recette."
+        path="/allergenes"
+        noindex
+      />
       <div className="allergenes-container">
         <header className="allergenes-header hide-on-print">
           <h1 className="allergenes-title">{t("allergens.title")}</h1>

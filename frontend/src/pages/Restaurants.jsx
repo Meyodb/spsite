@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "lucide-react";
+import { PageSEO } from "../components/PageSEO";
 import { Map, Marker, Popup } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Restaurants.css";
@@ -27,6 +28,7 @@ import iconMonumentPompidou from "../assets/images/monuments/paris-pompidou.svg"
 import { metroStationsParis } from "../data/metroStationsParis";
 import { RATP_LINE_COLORS } from "../data/ratpLineColors";
 import { monumentsParis } from "../data/monumentsParis";
+import { RESTAURANTS, RESTAURANT_COUNT } from "../data/restaurantsData";
 
 const monumentIcons = {
   eiffel: iconMonumentEiffel,
@@ -257,18 +259,7 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
   );
 };
 
-// Coordonnées vérifiées via géocodage OSM (Nominatim) — [longitude, latitude]
-const restaurants = [
-  { id: 1, name: "SOUP & JUICE ST LAZARE", address: "4 Rue de Londres, 75008 Paris", coordinates: [2.33046, 48.87678], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 2, name: "SOUP & JUICE BOURSE", address: "135 Rue Montmartre, 75002 Paris", coordinates: [2.34470, 48.86575], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 3, name: "SOUP & JUICE HAUSSMANN", address: "23 Rue Taitbout, 75009 Paris", coordinates: [2.33527, 48.87312], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 4, name: "SOUP & JUICE ÉCURIES", address: "7 Rue des Petites Écuries, 75010 Paris", coordinates: [2.35344, 48.87306], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 5, name: "SOUP & JUICE ÉTOILE", address: "54 Avenue Kléber, 75016 Paris", coordinates: [2.29115, 48.86880], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 6, name: "SOUP & JUICE OPÉRA", address: "24 Rue du 4 septembre, 75002 Paris", coordinates: [2.33515, 48.86994], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 7, name: "SOUP & JUICE NEUILLY", address: "38 Rue Ybry, 92200 Neuilly-sur-Seine", coordinates: [2.26032, 48.88753], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "06 37 79 03 01", deliverooUrl: "https://deliveroo.fr/fr/menu/paris/neuilly-sur-seine/soup-and-juice-neuilly" },
-  { id: 8, name: "SOUP & JUICE HONORÉ", address: "38 Rue de Berri, 75008 Paris", coordinates: [2.30700, 48.87390], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-  { id: 9, name: "SOUP & JUICE MADELEINE", address: "24 Rue d'Anjou, 75008 Paris", coordinates: [2.32175, 48.87125], hours: "Lundi - Vendredi: 9h00 - 15h00", phone: "+33 1 XX XX XX XX" },
-];
+const restaurants = RESTAURANTS;
 
 const center = [
   restaurants.reduce((s, r) => s + r.coordinates[0], 0) / restaurants.length,
@@ -341,13 +332,40 @@ export const Restaurants = () => {
 
   return (
     <main className="restaurants-page">
+      <PageSEO
+        title="Nos Restaurants à Paris"
+        description={`Retrouvez les ${RESTAURANT_COUNT} restaurants Soup & Juice à Paris et Neuilly : adresses, horaires, carte interactive. Soupes, jus frais et menus healthy près de chez vous.`}
+        path="/restaurants"
+        jsonLd={restaurants.map((r) => ({
+          "@context": "https://schema.org",
+          "@type": "Restaurant",
+          name: r.name,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: r.address.replace(/,\s*\d{5}\s*.+$/, ""),
+            addressLocality: r.address.match(/\d{5}\s+(.+)/)?.[1] || "Paris",
+            postalCode: r.address.match(/(\d{5})/)?.[1] || "",
+            addressCountry: "FR",
+          },
+          geo: { "@type": "GeoCoordinates", latitude: r.coordinates[1], longitude: r.coordinates[0] },
+          openingHoursSpecification: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            opens: "09:00",
+            closes: "15:00",
+          },
+          servesCuisine: ["Soupes", "Jus frais", "Healthy", "Salades"],
+          priceRange: "€",
+          url: "https://www.soup-juice.net/restaurants",
+        }))}
+      />
       <div className="restaurants-container">
         <div
           className={`restaurants-layout${infoWindowOpen ? " restaurants-layout--with-panel" : ""}`}
         >
           <div className="restaurants-sidebar">
             <div className="restaurants-list-header">
-              <p className="restaurants-list-title">{t("restaurants.listTitle")}</p>
+              <h1 className="restaurants-list-title">{t("restaurants.listTitle")}</h1>
             </div>
             <div className="restaurants-list">
               {restaurants.map((restaurant) => (

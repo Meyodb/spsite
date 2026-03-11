@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -8,18 +9,19 @@ export const Footer = () => {
         <div className="footer-column">
           <h4 className="footer-title">{t("footer.titleYou")}</h4>
           <ul className="footer-links">
-            <li><a href="#/adn">{t("footer.engagements")}</a></li>
-            <li><a href="#/nos-piliers">{t("footer.piliers")}</a></li>
-            <li><a href="#/restaurants">{t("footer.restaurants")}</a></li>
+            <li><Link to="/adn">{t("footer.engagements")}</Link></li>
+            <li><Link to="/nos-piliers">{t("footer.piliers")}</Link></li>
+            <li><Link to="/restaurants">{t("footer.restaurants")}</Link></li>
+            <li><Link to="/catering">{t("footer.catering")}</Link></li>
           </ul>
         </div>
         <div className="footer-column">
           <h4 className="footer-title">{t("footer.support")}</h4>
           <ul className="footer-links">
-            <li><a href="#/contact">{t("footer.contact")}</a></li>
-            <li><a href="#/allergenes">{t("footer.allergens")}</a></li>
-            <li><a href="#/contact">{t("footer.recruitment")}</a></li>
-            <li><a href="#/contact">{t("footer.catering")}</a></li>
+            <li><Link to="/contact">{t("footer.contact")}</Link></li>
+            <li><Link to="/faq">FAQ</Link></li>
+            <li><Link to="/allergenes">{t("footer.allergens")}</Link></li>
+            <li><Link to="/contact">{t("footer.recruitment")}</Link></li>
           </ul>
         </div>
         <div className="footer-column">
@@ -60,13 +62,13 @@ export const Footer = () => {
       <div className="footer-bottom">
         <p>{t("footer.copyright")}</p>
         <div className="footer-legal">
-          <a href="#/mentions-legales">{t("footer.legal")}</a>
+          <Link to="/mentions-legales">{t("footer.legal")}</Link>
           <span className="footer-separator">|</span>
-          <a href="#/politique-confidentialite">{t("footer.privacy")}</a>
+          <Link to="/politique-confidentialite">{t("footer.privacy")}</Link>
           <span className="footer-separator">|</span>
-          <a href="#/politique-cookies">{t("footer.cookies")}</a>
+          <Link to="/politique-cookies">{t("footer.cookies")}</Link>
           <span className="footer-separator">|</span>
-          <a href="#/cgu">{t("footer.cgu")}</a>
+          <Link to="/cgu">{t("footer.cgu")}</Link>
         </div>
       </div>
     </footer>

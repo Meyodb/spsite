@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "../components/PageSEO";
 import "./Legal.css";
 
 export const MentionsLegales = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
+      <PageSEO title="Mentions légales" description="Mentions légales du site Soup & Juice." path="/mentions-legales" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.mentionsTitle")}</h1>

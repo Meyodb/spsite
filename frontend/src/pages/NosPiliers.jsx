@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
+import { PageSEO } from "../components/PageSEO";
 import qualiteImage from "../assets/images/photo-menu/Photoroom_20250704_124732.JPG";
 
 export const NosPiliers = () => {
@@ -7,17 +8,22 @@ export const NosPiliers = () => {
 
   return (
     <main className="piliers-page">
+      <PageSEO
+        title="Nos 3 Piliers : Forme, Régime, Santé"
+        description="Les 3 piliers de Soup & Juice : Forme, Régime et Santé. Des recettes conçues pour votre bien-être au quotidien avec des ingrédients frais et naturels."
+        path="/nos-piliers"
+      />
       <AnimatedSection id="piliers" animation="fadeInUp" className="piliers-section">
         {/* Section Les 3 piliers : FORME, RÉGIME, SANTÉ */}
         <section className="adn-pillars-section">
           <div className="adn-pillars-container">
             <AnimatedItem animation="fadeInUp" delay={100}>
-              <h2 className="adn-pillars-section-title">{t("adn.pillars.title")}</h2>
+              <h1 className="adn-pillars-section-title">{t("adn.pillars.title")}</h1>
             </AnimatedItem>
 
             <AnimatedItem animation="fadeInUp" delay={120}>
               <div className="adn-pillars-photo">
-                <img src={qualiteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" />
+                <img src={qualiteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" loading="lazy" decoding="async" />
               </div>
             </AnimatedItem>
 

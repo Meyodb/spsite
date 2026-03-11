@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
+import { PageSEO } from "../components/PageSEO";
 import videoAccueil from "../assets/videos/Video_accueil.MP4";
 
 export const Home = () => {
@@ -42,6 +43,27 @@ export const Home = () => {
 
   return (
     <main>
+      <PageSEO
+        description="Soup & Juice : soupes et jus frais pressés depuis 2001 à Paris. Découvrez nos recettes healthy, nos restaurants et nos engagements qualité."
+        path="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Soup & Juice",
+          url: "https://www.soup-juice.net",
+          logo: "https://www.soup-juice.net/og-default.jpg",
+          foundingDate: "2001",
+          description: "Soupes et jus frais pressés depuis 2001 à Paris",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Paris",
+            addressCountry: "FR",
+          },
+          sameAs: [
+            "https://www.instagram.com/soupjuiceparis/",
+          ],
+        }}
+      />
       <section className="hero-section">
         <video 
           className="hero-video" 

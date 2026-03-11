@@ -87,6 +87,7 @@ export function ProductImageCarousel({ productId, alt, className, imageCount = 1
             alt={`${alt ?? ""} (${currentIndex + 1}/${totalSlides})`}
             className="product-image-carousel-img"
             loading="lazy"
+            decoding="async"
             onError={() => handleImageError(currentIndex)}
             onLoad={() => handleImageLoad(currentIndex)}
           />
@@ -134,6 +135,7 @@ function ProductImageCarouselSingle({ productId, alt, className }) {
       alt={alt ?? ""}
       className={className}
       loading="lazy"
+      decoding="async"
       onError={() => setTryIndex((i) => (i + 1 < urls.length ? i + 1 : urls.length))}
     />
   );

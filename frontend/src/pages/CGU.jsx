@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "../components/PageSEO";
 import "./Legal.css";
 
 export const CGU = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
+      <PageSEO title="Conditions générales d'utilisation" description="Conditions générales d'utilisation du site Soup & Juice." path="/cgu" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.cguTitle")}</h1>

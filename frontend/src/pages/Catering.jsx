@@ -1,6 +1,7 @@
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { PageSEO } from "../components/PageSEO";
 import traiteurJus from "../assets/images/catering/traiteur-jus.png";
 import miniSalades from "../assets/images/catering/mini-salades.png";
 
@@ -11,6 +12,11 @@ export const Catering = () => {
 
   return (
     <main className="adn-page">
+      <PageSEO
+        title="Traiteur & Catering"
+        description="Soup & Juice traiteur : plateaux de jus frais, soupes, mini-salades et finger food pour vos événements d'entreprise et réceptions à Paris."
+        path="/catering"
+      />
       <AnimatedSection id="catering" animation="fadeInUp" className="adn-section">
         {/* Bloc texte principal + photo jus */}
         <section className="adn-identity-section">
@@ -18,7 +24,7 @@ export const Catering = () => {
             <div className="adn-identity-content">
               <AnimatedItem animation="fadeInUp" delay={100}>
                 <span className="adn-section-label">{t("catering.label")}</span>
-                <h2 className="adn-identity-title">{t("catering.title")}</h2>
+                <h1 className="adn-identity-title">{t("catering.title")}</h1>
                 <p className="adn-identity-text">
                   {description}
                 </p>
@@ -30,6 +36,8 @@ export const Catering = () => {
                   src={traiteurJus}
                   alt={t("catering.imageJuicesAlt")}
                   className="adn-photo"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </AnimatedItem>
@@ -45,6 +53,8 @@ export const Catering = () => {
                   src={miniSalades}
                   alt={t("catering.imageBuffetAlt")}
                   className="adn-photo"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </AnimatedItem>

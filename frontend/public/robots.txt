@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /mentions-legales
+Disallow: /politique-confidentialite
+Disallow: /politique-cookies
+Disallow: /cgu
+Disallow: /formation
+
+Sitemap: https://www.soup-juice.net/sitemap.xml

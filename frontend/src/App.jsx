@@ -1,49 +1,39 @@
-import { lazy, Suspense, useEffect } from "react";
-import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./App.css";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Home } from "./pages/Home";
-import { ADN } from "./pages/ADN";
-import { NosPiliers } from "./pages/NosPiliers";
-import { ProduitsMenuTest } from "./pages/ProduitsMenuTest";
-import { Contact } from "./pages/Contact";
-import { Allergenes } from "./pages/Allergenes";
-import { Catering } from "./pages/Catering";
 
+const ADN = lazy(() => import("./pages/ADN").then((m) => ({ default: m.ADN })));
+const NosPiliers = lazy(() => import("./pages/NosPiliers").then((m) => ({ default: m.NosPiliers })));
+const ProduitsMenuTest = lazy(() => import("./pages/ProduitsMenuTest").then((m) => ({ default: m.ProduitsMenuTest })));
+const Contact = lazy(() => import("./pages/Contact").then((m) => ({ default: m.Contact })));
+const Allergenes = lazy(() => import("./pages/Allergenes").then((m) => ({ default: m.Allergenes })));
+const Catering = lazy(() => import("./pages/Catering").then((m) => ({ default: m.Catering })));
 const Restaurants = lazy(() => import("./pages/Restaurants").then((m) => ({ default: m.Restaurants })));
+const MentionsLegales = lazy(() => import("./pages/MentionsLegales").then((m) => ({ default: m.MentionsLegales })));
+const PolitiqueConfidentialite = lazy(() => import("./pages/PolitiqueConfidentialite").then((m) => ({ default: m.PolitiqueConfidentialite })));
+const PolitiqueCookies = lazy(() => import("./pages/PolitiqueCookies").then((m) => ({ default: m.PolitiqueCookies })));
+const CGU = lazy(() => import("./pages/CGU").then((m) => ({ default: m.CGU })));
+const FAQ = lazy(() => import("./pages/FAQ").then((m) => ({ default: m.FAQ })));
+const Formation = lazy(() => import("./pages/Formation").then((m) => ({ default: m.Formation })));
+const FormationSection = lazy(() => import("./pages/FormationSection").then((m) => ({ default: m.FormationSection })));
 
 function LoadingFallback() {
   const { t } = useTranslation();
-  return <>{t("common.loading")}</>;
+  return <div style={{ padding: "2rem", textAlign: "center" }}>{t("common.loading")}</div>;
 }
-import { MentionsLegales } from "./pages/MentionsLegales";
-import { PolitiqueConfidentialite } from "./pages/PolitiqueConfidentialite";
-import { PolitiqueCookies } from "./pages/PolitiqueCookies";
-import { CGU } from "./pages/CGU";
-import { Formation } from "./pages/Formation";
-import { FormationSection } from "./pages/FormationSection";
 
-const SITE_URL = import.meta.env.VITE_SITE_URL || "";
+function LazyPage({ children }) {
+  return <Suspense fallback={<LoadingFallback />}>{children}</Suspense>;
+}
 
 function AppContent() {
   const { pathname } = useLocation();
   const isHome = pathname === "/" || pathname === "";
-
-  useEffect(() => {
-    if (!SITE_URL) return;
-    const hashPath = pathname && pathname !== "/" ? `#${pathname}` : "";
-    const canonical = `${SITE_URL.replace(/\/$/, "")}${hashPath}`;
-    let link = document.querySelector('link[rel="canonical"]');
-    if (!link) {
-      link = document.createElement("link");
-      link.rel = "canonical";
-      document.head.appendChild(link);
-    }
-    if (link.href !== canonical) link.href = canonical;
-  }, [pathname]);
 
   return (
     <>
@@ -52,19 +42,20 @@ function AppContent() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/produits" element={<ProduitsMenuTest />} />
-          <Route path="/adn" element={<ADN />} />
-          <Route path="/nos-piliers" element={<NosPiliers />} />
-          <Route path="/catering" element={<Catering />} />
-          <Route path="/restaurants" element={<Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}><LoadingFallback /></div>}><Restaurants /></Suspense>} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/allergenes" element={<Allergenes />} />
-          <Route path="/mentions-legales" element={<MentionsLegales />} />
-          <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
-          <Route path="/politique-cookies" element={<PolitiqueCookies />} />
-          <Route path="/cgu" element={<CGU />} />
-          <Route path="/formation" element={<Formation />} />
-          <Route path="/formation/:sectionId" element={<FormationSection />} />
+          <Route path="/produits" element={<LazyPage><ProduitsMenuTest /></LazyPage>} />
+          <Route path="/adn" element={<LazyPage><ADN /></LazyPage>} />
+          <Route path="/nos-piliers" element={<LazyPage><NosPiliers /></LazyPage>} />
+          <Route path="/catering" element={<LazyPage><Catering /></LazyPage>} />
+          <Route path="/restaurants" element={<LazyPage><Restaurants /></LazyPage>} />
+          <Route path="/contact" element={<LazyPage><Contact /></LazyPage>} />
+          <Route path="/allergenes" element={<LazyPage><Allergenes /></LazyPage>} />
+          <Route path="/faq" element={<LazyPage><FAQ /></LazyPage>} />
+          <Route path="/mentions-legales" element={<LazyPage><MentionsLegales /></LazyPage>} />
+          <Route path="/politique-confidentialite" element={<LazyPage><PolitiqueConfidentialite /></LazyPage>} />
+          <Route path="/politique-cookies" element={<LazyPage><PolitiqueCookies /></LazyPage>} />
+          <Route path="/cgu" element={<LazyPage><CGU /></LazyPage>} />
+          <Route path="/formation" element={<LazyPage><Formation /></LazyPage>} />
+          <Route path="/formation/:sectionId" element={<LazyPage><FormationSection /></LazyPage>} />
         </Routes>
         <Footer />
       </div>

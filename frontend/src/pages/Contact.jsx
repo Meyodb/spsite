@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./Contact.css";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
+import { PageSEO } from "../components/PageSEO";
 
 export const Contact = () => {
   const { t } = useTranslation();
@@ -126,6 +127,11 @@ export const Contact = () => {
 
   return (
     <main className="contact-page">
+      <PageSEO
+        title="Contact"
+        description="Contactez Soup & Juice : recrutement, partenariats, catering ou question sur nos produits. Réponse rapide garantie."
+        path="/contact"
+      />
       <section className="contact-hero">
         <div className="contact-hero-content">
           <AnimatedItem>

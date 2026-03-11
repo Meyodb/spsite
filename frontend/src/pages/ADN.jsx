@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
+import { PageSEO } from "../components/PageSEO";
 import recetteImage from "../assets/images/photo-menu/photo-qualite-recettes.jpg";
 import logoSoupJuice from "../assets/images/logo-vert.png";
 
@@ -9,6 +10,11 @@ export const ADN = () => {
 
   return (
     <main className="adn-page">
+      <PageSEO
+        title="Notre ADN"
+        description="Découvrez l'ADN de Soup & Juice : nos valeurs, notre savoir-faire et nos engagements pour une alimentation saine, fraîche et locale depuis 2001."
+        path="/adn"
+      />
       <AnimatedSection id="adn" animation="fadeInUp" className="adn-section">
         {/* Section Identité & Vision */}
         <section className="adn-identity-section">
@@ -21,7 +27,7 @@ export const ADN = () => {
             <div className="adn-identity-content">
               <AnimatedItem animation="fadeInUp" delay={100}>
                 <span className="adn-section-label">{t("adn.identite.label")}</span>
-                <h2 className="adn-identity-title">{t("adn.identite.title")}</h2>
+                <h1 className="adn-identity-title">{t("adn.identite.title")}</h1>
                 <p className="adn-identity-text">{t("adn.identite.text")}</p>
               </AnimatedItem>
             </div>
@@ -33,7 +39,7 @@ export const ADN = () => {
           <div className="adn-quality-container">
             <AnimatedItem animation="fadeInUp" delay={200} className="adn-quality-image">
               <div className="adn-photo-placeholder">
-                <img src={recetteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" />
+                <img src={recetteImage} alt={t("adn.qualite.imageAlt")} className="adn-photo" loading="lazy" decoding="async" />
               </div>
             </AnimatedItem>
             <div className="adn-quality-content">

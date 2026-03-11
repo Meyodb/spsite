@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "../components/PageSEO";
 import "./Legal.css";
 
 export const PolitiqueCookies = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
+      <PageSEO title="Politique cookies" description="Politique de gestion des cookies du site Soup & Juice." path="/politique-cookies" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.cookiesTitle")}</h1>

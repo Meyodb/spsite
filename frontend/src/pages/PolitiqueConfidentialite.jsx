@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "../components/PageSEO";
 import "./Legal.css";
 
 export const PolitiqueConfidentialite = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
+      <PageSEO title="Politique de confidentialité" description="Politique de confidentialité de Soup & Juice." path="/politique-confidentialite" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.privacyTitle")}</h1>

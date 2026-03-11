@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { PageSEO } from "../components/PageSEO";
 import "./ProduitsMenuTest.css";
 import {
   PRODUCTS,
@@ -121,15 +122,19 @@ export const ProduitsMenuTest = () => {
 
   return (
     <main className="produits-menu-test">
-      {/* Fond tropical avec motifs Sj food fresh */}
+      <PageSEO
+        title="Notre Carte - Soupes, Jus & Menus"
+        description="Découvrez la carte Soup & Juice : jus frais pressés, soupes maison, salades, sandwichs, plats chauds et desserts. Menus dès 13,50€ à Paris."
+        path="/produits"
+      />
       <div
         className="menu-test-tropical-background"
         style={{ backgroundImage: `url(${backImage})` }}
       />
       <div className="menu-test-background-decorations">
-        <img src={citron} alt="" className="menu-test-decoration menu-test-decoration-citron" aria-hidden />
-        <img src={ananas} alt="" className="menu-test-decoration menu-test-decoration-ananas" aria-hidden />
-        <img src={palmier} alt="" className="menu-test-decoration menu-test-decoration-palmier" aria-hidden />
+        <img src={citron} alt="" className="menu-test-decoration menu-test-decoration-citron" aria-hidden loading="lazy" decoding="async" />
+        <img src={ananas} alt="" className="menu-test-decoration menu-test-decoration-ananas" aria-hidden loading="lazy" decoding="async" />
+        <img src={palmier} alt="" className="menu-test-decoration menu-test-decoration-palmier" aria-hidden loading="lazy" decoding="async" />
       </div>
       {/* En-tête GOOD DAY - repris de la page principale */}
       <div className="menu-test-formulas-section">
@@ -165,13 +170,13 @@ export const ProduitsMenuTest = () => {
           </div>
           <div className="menu-test-formulas-photos-grid">
             <div className="menu-test-formula-photo-item">
-              <img src={photoMenu1} alt="Menu Sandwich" className="menu-test-formula-photo" />
+              <img src={photoMenu1} alt="Menu Sandwich" className="menu-test-formula-photo" loading="lazy" decoding="async" />
             </div>
             <div className="menu-test-formula-photo-item">
-              <img src={photoMenu2} alt="Menu Salade" className="menu-test-formula-photo" />
+              <img src={photoMenu2} alt="Menu Salade" className="menu-test-formula-photo" loading="lazy" decoding="async" />
             </div>
             <div className="menu-test-formula-photo-item">
-              <img src={photoMenu3} alt="Menu Plat chaud" className="menu-test-formula-photo" />
+              <img src={photoMenu3} alt="Menu Plat chaud" className="menu-test-formula-photo" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -237,9 +242,9 @@ export const ProduitsMenuTest = () => {
         <section className="menu-test-content" aria-label="Liste des produits">
           {(activeCategory === "JUS" || activeCategory === "SOUPES") ? (
             <div className="menu-test-title-size-row">
-              <h1 className="menu-test-content-title">
+              <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-              </h1>
+              </h2>
               <div className="menu-test-size-price-block menu-test-size-price-block--inline">
                 {activeCategory === "JUS" && (
                   <>
@@ -289,43 +294,43 @@ export const ProduitsMenuTest = () => {
             </div>
           ) : activeCategory === "PLATS CHAUDS" ? (
             <div className="menu-test-title-size-row">
-              <h1 className="menu-test-content-title">
+              <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-              </h1>
+              </h2>
               <span className="menu-test-category-price">7,5€</span>
             </div>
           ) : activeCategory === "SALADES" ? (
             <div className="menu-test-title-size-row">
-              <h1 className="menu-test-content-title">
+              <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-              </h1>
+              </h2>
               <span className="menu-test-category-price">6,5€</span>
             </div>
           ) : activeCategory === "SANDWICH" ? (
             <div className="menu-test-title-size-row">
-              <h1 className="menu-test-content-title">
+              <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-              </h1>
+              </h2>
               <span className="menu-test-category-price">7,5€</span>
             </div>
           ) : activeCategory === "MILKSHAKES" ? (
             <div className="menu-test-title-size-row">
-              <h1 className="menu-test-content-title">
+              <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-              </h1>
+              </h2>
               <span className="menu-test-category-price">6€</span>
             </div>
           ) : activeCategory === "BOOSTERS" ? (
             <div className="menu-test-title-size-row">
-              <h1 className="menu-test-content-title">
+              <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-              </h1>
+              </h2>
               <span className="menu-test-category-price">1€</span>
             </div>
           ) : activeCategory && (
-            <h1 className="menu-test-content-title">
+            <h2 className="menu-test-content-title">
               {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
-            </h1>
+            </h2>
           )}
 
           {activeCategory && (
