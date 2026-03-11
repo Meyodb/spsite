@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import { PageSEO } from "../components/PageSEO";
 import { Map, Marker, Popup } from "@vis.gl/react-maplibre";
@@ -260,6 +261,27 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
 };
 
 const restaurants = RESTAURANTS;
+const siteUrl = "https://www.soup-juice.net";
+const mainRestaurantId = `${siteUrl}/#restaurant`;
+const defaultMenuUrl = `${siteUrl}/produits`;
+
+const parseRestaurantAddress = (address) => {
+  const streetAddress = address.replace(/,\s*\d{5}\s*.+$/, "");
+  const postalCode = address.match(/(\d{5})/)?.[1] || "";
+  const addressLocality = address.match(/\d{5}\s+(.+)/)?.[1] || "Paris";
+
+  return {
+    streetAddress,
+    postalCode,
+    addressLocality,
+  };
+};
+
+const toAbsoluteImageUrl = (src) => {
+  if (!src) return undefined;
+  if (src.startsWith("http://") || src.startsWith("https://")) return src;
+  return `${siteUrl}${src}`;
+};
 
 const center = [
   restaurants.reduce((s, r) => s + r.coordinates[0], 0) / restaurants.length,
@@ -278,6 +300,8 @@ export const Restaurants = () => {
     zoom: 12,
   });
   const mapContainerRef = useRef(null);
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => { setIsClient(true); }, []);
 
   const getNavigationUrl = (restaurant) => {
     const query = encodeURIComponent(`${restaurant.name} ${restaurant.address}`);
@@ -336,28 +360,64 @@ export const Restaurants = () => {
         title="Nos Restaurants à Paris"
         description={`Retrouvez les ${RESTAURANT_COUNT} restaurants Soup & Juice à Paris et Neuilly : adresses, horaires, carte interactive. Soupes, jus frais et menus healthy près de chez vous.`}
         path="/restaurants"
-        jsonLd={restaurants.map((r) => ({
-          "@context": "https://schema.org",
-          "@type": "Restaurant",
-          name: r.name,
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: r.address.replace(/,\s*\d{5}\s*.+$/, ""),
-            addressLocality: r.address.match(/\d{5}\s+(.+)/)?.[1] || "Paris",
-            postalCode: r.address.match(/(\d{5})/)?.[1] || "",
-            addressCountry: "FR",
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": ["Restaurant", "LocalBusiness"],
+            "@id": mainRestaurantId,
+            name: "Soup & Juice",
+            url: `${siteUrl}/restaurants`,
+            image: `${siteUrl}/og-default.jpg`,
+            logo: `${siteUrl}/og-default.jpg`,
+            telephone: "06 37 79 03 01",
+            sameAs: ["https://www.instagram.com/soupjuiceparis/"],
+            menu: defaultMenuUrl,
+            servesCuisine: ["Soupes", "Jus frais", "Healthy", "Salades"],
+            priceRange: "€",
+            areaServed: ["Paris", "Neuilly-sur-Seine"],
           },
-          geo: { "@type": "GeoCoordinates", latitude: r.coordinates[1], longitude: r.coordinates[0] },
-          openingHoursSpecification: {
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-            opens: "09:00",
-            closes: "15:00",
-          },
-          servesCuisine: ["Soupes", "Jus frais", "Healthy", "Salades"],
-          priceRange: "€",
-          url: "https://www.soup-juice.net/restaurants",
-        }))}
+          ...restaurants.map((r) => {
+            const parsedAddress = parseRestaurantAddress(r.address);
+            const restaurantImages = (restaurantPhotos[r.id] || []).map(toAbsoluteImageUrl);
+            const hasKnownPhone = Boolean(r.phone) && !r.phone.includes("XX");
+
+            return {
+              "@context": "https://schema.org",
+              "@type": "Restaurant",
+              "@id": `${siteUrl}/restaurants#restaurant-${r.id}`,
+              name: r.name,
+              branchOf: { "@id": mainRestaurantId },
+              url: r.slug ? `${siteUrl}/restaurants/${r.slug}` : `${siteUrl}/restaurants`,
+              ...(restaurantImages.length > 0 ? { image: restaurantImages } : { image: `${siteUrl}/og-default.jpg` }),
+              ...(hasKnownPhone ? { telephone: r.phone } : {}),
+              ...(r.deliverooUrl
+                ? { sameAs: ["https://www.instagram.com/soupjuiceparis/", r.deliverooUrl] }
+                : { sameAs: ["https://www.instagram.com/soupjuiceparis/"] }),
+              menu: r.deliverooUrl || defaultMenuUrl,
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: parsedAddress.streetAddress,
+                addressLocality: parsedAddress.addressLocality,
+                postalCode: parsedAddress.postalCode,
+                addressCountry: "FR",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: r.coordinates[1],
+                longitude: r.coordinates[0],
+              },
+              hasMap: getNavigationUrl(r),
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                opens: "09:00",
+                closes: "15:00",
+              },
+              servesCuisine: ["Soupes", "Jus frais", "Healthy", "Salades"],
+              priceRange: "€",
+            };
+          }),
+        ]}
       />
       <div className="restaurants-container">
         <div
@@ -388,6 +448,18 @@ export const Restaurants = () => {
                     <div className="restaurant-info">
                       <span className="restaurant-hours">{restaurant.hours}</span>
                       <div className="restaurant-card-actions">
+                        {restaurant.slug && (
+                          <Link
+                            to={`/restaurants/${restaurant.slug}`}
+                            className="restaurant-navigation-btn restaurant-detail-link-btn"
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label={`Voir la fiche - ${restaurant.name}`}
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </Link>
+                        )}
                         {restaurant.deliverooUrl && (
                           <a
                             href={restaurant.deliverooUrl}
@@ -455,14 +527,24 @@ export const Restaurants = () => {
                   </span>
                   {selectedRestaurant.address}
                 </p>
-                <a
-                  href={getNavigationUrl(selectedRestaurant)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="restaurant-detail-panel-directions"
-                >
-                  {t("restaurants.popupNavigate")}
-                </a>
+                <div className="restaurant-detail-panel-links">
+                  <a
+                    href={getNavigationUrl(selectedRestaurant)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="restaurant-detail-panel-directions"
+                  >
+                    {t("restaurants.popupNavigate")}
+                  </a>
+                  {selectedRestaurant.slug && (
+                    <Link
+                      to={`/restaurants/${selectedRestaurant.slug}`}
+                      className="restaurant-detail-panel-full-link"
+                    >
+                      Voir la fiche complète →
+                    </Link>
+                  )}
+                </div>
                 <div className="restaurant-detail-panel-hours">
                   <h3 className="restaurant-detail-panel-hours-title">{t("restaurants.hoursTitle")}</h3>
                   <p className="restaurant-detail-panel-hours-text">
@@ -480,7 +562,7 @@ export const Restaurants = () => {
           )}
 
           <div className="map-container" ref={mapContainerRef}>
-            <Map
+            {isClient && <Map
               {...viewState}
               onMove={(evt) => setViewState(evt.viewState)}
               style={{ width: "100%", height: "100%" }}
@@ -656,7 +738,7 @@ export const Restaurants = () => {
                   </div>
                 );
               })}
-            </Map>
+            </Map>}
             <p className="map-zoom-hint" aria-hidden="true">
               {t("restaurants.mapZoomHint")}
             </p>

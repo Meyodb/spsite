@@ -120,7 +120,7 @@
 .form-textarea:focus {
   outline: none;
   border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(130, 144, 123, 0.1);
+  box-shadow: 0 0 0 3px rgba(130, 144, 123, 0.3);
 }
 
 .form-input::placeholder,

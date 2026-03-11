@@ -408,6 +408,12 @@
   gap: 0.5rem;
 }
 
+.restaurant-detail-panel-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
 .restaurant-detail-panel-directions {
   color: var(--green-dark);
   text-decoration: underline;
@@ -419,6 +425,31 @@
 
 .restaurant-detail-panel-directions:hover {
   color: var(--green);
+}
+
+.restaurant-detail-panel-full-link {
+  display: inline-block;
+  color: var(--green-dark);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+.restaurant-detail-panel-full-link:hover {
+  color: var(--green);
+}
+
+.restaurant-detail-link-btn {
+  background: var(--green-dark);
+  box-shadow: 0 2px 4px rgba(90, 102, 84, 0.25);
+}
+
+.restaurant-detail-link-btn:hover {
+  background: var(--green);
+  box-shadow: 0 4px 8px rgba(90, 102, 84, 0.35);
 }
 
 .restaurant-detail-panel-hours {
@@ -531,6 +562,7 @@
 .restaurants-search-input:focus {
   outline: none;
   border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(130, 144, 123, 0.3);
 }
 
 .restaurants-search-input::placeholder {

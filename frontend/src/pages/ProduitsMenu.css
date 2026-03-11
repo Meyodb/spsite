@@ -265,7 +265,7 @@
 
 .menu-test-mobile-select-trigger:focus {
   outline: none;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 0 3px rgba(130, 144, 123, 0.3);
 }
 
 .menu-test-mobile-select-chevron {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
@@ -10,6 +10,21 @@ export const Home = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const loadHeroVideo = () => setShouldLoadHeroVideo(true);
+
+    if ("requestIdleCallback" in window) {
+      const idleCallbackId = window.requestIdleCallback(loadHeroVideo, { timeout: 2500 });
+      return () => window.cancelIdleCallback(idleCallbackId);
+    }
+
+    const timeoutId = window.setTimeout(loadHeroVideo, 1500);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
@@ -72,10 +87,10 @@ export const Home = () => {
           loop 
           muted 
           playsInline 
-          preload="auto"
+          preload="metadata"
           poster={heroPoster}
         >
-          <source src={videoAccueil} type="video/mp4" />
+          {shouldLoadHeroVideo ? <source src={videoAccueil} type="video/mp4" /> : null}
         </video>
         <div className="hero-content">
           <h1 className="hero-title">{t("home.heroTitle")}</h1>

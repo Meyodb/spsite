@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { PageSEO } from "../components/PageSEO";
-import "./ProduitsMenuTest.css";
+import "./ProduitsMenu.css";
 import {
   PRODUCTS,
   CATEGORIES_ORDER,
@@ -30,7 +30,7 @@ const getApiBase = () => {
   return "";
 };
 
-export const ProduitsMenuTest = () => {
+export const ProduitsMenu = () => {
   const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(false);

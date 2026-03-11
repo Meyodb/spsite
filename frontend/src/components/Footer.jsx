@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { openCookieConsentSettings } from "../cookies/consent";
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -67,6 +68,10 @@ export const Footer = () => {
           <Link to="/politique-confidentialite">{t("footer.privacy")}</Link>
           <span className="footer-separator">|</span>
           <Link to="/politique-cookies">{t("footer.cookies")}</Link>
+          <span className="footer-separator">|</span>
+          <button type="button" className="footer-legal-button" onClick={openCookieConsentSettings}>
+            Gerer mes cookies
+          </button>
           <span className="footer-separator">|</span>
           <Link to="/cgu">{t("footer.cgu")}</Link>
         </div>

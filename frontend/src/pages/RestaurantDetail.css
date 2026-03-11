@@ -1,0 +1,470 @@
+.rd-page {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ─── Hero ─── */
+.rd-hero {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+}
+
+.rd-hero-image-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.rd-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+
+.rd-hero-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 50%, var(--green-bright) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rd-hero-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+}
+
+.rd-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+.rd-hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 2.5rem;
+  color: #fff;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rd-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+.rd-back-link:hover {
+  color: #fff;
+}
+
+.rd-hero-title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.rd-hero-quartier {
+  margin: 0.5rem 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0.9;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+/* ─── Container ─── */
+.rd-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.rd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+/* ─── Sections ─── */
+.rd-section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+}
+
+.rd-section-title {
+  margin: 0 0 1rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green-dark);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+/* ─── Description ─── */
+.rd-description-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* ─── Infos pratiques ─── */
+.rd-info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rd-info-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.rd-info-row:first-of-type {
+  padding-top: 0;
+}
+
+.rd-info-icon {
+  flex-shrink: 0;
+  color: var(--green);
+  margin-top: 2px;
+}
+
+.rd-info-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.15rem;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+}
+
+.rd-info-value {
+  display: block;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ─── Métro ─── */
+.rd-metro-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.rd-metro-station {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.rd-metro-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.rd-metro-lines {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rd-metro-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Landmarks ─── */
+.rd-landmarks-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rd-landmark-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  background: var(--green-light);
+  color: var(--green-dark);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.rd-landmark-item::before {
+  content: "📍";
+  margin-right: 0.35rem;
+  font-size: 12px;
+}
+
+/* ─── Actions ─── */
+.rd-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.rd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;
+  cursor: pointer;
+  border: none;
+}
+
+.rd-btn:hover {
+  transform: translateY(-2px);
+}
+
+.rd-btn-primary {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(90, 102, 84, 0.3);
+}
+
+.rd-btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(90, 102, 84, 0.4);
+  color: #fff;
+}
+
+.rd-btn-deliveroo {
+  background: #00ccbc;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 204, 188, 0.3);
+}
+
+.rd-btn-deliveroo:hover {
+  background: #00b3a6;
+  box-shadow: 0 6px 20px rgba(0, 204, 188, 0.4);
+  color: #fff;
+}
+
+.rd-btn-deliveroo img {
+  filter: brightness(0) invert(1);
+}
+
+/* ─── Carte ─── */
+.rd-map-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.rd-map-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  height: 380px;
+  background: #f5f5f5;
+}
+
+.rd-map-wrap > div {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.rd-marker {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.rd-marker-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid var(--green-dark);
+  box-shadow: 0 3px 15px rgba(90, 102, 84, 0.5), 0 0 0 3px rgba(90, 102, 84, 0.15);
+  background-color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ─── Galerie ─── */
+.rd-gallery {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.rd-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.rd-gallery-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.rd-gallery-img:hover {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-md);
+}
+
+/* ─── Responsive tablette ─── */
+@media (max-width: 1024px) {
+  .rd-hero {
+    height: 320px;
+  }
+
+  .rd-hero-title {
+    font-size: 30px;
+  }
+
+  .rd-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .rd-map-wrap {
+    height: 320px;
+  }
+}
+
+/* ─── Responsive mobile ─── */
+@media (max-width: 768px) {
+  .rd-hero {
+    height: 280px;
+  }
+
+  .rd-hero-content {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .rd-hero-title {
+    font-size: 24px;
+  }
+
+  .rd-hero-quartier {
+    font-size: 13px;
+  }
+
+  .rd-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .rd-section {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .rd-section-title {
+    font-size: 14px;
+  }
+
+  .rd-description-text {
+    font-size: 14px;
+  }
+
+  .rd-map-wrap {
+    height: 260px;
+  }
+
+  .rd-gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .rd-gallery-img {
+    height: 140px;
+  }
+
+  .rd-actions {
+    flex-direction: column;
+  }
+
+  .rd-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .rd-hero {
+    height: 240px;
+  }
+
+  .rd-hero-title {
+    font-size: 20px;
+  }
+
+  .rd-container {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .rd-section {
+    padding: 1rem;
+  }
+
+  .rd-map-wrap {
+    height: 220px;
+  }
+
+  .rd-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rd-gallery-img {
+    height: 180px;
+  }
+}

@@ -11,6 +11,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] !== "https") {
+      return res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
+
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
@@ -18,8 +27,8 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'", "https://esm.sh", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "blob:", "https://basemaps.cartocdn.com", "https://*.tile.openstreetmap.org"],
-      connectSrc: ["'self'", "https://basemaps.cartocdn.com", "https://*.tile.openstreetmap.org", "https://deliveroo.fr"],
+      imgSrc: ["'self'", "data:", "blob:", "https://basemaps.cartocdn.com", "https://*.basemaps.cartocdn.com", "https://*.tile.openstreetmap.org"],
+      connectSrc: ["'self'", "https://basemaps.cartocdn.com", "https://*.basemaps.cartocdn.com", "https://*.tile.openstreetmap.org", "https://deliveroo.fr"],
       mediaSrc: ["'self'", "blob:"],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],
@@ -65,6 +74,29 @@ const newsletterSubscribers = [];
 
 const visibilityPath = path.join(__dirname, "data", "visible-products.json");
 const productsPath = path.join(__dirname, "data", "products-soup-juice.json");
+const SPA_STATIC_ROUTES = new Set([
+  "/",
+  "/produits",
+  "/adn",
+  "/nos-piliers",
+  "/catering",
+  "/restaurants",
+  "/contact",
+  "/allergenes",
+  "/faq",
+  "/mentions-legales",
+  "/politique-confidentialite",
+  "/politique-cookies",
+  "/cgu",
+  "/formation",
+]);
+
+function isValidSpaRoute(pathname) {
+  if (SPA_STATIC_ROUTES.has(pathname)) return true;
+  if (/^\/formation\/[^/]+$/.test(pathname)) return true;
+  if (/^\/restaurants\/[^/]+$/.test(pathname)) return true;
+  return false;
+}
 
 app.get("/api/menu", (_, res) => res.json(menu));
 app.get("/api/promos", (_, res) => res.json(promos));
@@ -217,16 +249,12 @@ app.get("/api/newsletter/subscribers", (req, res) => {
 // Servir le frontend buildé (optionnel : pour accès via IP de la box)
 const frontendDist = path.join(__dirname, "..", "frontend", "dist");
 if (fs.existsSync(frontendDist)) {
-  // Redirection / vers /?v=timestamp pour forcer le rechargement (cache busting)
-  // La version = mtime de index.html, change à chaque build
+  // URL canonique propre: si ?v=... est présent, on le supprime
   app.get("/", (req, res, next) => {
-    if (req.query.v) return next();
-    const indexPath = path.join(frontendDist, "index.html");
-    const version = fs.statSync(indexPath).mtime.getTime();
-    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
-    return res.redirect(302, `/?v=${version}`);
+    if (req.query.v) {
+      return res.redirect(301, "/");
+    }
+    return next();
   });
   // Fichiers statiques : cache long pour les assets hashés (JS, CSS), pas de cache pour index.html
   app.use(
@@ -243,13 +271,21 @@ if (fs.existsSync(frontendDist)) {
       },
     })
   );
-  // SPA : toute requête GET non-API renvoie index.html (sans cache)
+  // SPA fallback anti "soft 404":
+  // - routes frontend connues => index.html en 200
+  // - routes inconnues => index.html en 404 (la page NotFound React s'affiche, et le statut HTTP reste correct pour Google)
   app.use((req, res, next) => {
-    if (req.method === "GET" && !req.path.startsWith("/api")) {
+    if ((req.method === "GET" || req.method === "HEAD") && !req.path.startsWith("/api")) {
+      // Si l'URL ressemble à un fichier statique manquant (ex: .js/.css/.png), on renvoie un 404 direct.
+      if (path.extname(req.path)) {
+        return res.status(404).end();
+      }
+
+      const isKnownRoute = isValidSpaRoute(req.path);
       res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
       res.setHeader("Pragma", "no-cache");
       res.setHeader("Expires", "0");
-      res.sendFile(path.join(frontendDist, "index.html"));
+      return res.status(isKnownRoute ? 200 : 404).sendFile(path.join(frontendDist, "index.html"));
     } else {
       next();
     }

@@ -6,6 +6,37 @@ import { PageSEO } from "../components/PageSEO";
 
 export const Contact = () => {
   const { t } = useTranslation();
+  const siteUrl = "https://www.soup-juice.net";
+  const restaurantEntityId = `${siteUrl}/#restaurant`;
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": ["Restaurant", "LocalBusiness"],
+    "@id": restaurantEntityId,
+    name: "Soup & Juice",
+    url: `${siteUrl}/contact`,
+    image: `${siteUrl}/og-default.jpg`,
+    logo: `${siteUrl}/og-default.jpg`,
+    telephone: "06 37 79 03 01",
+    email: "contact@soup-juice.com",
+    sameAs: ["https://www.instagram.com/soupjuiceparis/"],
+    menu: `${siteUrl}/produits`,
+    servesCuisine: ["Soupes", "Jus frais", "Healthy", "Salades"],
+    priceRange: "€",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "54 Avenue Kléber",
+      postalCode: "75016",
+      addressLocality: "Paris",
+      addressCountry: "FR",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      email: "contact@soup-juice.com",
+      telephone: "06 37 79 03 01",
+      availableLanguage: ["fr", "en"],
+    },
+  };
   const [formData, setFormData] = useState({
     sujet: "",
     nom: "",
@@ -131,6 +162,7 @@ export const Contact = () => {
         title="Contact"
         description="Contactez Soup & Juice : recrutement, partenariats, catering ou question sur nos produits. Réponse rapide garantie."
         path="/contact"
+        jsonLd={localBusinessJsonLd}
       />
       <section className="contact-hero">
         <div className="contact-hero-content">

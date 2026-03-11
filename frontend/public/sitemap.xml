@@ -16,6 +16,51 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.soup-juice.net/restaurants/st-lazare</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/bourse</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/haussmann</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/ecuries</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/etoile</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/opera</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/neuilly</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/honore</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.soup-juice.net/restaurants/madeleine</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.soup-juice.net/adn</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
