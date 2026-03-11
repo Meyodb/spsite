@@ -21,6 +21,7 @@ const CGU = lazy(() => import("./pages/CGU").then((m) => ({ default: m.CGU })));
 const FAQ = lazy(() => import("./pages/FAQ").then((m) => ({ default: m.FAQ })));
 const Formation = lazy(() => import("./pages/Formation").then((m) => ({ default: m.Formation })));
 const FormationSection = lazy(() => import("./pages/FormationSection").then((m) => ({ default: m.FormationSection })));
+const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
 
 function LoadingFallback() {
   const { t } = useTranslation();
@@ -56,6 +57,7 @@ function AppContent() {
           <Route path="/cgu" element={<LazyPage><CGU /></LazyPage>} />
           <Route path="/formation" element={<LazyPage><Formation /></LazyPage>} />
           <Route path="/formation/:sectionId" element={<LazyPage><FormationSection /></LazyPage>} />
+          <Route path="*" element={<LazyPage><NotFound /></LazyPage>} />
         </Routes>
         <Footer />
       </div>

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
 import videoAccueil from "../assets/videos/Video_accueil.MP4";
+import heroPoster from "../assets/images/hero-poster.jpg";
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -72,6 +73,7 @@ export const Home = () => {
           muted 
           playsInline 
           preload="auto"
+          poster={heroPoster}
         >
           <source src={videoAccueil} type="video/mp4" />
         </video>
