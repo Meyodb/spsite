@@ -686,51 +686,14 @@ export const Restaurants = () => {
                           zIndex: isSelected ? 10 : 1,
                         }}
                       >
-                        {/* Point rond avec logo */}
                         <div
                           style={{
                             width: "100%",
                             height: "100%",
-                            borderRadius: "50%",
-                            border: isSelected ? "3px solid #5a6654" : "2px solid white",
-                            boxShadow: isSelected
-                              ? "0 3px 15px rgba(90, 102, 84, 0.5), 0 0 0 3px rgba(90, 102, 84, 0.1)"
-                              : "0 2px 10px rgba(90, 102, 84, 0.3)",
-                            position: "relative",
-                            overflow: "hidden",
-                            backgroundColor: "white",
                             backgroundImage: `url(${logoVert})`,
-                            backgroundSize: "cover",
+                            backgroundSize: "contain",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
-                          }}
-                        >
-                          {/* Overlay pour améliorer la visibilité */}
-                          <div
-                            style={{
-                              position: "absolute",
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: 0,
-                              backgroundColor: isSelected ? "rgba(90, 102, 84, 0.15)" : "rgba(130, 144, 123, 0.1)",
-                              borderRadius: "50%",
-                            }}
-                          />
-                        </div>
-                        {/* Ombre portée */}
-                        <div
-                          style={{
-                            position: "absolute",
-                            bottom: "-4px",
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            width: "60%",
-                            height: "4px",
-                            backgroundColor: "rgba(0, 0, 0, 0.2)",
-                            borderRadius: "50%",
-                            filter: "blur(3px)",
-                            zIndex: -1,
                           }}
                         />
                       </div>

@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import { useMemo, useState, useRef, useCallback, useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { MapPin, Clock, Navigation, ArrowLeft, Train } from "lucide-react";
+import { MapPin, Clock, Navigation, ArrowLeft, Train, ChevronLeft, ChevronRight, X, ZoomIn, UtensilsCrossed } from "lucide-react";
 import { PageSEO } from "../components/PageSEO";
 import { Map, Marker } from "@vis.gl/react-maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -57,11 +57,52 @@ const toAbsoluteImageUrl = (src) => {
 export const RestaurantDetail = () => {
   const { slug } = useParams();
   const { t } = useTranslation();
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
+  const scrollRef = useRef(null);
 
   const restaurant = useMemo(
     () => RESTAURANTS.find((r) => r.slug === slug),
     [slug]
   );
+
+  const openLightbox = useCallback((i) => setLightboxIndex(i), []);
+  const closeLightbox = useCallback(() => setLightboxIndex(-1), []);
+
+  const lightboxPrev = useCallback(() => {
+    setLightboxIndex((prev) => {
+      const photos = restaurantPhotos[restaurant?.id] || [];
+      return prev > 0 ? prev - 1 : photos.length - 1;
+    });
+  }, [restaurant?.id]);
+
+  const lightboxNext = useCallback(() => {
+    setLightboxIndex((prev) => {
+      const photos = restaurantPhotos[restaurant?.id] || [];
+      return prev < photos.length - 1 ? prev + 1 : 0;
+    });
+  }, [restaurant?.id]);
+
+  useEffect(() => {
+    if (lightboxIndex < 0) return;
+    const handleKey = (e) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") lightboxPrev();
+      if (e.key === "ArrowRight") lightboxNext();
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightboxIndex, closeLightbox, lightboxPrev, lightboxNext]);
+
+  const scrollGallery = useCallback((dir) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.7;
+    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
+  }, []);
 
   if (!restaurant) {
     return <Navigate to="/restaurants" replace />;
@@ -142,18 +183,59 @@ export const RestaurantDetail = () => {
         </div>
       </section>
 
+      {/* Actions rapides */}
+      <div className="rd-actions-bar">
+        <div className="rd-actions-inner">
+          <a
+            href={getNavigationUrl(restaurant)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rd-btn rd-btn-primary"
+          >
+            <Navigation size={16} />
+            S'y rendre
+          </a>
+          {restaurant.deliverooUrl && (
+            <a
+              href={restaurant.deliverooUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rd-btn rd-btn-deliveroo"
+            >
+              <img src={deliveroLogo} alt="" width="18" height="18" />
+              Commander sur Deliveroo
+            </a>
+          )}
+        </div>
+      </div>
+
       {/* Contenu principal */}
       <div className="rd-container">
         <div className="rd-grid">
           {/* Colonne gauche : infos */}
           <div className="rd-info-col">
-            {/* Description du quartier */}
             <section className="rd-section rd-description">
               <h2 className="rd-section-title">Découvrir ce restaurant</h2>
               <p className="rd-description-text">{restaurant.description}</p>
             </section>
 
-            {/* Infos pratiques */}
+            <section className="rd-section rd-cta-produits">
+              <div className="rd-cta-produits-text">
+                <span className="rd-cta-produits-icon">
+                  <UtensilsCrossed size={18} />
+                </span>
+                <div>
+                  <h3 className="rd-cta-produits-title">Voir la carte Soup &amp; Juice</h3>
+                  <p className="rd-cta-produits-desc">
+                    Tous nos produits disponibles dans ce restaurant.
+                  </p>
+                </div>
+              </div>
+              <Link to="/produits" className="rd-btn rd-btn-primary rd-cta-produits-btn">
+                Voir nos produits
+              </Link>
+            </section>
+
             <section className="rd-section rd-practical">
               <h2 className="rd-section-title">Informations pratiques</h2>
 
@@ -173,9 +255,8 @@ export const RestaurantDetail = () => {
                 </div>
               </div>
 
-              {/* Métro */}
               {restaurant.metro && restaurant.metro.length > 0 && (
-                <div className="rd-info-row rd-info-row--metro">
+                <div className="rd-info-row">
                   <Train size={18} className="rd-info-icon" />
                   <div>
                     <span className="rd-info-label">Métro</span>
@@ -205,7 +286,6 @@ export const RestaurantDetail = () => {
               )}
             </section>
 
-            {/* Lieux à proximité */}
             {restaurant.nearbyLandmarks && restaurant.nearbyLandmarks.length > 0 && (
               <section className="rd-section rd-landmarks">
                 <h2 className="rd-section-title">À proximité</h2>
@@ -216,30 +296,6 @@ export const RestaurantDetail = () => {
                 </ul>
               </section>
             )}
-
-            {/* Actions */}
-            <div className="rd-actions">
-              <a
-                href={getNavigationUrl(restaurant)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rd-btn rd-btn-primary"
-              >
-                <Navigation size={16} />
-                S'y rendre
-              </a>
-              {restaurant.deliverooUrl && (
-                <a
-                  href={restaurant.deliverooUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rd-btn rd-btn-deliveroo"
-                >
-                  <img src={deliveroLogo} alt="" width="18" height="18" />
-                  Commander sur Deliveroo
-                </a>
-              )}
-            </div>
           </div>
 
           {/* Colonne droite : carte + galerie */}
@@ -273,25 +329,93 @@ export const RestaurantDetail = () => {
               </Map>
             </div>
 
-            {/* Galerie photos */}
-            {photos.length > 1 && (
+            {photos.length > 0 && (
               <div className="rd-gallery">
                 <h2 className="rd-section-title">Photos</h2>
-                <div className="rd-gallery-grid">
-                  {photos.map((photo, i) => (
-                    <img
-                      key={i}
-                      src={photo}
-                      alt={`${restaurant.name} – photo ${i + 1}`}
-                      className="rd-gallery-img"
-                    />
-                  ))}
+                <div className="rd-gallery-carousel-wrap">
+                  {photos.length > 1 && (
+                    <button
+                      type="button"
+                      className="rd-gallery-arrow rd-gallery-arrow--left"
+                      onClick={() => scrollGallery("left")}
+                      aria-label="Photos précédentes"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                  )}
+                  <div className="rd-gallery-scroll" ref={scrollRef}>
+                    {photos.map((photo, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        className="rd-gallery-item"
+                        onClick={() => openLightbox(i)}
+                        aria-label={`Agrandir photo ${i + 1}`}
+                      >
+                        <img
+                          src={photo}
+                          alt={`${restaurant.name} – photo ${i + 1}`}
+                          className="rd-gallery-img"
+                        />
+                        <span className="rd-gallery-zoom">
+                          <ZoomIn size={16} />
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  {photos.length > 1 && (
+                    <button
+                      type="button"
+                      className="rd-gallery-arrow rd-gallery-arrow--right"
+                      onClick={() => scrollGallery("right")}
+                      aria-label="Photos suivantes"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  )}
                 </div>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightboxIndex >= 0 && photos[lightboxIndex] && (
+        <div
+          className="rd-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo agrandie"
+          onClick={(e) => e.target === e.currentTarget && closeLightbox()}
+        >
+          <button type="button" className="rd-lightbox-close" onClick={closeLightbox} aria-label="Fermer">
+            <X size={24} />
+          </button>
+          {photos.length > 1 && (
+            <button type="button" className="rd-lightbox-nav rd-lightbox-nav--prev" onClick={lightboxPrev} aria-label="Photo précédente">
+              <ChevronLeft size={28} />
+            </button>
+          )}
+          <div className="rd-lightbox-content">
+            <img
+              src={photos[lightboxIndex]}
+              alt={`${restaurant.name} – photo ${lightboxIndex + 1}`}
+              className="rd-lightbox-img"
+            />
+            {photos.length > 1 && (
+              <span className="rd-lightbox-counter">
+                {lightboxIndex + 1} / {photos.length}
+              </span>
+            )}
+          </div>
+          {photos.length > 1 && (
+            <button type="button" className="rd-lightbox-nav rd-lightbox-nav--next" onClick={lightboxNext} aria-label="Photo suivante">
+              <ChevronRight size={28} />
+            </button>
+          )}
+        </div>
+      )}
     </main>
   );
 };
