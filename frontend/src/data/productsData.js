@@ -106,7 +106,7 @@ export const PRODUCTS = [
   { id: 86, name: "ROUGAIL THON", category: "PLATS CHAUDS", price: "7.5", description: "Riz basmati, achards, thon, sauce rougail tomate", afficher: false },
   { id: 87, name: "SAUMON SAUCE CITRON GINGEMBRE", category: "PLATS CHAUDS", price: "7.5", description: "Riz basmati et noir, haricots verts, carottes, saumon, sauce citron gingembre", afficher: false },
   { id: 88, name: "DUO DE RIZ AUBERGINES FALAFEL", category: "PLATS CHAUDS", price: "7.5", description: "Riz noir et blanc, aubergines, falafel, pois chiches, curry", afficher: false },
-  { id: 89, name: "FAGOTTINI", category: "PLATS CHAUDS", price: "7.5", description: "Pâtes farcies épinards-fromage, jeunes pousses, courgettes grillées, pesto rouge" },
+  { id: 89, name: "FAGOTTINI", category: "PLATS CHAUDS", price: "7.5", description: "Pâtes farcies épinards-fromage, jeunes pousses, courgettes grillées, pesto rouge", afficher: false },
   { id: 91, name: "LASAGNE BOLOGNESE", category: "PLATS CHAUDS", price: "7.5", description: "Tomates, lait, lasagnes, fromage, haché porc, oignons, basilic" },
   { id: 92, name: "LASAGNE VEGAN", category: "PLATS CHAUDS", price: "7.5", description: "Tomates, chou-fleur, lasagnes, boisson amandes, miso, basilic", afficher: false },
   { id: 93, name: "CABILLAUD TERIYAKI", category: "PLATS CHAUDS", price: "7.5", description: "Cabillaud, sauce teriyaki, nouilles soba, légumes wok" },

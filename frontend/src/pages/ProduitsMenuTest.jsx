@@ -51,7 +51,7 @@ export const ProduitsMenuTest = () => {
     }
     if (Array.isArray(visibleIdsFromApi)) {
       const set = new Set(visibleIdsFromApi);
-      return PRODUCTS.filter((p) => set.has(p.id));
+      return PRODUCTS.filter((p) => set.has(p.id) && p.afficher !== false);
     }
     return PRODUCTS.filter((p) => p.afficher !== false);
   }, [visibleIdsFromApi]);
