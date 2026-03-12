@@ -1,6 +1,8 @@
 /**
  * IDs des produits ayant une photo dans public/images/products/.
  * Utilisé pour masquer plats chauds, sandwichs et salades sans photo.
+ * Pour les produits provenant de l'API qui ont imageUrl défini,
+ * on considère qu'ils ont toujours une photo.
  */
 const IMAGE_ID_ALIAS = { 1: 222, 42: 90 };
 const PRODUCT_IDS_WITH_PHOTO = new Set([
@@ -16,11 +18,13 @@ function resolveImageProductId(productId) {
 
 /** Retourne true si le produit a une photo (pour plats chauds, sandwichs, salades). */
 export function productHasPhoto(product) {
+  // Si le produit vient de l'API et possède une URL d'image, on le considère illustré.
+  if (product.imageUrl) return true;
   const imageId = resolveImageProductId(product.id);
   return PRODUCT_IDS_WITH_PHOTO.has(imageId);
 }
 
-/** Données produits partagées entre pages */
+/** Données produits partagées entre pages (fallback si l'API n'est pas dispo) */
 export const PRODUCTS = [
   { id: 1, name: "SLIM DÉTOX", category: "JUS", price: "5.8", volume: "47 cl", description: "Ananas, orange, citron vert, menthe" },
   { id: 2, name: "SUNNY WAKE UP", category: "JUS", price: "5.8", volume: "47 cl", description: "Açaï, orange, fraise, kiwi" },

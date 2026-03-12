@@ -38,6 +38,7 @@ export const ProduitsMenu = () => {
   const [lightboxProduct, setLightboxProduct] = useState(null);
   const [sheetProduct, setSheetProduct] = useState(null);
   const [visibleIdsFromApi, setVisibleIdsFromApi] = useState(null);
+  const [productsFromApi, setProductsFromApi] = useState(null);
 
   useEffect(() => {
     fetch(`${getApiBase()}/api/products/visibility`)
@@ -46,16 +47,39 @@ export const ProduitsMenu = () => {
       .catch(() => setVisibleIdsFromApi(undefined));
   }, []);
 
+  useEffect(() => {
+    fetch(`${getApiBase()}/api/products`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((data) => {
+        const apiProducts = Array.isArray(data) ? data : data.products ?? [];
+        if (apiProducts.length) {
+          setProductsFromApi(apiProducts);
+        } else {
+          setProductsFromApi(undefined);
+        }
+      })
+      .catch(() => setProductsFromApi(undefined));
+  }, []);
+
+  const baseProducts = useMemo(() => {
+    // Si l'API renvoie des produits, on les utilise comme source de vérité.
+    if (Array.isArray(productsFromApi) && productsFromApi.length > 0) {
+      return productsFromApi;
+    }
+    // Fallback : données statiques du frontend.
+    return PRODUCTS;
+  }, [productsFromApi]);
+
   const visibleProducts = useMemo(() => {
     if (visibleIdsFromApi === undefined) {
-      return PRODUCTS.filter((p) => p.afficher !== false);
+      return baseProducts.filter((p) => p.afficher !== false);
     }
     if (Array.isArray(visibleIdsFromApi)) {
       const set = new Set(visibleIdsFromApi);
-      return PRODUCTS.filter((p) => set.has(p.id) && p.afficher !== false);
+      return baseProducts.filter((p) => set.has(p.id) && p.afficher !== false);
     }
-    return PRODUCTS.filter((p) => p.afficher !== false);
-  }, [visibleIdsFromApi]);
+    return baseProducts.filter((p) => p.afficher !== false);
+  }, [visibleIdsFromApi, baseProducts]);
 
   const productsByCategory = useMemo(() => {
     const acc = {};

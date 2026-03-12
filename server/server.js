@@ -4,12 +4,84 @@ import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
-import { saveContactMessage, listContactMessages } from "./db.js";
+import multer from "multer";
+import {
+  getActivePromos,
+  getStores,
+  getVisibleProductIds,
+  getAllProductsForApi,
+  getAllergenes,
+  getAllergensForProduct,
+  getAllProductAllergens,
+  saveContactMessage,
+  listContactMessages,
+  addNewsletterSubscriber,
+  isNewsletterSubscribed,
+  listNewsletterSubscribers,
+  adminListCategories,
+  adminListProducts,
+  adminCreateProduct,
+  adminUpdateProduct,
+  adminDeleteProduct,
+} from "./db.js";
 import { sendContactEmail } from "./mail.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+// ─── Upload images produits ─────────────────────────────────────────────
+
+const uploadsDir = path.join(__dirname, "uploads", "products");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => cb(null, uploadsDir),
+  filename: (_, file, cb) => {
+    const safeName = String(file.originalname || "file")
+      .toLowerCase()
+      .replace(/[^\w.-]+/g, "_");
+    const timestamp = Date.now();
+    cb(null, `${timestamp}-${safeName}`);
+  },
+});
+
+const upload = multer({ storage });
+
+// ─── Auth basique pour l'admin ─────────────────────────────────────────
+
+const ADMIN_USER = process.env.ADMIN_USER || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "change-me";
+
+function adminAuth(req, res, next) {
+  const header = req.headers.authorization || "";
+  const [scheme, encoded] = header.split(" ");
+  if (scheme !== "Basic" || !encoded) {
+    res.setHeader("WWW-Authenticate", 'Basic realm="admin"');
+    return res.status(401).send("Authentification requise");
+  }
+
+  let decoded = "";
+  try {
+    decoded = Buffer.from(encoded, "base64").toString("utf8");
+  } catch {
+    res.setHeader("WWW-Authenticate", 'Basic realm="admin"');
+    return res.status(401).send("Identifiants invalides");
+  }
+
+  const idx = decoded.indexOf(":");
+  const username = decoded.slice(0, idx);
+  const password = decoded.slice(idx + 1);
+
+  if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
+    return next();
+  }
+
+  res.setHeader("WWW-Authenticate", 'Basic realm="admin"');
+  return res.status(401).send("Identifiants invalides");
+}
 
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
@@ -39,41 +111,8 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },
 }));
 app.use(cors());
-
-const menu = {
-  soups: [
-    { id: 1, name: "Soupe courge coco", price: 8.9, tags: ["chaud", "vegan"] },
-    { id: 2, name: "Miso shiitake", price: 7.9, tags: ["chaud"] },
-    { id: 3, name: "Gaspacho verde", price: 6.9, tags: ["froid", "detox"] },
-  ],
-  juices: [
-    { id: 11, name: "Jus vert boost", price: 6.5, tags: ["detox", "energie"] },
-    { id: 12, name: "Antioxydant rouge", price: 6.7, tags: ["immunite"] },
-    { id: 13, name: "Sunrise agrumes", price: 6.2, tags: ["vitamine C"] },
-  ],
-  combos: [
-    { id: 21, name: "Combo midi", price: 13.9, includes: ["soupe", "jus"] },
-    { id: 22, name: "Pack énergie", price: 15.5, includes: ["jus", "jus"] },
-  ],
-};
-
-const promos = [
-  { title: "-15% combos midi", description: "Du lundi au vendredi", code: "MIDI15" },
-  { title: "Livraison offerte > 35€", description: "Paris intramuros" },
-];
-
-const stores = [
-  { city: "Paris", address: "12 rue des Soupes", hours: "9h-21h", services: ["click&collect", "terrasse"] },
-  { city: "Lyon", address: "5 quai des Jus", hours: "9h-20h", services: ["click&collect"] },
-];
-
 app.use(express.json());
-
-// Stockage temporaire des emails (en production, utilisez une base de données)
-const newsletterSubscribers = [];
-
-const visibilityPath = path.join(__dirname, "data", "visible-products.json");
-const productsPath = path.join(__dirname, "data", "products-soup-juice.json");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const SPA_STATIC_ROUTES = new Set([
   "/",
   "/produits",
@@ -98,9 +137,18 @@ function isValidSpaRoute(pathname) {
   return false;
 }
 
-app.get("/api/menu", (_, res) => res.json(menu));
-app.get("/api/promos", (_, res) => res.json(promos));
-app.get("/api/stores", (_, res) => res.json(stores));
+app.get("/api/promos", (_, res) => res.json(getActivePromos()));
+app.get("/api/stores", (_, res) => res.json(getStores()));
+
+app.get("/api/allergenes", (_, res) => res.json(getAllergenes()));
+
+app.get("/api/allergenes/products", (_, res) => res.json(getAllProductAllergens()));
+
+app.get("/api/products/:id/allergenes", (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) return res.status(400).json({ error: "ID invalide" });
+  res.json(getAllergensForProduct(id));
+});
 
 app.post("/api/contact", async (req, res) => {
   const {
@@ -178,71 +226,198 @@ app.get("/api/contact/messages", (req, res) => {
   res.json({ count: messages.length, messages });
 });
 
-// Visibilité des produits : utilisé par la page Nos produits. Si visible-products.json n'existe pas, tous les produits sont visibles.
 app.get("/api/products/visibility", (_, res) => {
-  try {
-    const raw = fs.readFileSync(visibilityPath, "utf8");
-    const data = JSON.parse(raw);
-    res.json({ visibleIds: data.visibleIds || [], lastSync: data.lastSync ?? null });
-  } catch (err) {
-    if (err.code === "ENOENT") {
-      try {
-        const products = JSON.parse(fs.readFileSync(productsPath, "utf8"));
-        const allIds = Array.isArray(products) ? products.map((p) => p.id) : [];
-        return res.json({ visibleIds: allIds, lastSync: null });
-      } catch (_) {
-        return res.json({ visibleIds: [], lastSync: null });
-      }
-    }
-    res.status(500).json({ error: "Erreur lecture visibilité produits" });
-  }
+  const visibleIds = getVisibleProductIds();
+  res.json({ visibleIds, lastSync: null });
 });
 
-// Route pour s'inscrire à la newsletter
+app.get("/api/products", (_, res) => {
+  const products = getAllProductsForApi();
+  res.json({ products });
+});
+
+// ─── Routes Admin protégées ────────────────────────────────────────────
+
+app.get("/admin", adminAuth, (req, res) => {
+  const adminHtml = path.join(__dirname, "admin.html");
+  if (fs.existsSync(adminHtml)) {
+    return res.sendFile(adminHtml);
+  }
+  return res
+    .status(500)
+    .send("Fichier admin.html manquant côté serveur.");
+});
+
+app.get("/api/admin/categories", adminAuth, (req, res) => {
+  const categories = adminListCategories();
+  res.json(categories);
+});
+
+app.get("/api/admin/products", adminAuth, (req, res) => {
+  const products = adminListProducts();
+  res.json(products);
+});
+
+app.post(
+  "/api/admin/upload-image",
+  adminAuth,
+  upload.single("file"),
+  (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: "Aucun fichier reçu" });
+    }
+    const url = `/uploads/products/${req.file.filename}`;
+    return res.status(201).json({ url, filename: req.file.filename });
+  }
+);
+
+app.post("/api/admin/products", adminAuth, (req, res) => {
+  const {
+    name,
+    category_id,
+    subcategory,
+    price,
+    volume,
+    description,
+    extra_price,
+    extra_price_label,
+    image_url,
+    image_alt,
+    visible,
+    sort_order,
+  } = req.body || {};
+
+  if (!name || !String(name).trim()) {
+    return res.status(400).json({ error: "Le nom du produit est obligatoire." });
+  }
+  if (!category_id || !Number.isFinite(Number(category_id))) {
+    return res
+      .status(400)
+      .json({ error: "category_id est obligatoire et doit être un nombre." });
+  }
+
+  const id = adminCreateProduct({
+    name,
+    category_id,
+    subcategory,
+    price,
+    volume,
+    description,
+    extra_price,
+    extra_price_label,
+    image_url,
+    image_alt,
+    visible: !!visible,
+    sort_order,
+  });
+
+  return res.status(201).json({ id });
+});
+
+app.put("/api/admin/products/:id", adminAuth, (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) {
+    return res.status(400).json({ error: "ID invalide." });
+  }
+
+  const {
+    name,
+    category_id,
+    subcategory,
+    price,
+    volume,
+    description,
+    extra_price,
+    extra_price_label,
+    image_url,
+    image_alt,
+    visible,
+    sort_order,
+  } = req.body || {};
+
+  if (!name || !String(name).trim()) {
+    return res.status(400).json({ error: "Le nom du produit est obligatoire." });
+  }
+  if (!category_id || !Number.isFinite(Number(category_id))) {
+    return res
+      .status(400)
+      .json({ error: "category_id est obligatoire et doit être un nombre." });
+  }
+
+  const changes = adminUpdateProduct(id, {
+    name,
+    category_id,
+    subcategory,
+    price,
+    volume,
+    description,
+    extra_price,
+    extra_price_label,
+    image_url,
+    image_alt,
+    visible: !!visible,
+    sort_order,
+  });
+
+  if (!changes) {
+    return res.status(404).json({ error: "Produit introuvable." });
+  }
+
+  return res.json({ updated: true });
+});
+
+app.delete("/api/admin/products/:id", adminAuth, (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) {
+    return res.status(400).json({ error: "ID invalide." });
+  }
+
+  const changes = adminDeleteProduct(id);
+  if (!changes) {
+    return res.status(404).json({ error: "Produit introuvable." });
+  }
+
+  return res.json({ deleted: true });
+});
+
 app.post("/api/newsletter/subscribe", (req, res) => {
   const { email } = req.body;
 
-  // Validation de l'email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
-    return res.status(400).json({ 
-      success: false, 
-      message: "Adresse email invalide" 
+    return res.status(400).json({
+      success: false,
+      message: "Adresse email invalide",
     });
   }
 
-  // Vérifier si l'email existe déjà
-  if (newsletterSubscribers.includes(email)) {
-    return res.status(409).json({ 
-      success: false, 
-      message: "Cet email est déjà inscrit à la newsletter" 
+  if (isNewsletterSubscribed(email)) {
+    return res.status(409).json({
+      success: false,
+      message: "Cet email est déjà inscrit à la newsletter",
     });
   }
 
-  // Ajouter l'email à la liste
-  newsletterSubscribers.push(email);
-  
-  console.log(`Nouvel abonné à la newsletter: ${email}`);
-  console.log(`Total d'abonnés: ${newsletterSubscribers.length}`);
+  const result = addNewsletterSubscriber(email);
+  if (!result.inserted) {
+    return res.status(409).json({
+      success: false,
+      message: "Cet email est déjà inscrit à la newsletter",
+    });
+  }
 
-  // ICI: Vous pouvez ajouter l'intégration avec un service d'email marketing
-  // Exemples:
-  // - Mailchimp API
-  // - SendGrid API
-  // - Brevo (ex-Sendinblue) API
-  // - Envoyer un email de confirmation via nodemailer
-
-  res.json({ 
-    success: true, 
-    message: "Inscription réussie ! Merci de votre intérêt." 
+  console.log(`Nouvel abonné newsletter: ${email}`);
+  res.json({
+    success: true,
+    message: "Inscription réussie ! Merci de votre intérêt.",
   });
 });
 
-// Route pour obtenir la liste des abonnés (optionnel, pour l'admin)
 app.get("/api/newsletter/subscribers", (req, res) => {
-  res.json({ 
-    count: newsletterSubscribers.length,
-    subscribers: newsletterSubscribers 
+  const subscribers = listNewsletterSubscribers();
+  res.json({
+    count: subscribers.length,
+    subscribers: subscribers.map((s) => s.email),
   });
 });
 

@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Administration — Soup &amp; Juice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --green: #82907B;
+        --green-dark: #5a6654;
+        --green-light: #e8ede6;
+        --text: #1a1a1a;
+        --text-light: #666;
+        --bg: #f7f6f3;
+        --bg-panel: #ffffff;
+        --border: #e0e0e0;
+        --danger: #c45c5c;
+        --shadow: 0 2px 12px rgba(130, 144, 123, 0.12);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        padding: 24px 16px;
+      }
+
+      .shell {
+        width: 100%;
+        max-width: 1200px;
+        border-radius: 12px;
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .shell-header {
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-panel);
+      }
+
+      .shell-header h1 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text);
+      }
+
+      .shell-main {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        padding: 20px 24px 24px;
+      }
+
+      @media (max-width: 960px) {
+        .shell-main { grid-template-columns: 1fr; }
+      }
+
+      .panel {
+        background: var(--bg-panel);
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 0;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .panel-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: baseline;
+        gap: 0.35em;
+      }
+
+      .panel-title span {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .table-wrapper {
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        overflow: hidden;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+      }
+
+      thead { background: var(--green-light); }
+
+      th, td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      th {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-light);
+        font-weight: 600;
+      }
+
+      tbody tr:hover { background: var(--green-light); }
+
+      .tag {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        background: var(--green-light);
+        color: var(--green-dark);
+      }
+
+      .tag-pill {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+
+      .status-dot.on { background: var(--green); }
+      .status-dot.off { background: var(--danger); }
+
+      .btn {
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg-panel);
+        color: var(--text);
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        font-family: inherit;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+
+      .btn:hover { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+
+      .btn-primary {
+        border-color: var(--green);
+        background: var(--green);
+        color: #fff;
+      }
+
+      .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+
+      .btn-danger {
+        border-color: var(--danger);
+        background: #fff;
+        color: var(--danger);
+      }
+
+      .btn-danger:hover { background: #fde8e8; }
+
+      .btn:disabled { opacity: 0.5; cursor: default; }
+
+      .btn-sm { padding: 6px 10px; font-size: 0.8rem; }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      @media (max-width: 720px) {
+        .form-grid { grid-template-columns: 1fr; }
+      }
+
+      label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-light);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      select,
+      textarea {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg-panel);
+        color: var(--text);
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        font-family: inherit;
+      }
+
+      textarea {
+        border-radius: 8px;
+        min-height: 72px;
+        resize: vertical;
+      }
+
+      input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--green);
+      }
+
+      .field-inline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 4px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+      }
+
+      .error-banner {
+        border-radius: 8px;
+        border: 1px solid var(--danger);
+        background: #fde8e8;
+        color: #8b3a3a;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+        display: none;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .error-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--danger);
+      }
+
+      .img-preview-wrap {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--green-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .img-preview-wrap img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="shell-header">
+        <h1>Administration — Produits</h1>
+        <button id="logoutBtn" class="btn" type="button">Se déconnecter</button>
+      </header>
+
+      <main class="shell-main">
+        <section class="panel">
+          <header class="panel-header">
+            <div class="panel-title">
+              Catalogue
+              <span>produits &amp; visibilité</span>
+            </div>
+            <button id="refreshBtn" class="btn" type="button">
+              ↻ Recharger
+            </button>
+          </header>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nom</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Statut</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="productsTbody">
+                <tr>
+                  <td colspan="7">Chargement en cours…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel">
+          <header class="panel-header">
+            <div class="panel-title">
+              Produit
+              <span id="formModeLabel">nouveau</span>
+            </div>
+            <button id="newBtn" class="btn" type="button">
+              + Nouveau produit
+            </button>
+          </header>
+
+          <div id="errorBanner" class="error-banner">
+            <span class="error-dot"></span>
+            <span id="errorText"></span>
+          </div>
+
+          <form id="productForm">
+            <input type="hidden" id="productId" />
+
+            <!-- Ligne 1 : nom + catégorie -->
+            <div class="form-grid">
+              <div>
+                <label for="name">Nom</label>
+                <input id="name" type="text" required />
+              </div>
+              <div>
+                <label for="category">Catégorie</label>
+                <select id="category" required></select>
+              </div>
+            </div>
+
+            <!-- Ligne 2 : prix + ordre -->
+            <div class="form-grid" style="margin-top: 10px">
+              <div>
+                <label for="price">Prix (€)</label>
+                <input id="price" type="number" step="0.01" min="0" />
+              </div>
+              <div>
+                <label for="sortOrder">Ordre d’affichage</label>
+                <input id="sortOrder" type="number" step="1" />
+              </div>
+            </div>
+
+            <!-- Ligne 3 : image URL + upload -->
+            <div class="form-grid" style="margin-top: 10px">
+              <div>
+                <label for="imageUrl">Chemin de l’image</label>
+                <input
+                  id="imageUrl"
+                  type="text"
+                  placeholder="ex: /uploads/products/xxx.jpg"
+                />
+              </div>
+              <div>
+                <label for="imageFile">Importer une image</label>
+                <div class="field-inline">
+                  <input id="imageFile" type="file" accept="image/*" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Description pleine largeur -->
+            <div style="margin-top: 10px">
+              <label for="description">Description</label>
+              <textarea
+                id="description"
+                placeholder="Texte descriptif court (optionnel)"
+              ></textarea>
+            </div>
+
+            <!-- Ligne 4 : texte alt + supplément -->
+            <div class="form-grid" style="margin-top: 10px">
+              <div>
+                <label for="imageAlt">Texte alternatif (lecture écran)</label>
+                <input
+                  id="imageAlt"
+                  type="text"
+                  placeholder="ex: Jus Slim Détox dans un verre"
+                />
+              </div>
+              <div>
+                <label for="extraPrice">Montant du supplément</label>
+                <input
+                  id="extraPrice"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="ex: 1.50"
+                />
+              </div>
+            </div>
+
+            <!-- Ligne 5 : libellé supplément + visibilité -->
+            <div class="form-grid" style="margin-top: 10px">
+              <div>
+                <label for="extraPriceLabel">Libellé supplément</label>
+                <input
+                  id="extraPriceLabel"
+                  type="text"
+                  placeholder="ex: supplément topping"
+                />
+              </div>
+              <div>
+                <label>Affichage</label>
+                <div class="field-inline">
+                  <input id="visible" type="checkbox" checked />
+                  <span>Visible sur le site</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Boutons + aperçu -->
+            <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button id="saveBtn" class="btn btn-primary" type="submit">
+                  Enregistrer
+                </button>
+                <button
+                  id="deleteBtn"
+                  class="btn btn-danger btn-sm"
+                  type="button"
+                  disabled
+                >
+                  Supprimer
+                </button>
+              </div>
+              <div id="imagePreviewWrapper" style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.75rem; color:var(--text-light);">Aperçu</span>
+                <div class="img-preview-wrap">
+                  <img id="imagePreview" src="" alt="" style="display:none;" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const tbody = document.getElementById("productsTbody");
+      const refreshBtn = document.getElementById("refreshBtn");
+      const form = document.getElementById("productForm");
+      const formModeLabel = document.getElementById("formModeLabel");
+      const newBtn = document.getElementById("newBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const deleteBtn = document.getElementById("deleteBtn");
+      const saveBtn = document.getElementById("saveBtn");
+      const categorySelect = document.getElementById("category");
+      const errorBanner = document.getElementById("errorBanner");
+      const errorText = document.getElementById("errorText");
+
+      // Prix de base par catégorie (si le produit n'a pas de prix propre)
+      const CATEGORY_BASE_PRICE = {
+        JUS: 5.8,
+        "PLATS CHAUDS": 7.5,
+      };
+
+      const productIdEl = document.getElementById("productId");
+      const nameEl = document.getElementById("name");
+      const priceEl = document.getElementById("price");
+      const imageUrlEl = document.getElementById("imageUrl");
+      const descriptionEl = document.getElementById("description");
+      const imageAltEl = document.getElementById("imageAlt");
+      const extraPriceEl = document.getElementById("extraPrice");
+      const extraPriceLabelEl = document.getElementById("extraPriceLabel");
+      const visibleEl = document.getElementById("visible");
+      const sortOrderEl = document.getElementById("sortOrder");
+      const imageFileEl = document.getElementById("imageFile");
+      const imagePreviewEl = document.getElementById("imagePreview");
+
+      function showError(msg) {
+        errorText.textContent = msg;
+        errorBanner.style.display = "flex";
+      }
+
+      function clearError() {
+        errorBanner.style.display = "none";
+        errorText.textContent = "";
+      }
+
+      function setLoading(isLoading) {
+        refreshBtn.disabled = isLoading;
+        saveBtn.disabled = isLoading;
+      }
+
+      async function fetchJSON(url, options) {
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            "Content-Type": "application/json",
+            ...(options && options.headers),
+          },
+        });
+        if (!res.ok) {
+          let message = "Erreur " + res.status;
+          try {
+            const data = await res.json();
+            if (data && data.error) message = data.error;
+          } catch (_) {}
+          throw new Error(message);
+        }
+        if (res.status === 204) return null;
+        return res.json();
+      }
+
+      function rowForProduct(p) {
+        const tr = document.createElement("tr");
+        tr.dataset.id = p.id;
+
+        const statusOn = Number(p.visible) === 1;
+
+        const basePrice =
+          p.price != null
+            ? Number(p.price)
+            : CATEGORY_BASE_PRICE[p.category_code] ?? null;
+        const priceLabel =
+          basePrice != null
+            ? basePrice.toFixed(2).replace(".", ",")
+            : "—";
+
+        tr.innerHTML = `
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>
+            <span class="tag">${p.category_label || p.category_code}</span>
+          </td>
+          <td>${priceLabel}</td>
+          <td>
+            <span class="tag-pill">
+              <span class="status-dot ${statusOn ? "on" : "off"}"></span>
+              ${statusOn ? "Visible" : "Caché"}
+            </span>
+          </td>
+          <td style="text-align: right">
+            <button type="button" class="btn btn-sm">Éditer</button>
+          </td>
+        `;
+
+        tr.querySelector("button").addEventListener("click", () =>
+          populateForm(p)
+        );
+
+        return tr;
+      }
+
+      function resetForm() {
+        productIdEl.value = "";
+        nameEl.value = "";
+        priceEl.value = "";
+        imageUrlEl.value = "";
+        descriptionEl.value = "";
+        imageAltEl.value = "";
+        extraPriceEl.value = "";
+        extraPriceLabelEl.value = "";
+        visibleEl.checked = true;
+        sortOrderEl.value = "";
+        if (imageFileEl) imageFileEl.value = "";
+        if (imagePreviewEl) {
+          imagePreviewEl.src = "";
+          imagePreviewEl.style.display = "none";
+        }
+        formModeLabel.textContent = "nouveau";
+        deleteBtn.disabled = true;
+        clearError();
+      }
+
+      function populateForm(p) {
+        productIdEl.value = p.id;
+        nameEl.value = p.name || "";
+        priceEl.value = p.price != null ? p.price : "";
+        imageUrlEl.value = p.image_url || "";
+        descriptionEl.value = p.description || "";
+        imageAltEl.value = p.image_alt || "";
+        extraPriceEl.value = p.extra_price != null ? p.extra_price : "";
+        extraPriceLabelEl.value = p.extra_price_label || "";
+        visibleEl.checked = Number(p.visible) === 1;
+        sortOrderEl.value = p.sort_order != null ? p.sort_order : "";
+        if (imageFileEl) imageFileEl.value = "";
+        if (imagePreviewEl) {
+          if (p.image_url) {
+            imagePreviewEl.src = p.image_url;
+            imagePreviewEl.style.display = "block";
+          } else {
+            imagePreviewEl.src = "";
+            imagePreviewEl.style.display = "none";
+          }
+        }
+        if (p.category_id) {
+          categorySelect.value = String(p.category_id);
+        }
+        formModeLabel.textContent = "édition #" + p.id;
+        deleteBtn.disabled = false;
+        clearError();
+      }
+
+      async function loadCategories() {
+        const cats = await fetchJSON("/api/admin/categories");
+        categorySelect.innerHTML = "";
+        for (const c of cats) {
+          const opt = document.createElement("option");
+          opt.value = c.id;
+          opt.textContent = `${c.label_fr || c.code}`;
+          categorySelect.appendChild(opt);
+        }
+      }
+
+      async function loadProducts() {
+        setLoading(true);
+        clearError();
+        try {
+          const products = await fetchJSON("/api/admin/products");
+          tbody.innerHTML = "";
+          if (!products.length) {
+            const tr = document.createElement("tr");
+            tr.innerHTML =
+              '<td colspan="7">Aucun produit encore défini.</td>';
+            tbody.appendChild(tr);
+          } else {
+            for (const p of products) {
+              tbody.appendChild(rowForProduct(p));
+            }
+          }
+        } catch (err) {
+          tbody.innerHTML = "";
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            '<td colspan="7">Erreur de chargement. Vérifiez vos identifiants ou rechargez la page.</td>';
+          tbody.appendChild(tr);
+          showError(err.message || "Erreur de chargement");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      refreshBtn.addEventListener("click", () => {
+        loadProducts();
+      });
+
+      newBtn.addEventListener("click", () => {
+        resetForm();
+      });
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          window.location.href = "/";
+        });
+      }
+
+      async function uploadImageFile(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await fetch("/api/admin/upload-image", {
+          method: "POST",
+          body: formData,
+        });
+        if (!res.ok) {
+          let message = "Erreur " + res.status;
+          try {
+            const data = await res.json();
+            if (data && data.error) message = data.error;
+          } catch (_) {}
+          throw new Error(message);
+        }
+        return res.json();
+      }
+
+      if (imageFileEl) {
+        imageFileEl.addEventListener("change", async (e) => {
+          clearError();
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          try {
+            setLoading(true);
+            const result = await uploadImageFile(file);
+            if (result && result.url) {
+              imageUrlEl.value = result.url;
+              if (imagePreviewEl) {
+                imagePreviewEl.src = result.url;
+                imagePreviewEl.style.display = "block";
+              }
+            }
+          } catch (err) {
+            showError(err.message || "Erreur lors de l'upload de l'image.");
+          } finally {
+            setLoading(false);
+          }
+        });
+      }
+
+      // Déconnexion automatique après inactivité côté client (15 min)
+      const IDLE_LIMIT_MS = 15 * 60 * 1000;
+      let idleTimer = null;
+
+      function resetIdleTimer() {
+        if (idleTimer) clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+          alert("Session expirée après inactivité. Vous allez être déconnecté du back-office.");
+          window.location.href = "/";
+        }, IDLE_LIMIT_MS);
+      }
+
+      ["mousemove", "keydown", "click", "scroll"].forEach((evt) => {
+        window.addEventListener(evt, resetIdleTimer, { passive: true });
+      });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        clearError();
+        const id = productIdEl.value ? Number(productIdEl.value) : null;
+        const payload = {
+          name: nameEl.value.trim(),
+          category_id: Number(categorySelect.value),
+          price:
+            priceEl.value === "" ? null : Number(priceEl.value.replace(",", ".")),
+          image_url: imageUrlEl.value.trim() || null,
+          description: descriptionEl.value.trim() || null,
+          extra_price:
+            extraPriceEl.value === ""
+              ? null
+              : Number(extraPriceEl.value.replace(",", ".")),
+          extra_price_label: extraPriceLabelEl.value.trim() || null,
+          image_alt: imageAltEl.value.trim() || null,
+          visible: visibleEl.checked,
+          sort_order:
+            sortOrderEl.value === "" ? 0 : Number(sortOrderEl.value),
+        };
+
+        if (!payload.name) {
+          showError("Le nom du produit est obligatoire.");
+          return;
+        }
+
+        const method = id ? "PUT" : "POST";
+        const url = id
+          ? `/api/admin/products/${encodeURIComponent(id)}`
+          : "/api/admin/products";
+
+        setLoading(true);
+        try {
+          await fetchJSON(url, {
+            method,
+            body: JSON.stringify(payload),
+          });
+          await loadProducts();
+          if (!id) {
+            resetForm();
+          } else {
+            formModeLabel.textContent = "édition";
+          }
+        } catch (err) {
+          showError(err.message || "Erreur lors de l’enregistrement.");
+        } finally {
+          setLoading(false);
+        }
+      });
+
+      deleteBtn.addEventListener("click", async () => {
+        clearError();
+        const id = productIdEl.value ? Number(productIdEl.value) : null;
+        if (!id) return;
+        if (
+          !window.confirm(
+            "Supprimer définitivement ce produit ? Cette action est irréversible."
+          )
+        ) {
+          return;
+        }
+        setLoading(true);
+        try {
+          await fetchJSON(
+            `/api/admin/products/${encodeURIComponent(id)}`,
+            { method: "DELETE" }
+          );
+          resetForm();
+          await loadProducts();
+        } catch (err) {
+          showError(err.message || "Erreur lors de la suppression.");
+        } finally {
+          setLoading(false);
+        }
+      });
+
+      (async function init() {
+        try {
+          await loadCategories();
+        } catch (err) {
+          showError(
+            "Impossible de charger les catégories : " +
+              (err.message || "erreur inconnue")
+          );
+        }
+        await loadProducts();
+        if (typeof resetIdleTimer === "function") resetIdleTimer();
+      })();
+    </script>
+  </body>
+</html>
+
