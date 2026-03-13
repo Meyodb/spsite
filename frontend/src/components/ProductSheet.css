@@ -1,7 +1,8 @@
 .product-sheet-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1200;
+  /* Au-dessus du header (z-index 9999) et du menu mobile */
+  z-index: 2147483645;
   display: flex;
   align-items: center;
   justify-content: center;

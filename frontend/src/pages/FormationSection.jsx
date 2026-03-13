@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { CodeProtection } from "../components/CodeProtection";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 import "./Formation.css";
 
 const SECTION_I18N = { "service-client": "serviceClient", "mise-en-place": "miseEnPlace" };
@@ -83,6 +84,10 @@ export const FormationSection = () => {
   const { sectionId } = useParams();
   const navigate = useNavigate();
   const [playingVideo, setPlayingVideo] = useState(null);
+  const [infoMessage, setInfoMessage] = useState("");
+  const modalRef = useRef(null);
+
+  useFocusTrap(modalRef, { active: Boolean(playingVideo) });
 
   const section = FORMATION_SECTIONS.find(s => s.id === sectionId);
   const sectionTitleKey = SECTION_I18N[sectionId] || sectionId;
@@ -110,10 +115,11 @@ export const FormationSection = () => {
         title: cardTitle,
         section: sectionTitle
       });
+      setInfoMessage("");
     } else {
       const cardTitleKey = CARD_I18N[card.id] || card.id;
       const cardTitle = t(`formation.sections.${cardTitleKey}`);
-      alert(t("formation.videoSoon", { title: cardTitle }));
+      setInfoMessage(t("formation.videoSoon", { title: cardTitle }));
     }
   };
 
@@ -134,6 +140,12 @@ export const FormationSection = () => {
             </button>
             <h1 className="formation-section-title">{section.title.toUpperCase()}</h1>
           </div>
+
+          {infoMessage && (
+            <div className="formation-info-banner" role="status">
+              {infoMessage}
+            </div>
+          )}
 
           {section.cards && section.cards.length > 0 ? (
             <div className="subsection-cards-grid">
@@ -159,7 +171,14 @@ export const FormationSection = () => {
           {/* Modal pour la vidéo */}
           {playingVideo && (
             <div className="video-modal" onClick={closeVideo}>
-              <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+              <div
+                className="video-modal-content"
+                ref={modalRef}
+                role="dialog"
+                aria-modal="true"
+                aria-label={playingVideo.title}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <button className="video-modal-close" onClick={closeVideo}>
                   ×
                 </button>

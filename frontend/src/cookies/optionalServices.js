@@ -7,6 +7,10 @@ import {
 const GA_SCRIPT_ID = "sj-ga-script";
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
+if (GA_MEASUREMENT_ID) {
+  window[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+}
+
 function initGoogleAnalytics() {
   if (!GA_MEASUREMENT_ID || document.getElementById(GA_SCRIPT_ID)) return;
 

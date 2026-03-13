@@ -6,6 +6,7 @@ import { AllergenPictograms, getAllergensForProduct } from "./AllergenPictograms
 import { PRODUCT_SHEET_DATA } from "../data/productSheetData";
 import { CATEGORY_I18N_KEYS } from "../data/productsData";
 import "./ProductSheet.css";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 /**
  * Fiche produit détaillée (modal).
@@ -13,7 +14,7 @@ import "./ProductSheet.css";
  */
 export function ProductSheet({ open, onClose, product, onViewImage }) {
   const { t } = useTranslation();
-  const sheetRef = useRef(null);
+  const overlayRef = useRef(null);
 
   const handleClose = useCallback(() => {
     onClose?.();
@@ -31,6 +32,8 @@ export function ProductSheet({ open, onClose, product, onViewImage }) {
       document.body.style.overflow = "";
     };
   }, [open, handleClose]);
+
+  useFocusTrap(overlayRef, { active: open });
 
   if (!open || !product) return null;
 
@@ -53,9 +56,9 @@ export function ProductSheet({ open, onClose, product, onViewImage }) {
       aria-modal="true"
       aria-labelledby="product-sheet-title"
       onClick={(e) => e.target === e.currentTarget && handleClose()}
+      ref={overlayRef}
     >
       <div
-        ref={sheetRef}
         className="product-sheet"
         onClick={(e) => e.stopPropagation()}
       >

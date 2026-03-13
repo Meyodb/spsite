@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import { PageSEO } from "../components/PageSEO";
-import { Map, Marker, Popup } from "@vis.gl/react-maplibre";
-import "maplibre-gl/dist/maplibre-gl.css";
 import "./Restaurants.css";
 import deliveroLogo from "../assets/images/delivero.svg";
 import logoVert from "../assets/images/logo-vert.png";
@@ -30,6 +28,7 @@ import { metroStationsParis } from "../data/metroStationsParis";
 import { RATP_LINE_COLORS } from "../data/ratpLineColors";
 import { monumentsParis } from "../data/monumentsParis";
 import { RESTAURANTS, RESTAURANT_COUNT } from "../data/restaurantsData";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 const monumentIcons = {
   eiffel: iconMonumentEiffel,
@@ -63,6 +62,9 @@ const RestaurantPhotoLightbox = ({ open, photos, initialIndex, onClose }) => {
   const [index, setIndex] = useState(initialIndex);
   const [isClosing, setIsClosing] = useState(false);
   const handleCloseRef = useRef(() => {});
+  const containerRef = useRef(null);
+
+  useFocusTrap(containerRef, { active: open && !isClosing });
 
   useEffect(() => {
     if (open) setIndex(initialIndex);
@@ -104,6 +106,7 @@ const RestaurantPhotoLightbox = ({ open, photos, initialIndex, onClose }) => {
   return (
     <div
       className={`restaurant-photo-lightbox ${isClosing ? "restaurant-photo-lightbox--closing" : ""}`}
+      ref={containerRef}
       role="dialog"
       aria-modal="true"
       aria-label="Photo du restaurant en plein écran"
@@ -142,6 +145,10 @@ const RestaurantPhotoLightbox = ({ open, photos, initialIndex, onClose }) => {
           src={photos[index]}
           alt=""
           className="restaurant-photo-lightbox-img"
+          loading="lazy"
+          decoding="async"
+          width="1600"
+          height="900"
         />
         {photos.length > 1 && (
           <div className="restaurant-photo-lightbox-dots" aria-hidden="true">
@@ -201,6 +208,10 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
             src={photos[0]}
             alt=""
             className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="800"
           />
         </PhotoWrapper>
         <RestaurantPhotoLightbox
@@ -229,6 +240,10 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
             src={photos[index]}
             alt=""
             className="restaurant-detail-panel-logo restaurant-detail-panel-photo"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="800"
           />
         </PhotoWrapper>
         <button
@@ -301,7 +316,59 @@ export const Restaurants = () => {
   });
   const mapContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
-  useEffect(() => { setIsClient(true); }, []);
+  const [hasEnteredMap, setHasEnteredMap] = useState(false);
+  const [mapLib, setMapLib] = useState(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mapContainerRef.current || hasEnteredMap || typeof window === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredMap(true);
+          observer.disconnect();
+        }
+      },
+      { root: null, threshold: 0.15 },
+    );
+
+    observer.observe(mapContainerRef.current);
+
+    return () => observer.disconnect();
+  }, [hasEnteredMap]);
+
+  useEffect(() => {
+    if (!hasEnteredMap || !isClient || mapLib) return;
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const [lib] = await Promise.all([
+          import("@vis.gl/react-maplibre"),
+          import("maplibre-gl/dist/maplibre-gl.css"),
+        ]);
+
+        if (!cancelled) {
+          setMapLib({
+            Map: lib.Map,
+            Marker: lib.Marker,
+            Popup: lib.Popup,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to load MapLibre:", error);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [hasEnteredMap, isClient, mapLib]);
 
   const getNavigationUrl = (restaurant) => {
     const query = encodeURIComponent(`${restaurant.name} ${restaurant.address}`);
@@ -353,6 +420,10 @@ export const Restaurants = () => {
     if (!showMetroMarkers && selectedMetroStation) setSelectedMetroStation(null);
     if (!showMonumentMarkers && selectedMonument) setSelectedMonument(null);
   }, [showMetroMarkers, showMonumentMarkers, selectedMetroStation, selectedMonument]);
+
+  const MapComponent = mapLib?.Map;
+  const MarkerComponent = mapLib?.Marker;
+  const PopupComponent = mapLib?.Popup;
 
   return (
     <main className="restaurants-page">
@@ -469,7 +540,14 @@ export const Restaurants = () => {
                             onClick={(e) => e.stopPropagation()}
                             aria-label={`${t("restaurants.ariaDeliveroo")} - ${restaurant.name}`}
                           >
-                            <img src={deliveroLogo} alt="" width="18" height="18" />
+                            <img
+                              src={deliveroLogo}
+                              alt=""
+                              width="18"
+                              height="18"
+                              loading="lazy"
+                              decoding="async"
+                            />
                           </a>
                         )}
                         <a
@@ -562,7 +640,8 @@ export const Restaurants = () => {
           )}
 
           <div className="map-container" ref={mapContainerRef}>
-            {isClient && <Map
+            {isClient && hasEnteredMap && MapComponent && (
+            <MapComponent
               {...viewState}
               onMove={(evt) => setViewState(evt.viewState)}
               style={{ width: "100%", height: "100%" }}
@@ -573,7 +652,7 @@ export const Restaurants = () => {
               {showMetroMarkers &&
                 metroStationsParis.map((station, i) => (
                   <div key={`metro-${i}`}>
-                    <Marker
+                    <MarkerComponent
                       longitude={station.coordinates[0]}
                       latitude={station.coordinates[1]}
                       anchor="center"
@@ -588,11 +667,18 @@ export const Restaurants = () => {
                         title={station.name}
                         aria-label={`Station ${station.name}`}
                       >
-                        <img src={metroLogo} alt="" width={18} height={18} />
+                        <img
+                          src={metroLogo}
+                          alt=""
+                          width={18}
+                          height={18}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </button>
-                    </Marker>
+                    </MarkerComponent>
                     {selectedMetroStation?.name === station.name && (
-                      <Popup
+                      <PopupComponent
                         longitude={station.coordinates[0]}
                         latitude={station.coordinates[1]}
                         anchor="top"
@@ -622,14 +708,14 @@ export const Restaurants = () => {
                           </div>
                           <span className="popup-metro-name">{station.name}</span>
                         </div>
-                      </Popup>
+                      </PopupComponent>
                     )}
                   </div>
                 ))}
               {showMonumentMarkers &&
                 monumentsParis.map((monument, i) => (
                   <div key={`monument-${i}`}>
-                    <Marker
+                    <MarkerComponent
                       longitude={monument.coordinates[0]}
                       latitude={monument.coordinates[1]}
                       anchor="center"
@@ -644,11 +730,18 @@ export const Restaurants = () => {
                         title={monument.name}
                         aria-label={`Monument ${monument.name}`}
                       >
-                        <img src={monumentIcons[monument.icon] || iconMonumentEiffel} alt="" width={28} height={28} />
+                        <img
+                          src={monumentIcons[monument.icon] || iconMonumentEiffel}
+                          alt=""
+                          width={28}
+                          height={28}
+                          loading="lazy"
+                          decoding="async"
+                        />
                       </button>
-                    </Marker>
+                    </MarkerComponent>
                     {selectedMonument?.name === monument.name && (
-                      <Popup
+                      <PopupComponent
                         longitude={monument.coordinates[0]}
                         latitude={monument.coordinates[1]}
                         anchor="bottom"
@@ -660,7 +753,7 @@ export const Restaurants = () => {
                         <div className="popup-content popup-content--monument">
                           <span className="popup-monument-name">{monument.name}</span>
                         </div>
-                      </Popup>
+                      </PopupComponent>
                     )}
                   </div>
                 ))}
@@ -668,7 +761,7 @@ export const Restaurants = () => {
                 const isSelected = infoWindowOpen === restaurant.id;
                 return (
                   <div key={restaurant.id}>
-                    <Marker
+                    <MarkerComponent
                       longitude={restaurant.coordinates[0]}
                       latitude={restaurant.coordinates[1]}
                       anchor="center"
@@ -697,12 +790,13 @@ export const Restaurants = () => {
                           }}
                         />
                       </div>
-                    </Marker>
+                    </MarkerComponent>
                   </div>
                 );
               })}
-            </Map>}
-            <p className="map-zoom-hint" aria-hidden="true">
+            </MapComponent>
+            )}
+            <p className="map-zoom-hint">
               {t("restaurants.mapZoomHint")}
             </p>
           </div>

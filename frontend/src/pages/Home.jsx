@@ -10,6 +10,7 @@ export const Home = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+  const [newsletterError, setNewsletterError] = useState("");
   const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
 
   useEffect(() => {
@@ -28,7 +29,19 @@ export const Home = () => {
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      setNewsletterError(t("home.newsletterEmailRequired"));
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setNewsletterError(t("home.newsletterEmailInvalid"));
+      return;
+    }
+
+    setNewsletterError("");
 
     try {
       const apiBase = import.meta.env.VITE_API_URL !== undefined
@@ -39,7 +52,7 @@ export const Home = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: trimmedEmail }),
       });
 
       const data = await response.json();
@@ -47,13 +60,13 @@ export const Home = () => {
       if (response.ok && data.success) {
         setNewsletterSubmitted(true);
         setEmail("");
-        setTimeout(() => setNewsletterSubmitted(false), 5000);
+        setNewsletterError("");
       } else {
-        alert(data.message || t("common.errorRetry"));
+        setNewsletterError(data.message || t("common.errorRetry"));
       }
     } catch (error) {
       console.error("Newsletter error:", error);
-      alert(t("common.errorConnection"));
+      setNewsletterError(t("common.errorConnection"));
     }
   };
 
@@ -131,18 +144,32 @@ export const Home = () => {
                     className="newsletter-input"
                     placeholder={t("home.newsletterPlaceholder")}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setEmail(value);
+                      if (newsletterSubmitted) {
+                        setNewsletterSubmitted(false);
+                      }
+                      if (newsletterError) {
+                        setNewsletterError("");
+                      }
+                    }}
                     required
                   />
                   <button type="submit" className="newsletter-btn">
                     {t("home.newsletterSubmit")}
                   </button>
                 </form>
-              {newsletterSubmitted && (
-                <p style={{ color: "var(--green)", marginTop: "12px", fontSize: "14px", fontWeight: "500" }}>
-                  ✓ {t("home.newsletterThanks")}
-                </p>
-              )}
+                {newsletterError && (
+                  <p className="newsletter-error" role="alert">
+                    {newsletterError}
+                  </p>
+                )}
+                {newsletterSubmitted && (
+                  <p className="newsletter-success-message" role="status">
+                    {t("home.newsletterThanks")}
+                  </p>
+                )}
                 <p className="newsletter-disclaimer">
                   {t("home.newsletterDisclaimer")}
                 </p>

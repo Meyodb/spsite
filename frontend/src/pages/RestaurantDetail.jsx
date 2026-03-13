@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { MapPin, Clock, Navigation, ArrowLeft, Train, ChevronLeft, ChevronRight, X, ZoomIn, UtensilsCrossed } from "lucide-react";
 import { PageSEO } from "../components/PageSEO";
 import { Map, Marker } from "@vis.gl/react-maplibre";
-import "maplibre-gl/dist/maplibre-gl.css";
 import { RESTAURANTS } from "../data/restaurantsData";
 import { RATP_LINE_COLORS } from "../data/ratpLineColors";
 import logoVert from "../assets/images/logo-vert.png";
@@ -21,6 +20,7 @@ import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
 import photoHonore from "../assets/images/restaurants/photo_honore.png";
 import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";
 import "./RestaurantDetail.css";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 const restaurantPhotos = {
   1: [photoLondre],
@@ -57,8 +57,12 @@ const toAbsoluteImageUrl = (src) => {
 export const RestaurantDetail = () => {
   const { slug } = useParams();
   const { t } = useTranslation();
+  useEffect(() => {
+    import("maplibre-gl/dist/maplibre-gl.css");
+  }, []);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const scrollRef = useRef(null);
+  const lightboxRef = useRef(null);
 
   const restaurant = useMemo(
     () => RESTAURANTS.find((r) => r.slug === slug),
@@ -96,6 +100,8 @@ export const RestaurantDetail = () => {
       document.body.style.overflow = "";
     };
   }, [lightboxIndex, closeLightbox, lightboxPrev, lightboxNext]);
+
+  useFocusTrap(lightboxRef, { active: lightboxIndex >= 0 });
 
   const scrollGallery = useCallback((dir) => {
     const el = scrollRef.current;
@@ -165,10 +171,22 @@ export const RestaurantDetail = () => {
       <section className="rd-hero">
         <div className="rd-hero-image-wrap">
           {heroPhoto ? (
-            <img src={heroPhoto} alt={restaurant.name} className="rd-hero-image" />
+            <img
+              src={heroPhoto}
+              alt={restaurant.name}
+              className="rd-hero-image"
+              width="1600"
+              height="900"
+            />
           ) : (
             <div className="rd-hero-placeholder">
-              <img src={logoVert} alt="" className="rd-hero-logo" />
+              <img
+                src={logoVert}
+                alt=""
+                className="rd-hero-logo"
+                width="220"
+                height="220"
+              />
             </div>
           )}
           <div className="rd-hero-overlay" />
@@ -202,7 +220,14 @@ export const RestaurantDetail = () => {
               rel="noopener noreferrer"
               className="rd-btn rd-btn-deliveroo"
             >
-              <img src={deliveroLogo} alt="" width="18" height="18" />
+              <img
+                src={deliveroLogo}
+                alt=""
+                width="18"
+                height="18"
+                loading="lazy"
+                decoding="async"
+              />
               Commander sur Deliveroo
             </a>
           )}
@@ -356,6 +381,10 @@ export const RestaurantDetail = () => {
                           src={photo}
                           alt={`${restaurant.name} – photo ${i + 1}`}
                           className="rd-gallery-img"
+                          loading="lazy"
+                          decoding="async"
+                          width="1200"
+                          height="800"
                         />
                         <span className="rd-gallery-zoom">
                           <ZoomIn size={16} />
@@ -388,6 +417,7 @@ export const RestaurantDetail = () => {
           aria-modal="true"
           aria-label="Photo agrandie"
           onClick={(e) => e.target === e.currentTarget && closeLightbox()}
+          ref={lightboxRef}
         >
           <button type="button" className="rd-lightbox-close" onClick={closeLightbox} aria-label="Fermer">
             <X size={24} />
@@ -402,6 +432,10 @@ export const RestaurantDetail = () => {
               src={photos[lightboxIndex]}
               alt={`${restaurant.name} – photo ${lightboxIndex + 1}`}
               className="rd-lightbox-img"
+              loading="lazy"
+              decoding="async"
+              width="1600"
+              height="900"
             />
             {photos.length > 1 && (
               <span className="rd-lightbox-counter">

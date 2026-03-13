@@ -148,7 +148,7 @@ export const Header = () => {
           <div className="header-bar">
             <div className="nav-left">
               <Link to="/" className="logo">
-                <img src={logoVert} alt="Soup & Juice" />
+              <img src={logoVert} alt="Soup & Juice" width={140} height={40} />
               </Link>
             </div>
             <button 

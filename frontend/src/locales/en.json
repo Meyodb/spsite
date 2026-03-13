@@ -51,6 +51,8 @@
     "newsletterSubmit": "Subscribe",
     "newsletterThanks": "Thank you for subscribing!",
     "newsletterDisclaimer": "By subscribing, you agree to receive our communications. You can unsubscribe at any time.",
+    "newsletterEmailRequired": "Please enter your email address.",
+    "newsletterEmailInvalid": "Please enter a valid email address.",
     "joinTitle": "Join the Soup & Juice adventure",
     "joinDescription": "Want to be part of the Soup & Juice adventure? Join our passionate team and help us make healthy eating accessible to everyone.",
     "joinCta": "Join us"

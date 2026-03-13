@@ -263,7 +263,7 @@ export const ProduitsMenu = () => {
         </aside>
 
         {/* Contenu principal - liste des produits */}
-        <section className="menu-test-content" aria-label="Liste des produits">
+        <section className="menu-test-content" aria-label="Liste des produits" data-category={activeCategory}>
           {(activeCategory === "JUS" || activeCategory === "SOUPES") ? (
             <div className="menu-test-title-size-row">
               <h2 className="menu-test-content-title">

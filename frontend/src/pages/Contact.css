@@ -148,6 +148,17 @@
   font-family: 'Montserrat', -apple-system, sans-serif;
 }
 
+.form-global-error {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid #e74c3c;
+  background: #fdecea;
+  color: #c0392b;
+  font-size: 14px;
+  font-family: 'Montserrat', -apple-system, sans-serif;
+}
+
 .submit-button {
   background: linear-gradient(135deg, var(--green) 0%, var(--green-bright) 100%);
   color: white;

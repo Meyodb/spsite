@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
+import { Agentation } from 'agentation'
 import './index.css'
 import './i18n'
 import App from './App.jsx'
@@ -10,6 +11,7 @@ const app = (
   <StrictMode>
     <HelmetProvider>
       <App />
+      {import.meta.env.DEV && <Agentation />}
     </HelmetProvider>
   </StrictMode>
 )

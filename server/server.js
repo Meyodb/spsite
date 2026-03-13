@@ -275,8 +275,18 @@ app.post("/admin/login", (req, res) => {
 });
 
 app.post("/admin/logout", (req, res) => {
-  req.session?.destroy(() => {
-    res.redirect("/");
+  if (!req.session) {
+    return res.redirect("/");
+  }
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Erreur lors de la destruction de la session admin:", err);
+    }
+
+    // Invalide le cookie de session côté client
+    res.clearCookie("connect.sid");
+    return res.redirect("/");
   });
 });
 

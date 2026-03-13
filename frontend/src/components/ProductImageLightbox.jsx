@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { ProductImage } from "./ProductImage";
 import "./ProductImageLightbox.css";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 const CLOSE_DURATION_MS = 280;
 
@@ -11,6 +12,9 @@ const CLOSE_DURATION_MS = 280;
 export function ProductImageLightbox({ open, onClose, productId, alt, imageCount }) {
   const [isClosing, setIsClosing] = useState(false);
   const handleCloseRef = useRef(() => {});
+  const containerRef = useRef(null);
+
+  useFocusTrap(containerRef, { active: open && !isClosing });
 
   const handleClose = useCallback(() => {
     setIsClosing((prev) => {
@@ -51,6 +55,7 @@ export function ProductImageLightbox({ open, onClose, productId, alt, imageCount
   return (
     <div
       className={`product-image-lightbox ${isClosing ? "product-image-lightbox--closing" : ""}`}
+      ref={containerRef}
       role="dialog"
       aria-modal="true"
       aria-label={alt ?? "Photo du produit"}

@@ -6,7 +6,7 @@
   --green-light: #e8ede6;
   --green-bright: #9baa8f;
   --text: #1a1a1a;
-  --text-light: #666;
+  --text-light: #555555;
   --bg: #ffffff;
   --bg-light: #fafafa;
   --bg-section: #e8e8e8;
@@ -2945,6 +2945,26 @@ body {
   gap: 12px;
   margin-bottom: 16px;
   min-width: 0;
+}
+
+.newsletter-error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 4px;
+  font-family: 'Montserrat', -apple-system, sans-serif;
+}
+
+.newsletter-success-message {
+  background: var(--green-light);
+  border: 2px solid var(--green);
+  border-radius: 6px;
+  padding: 14px 16px;
+  text-align: center;
+  color: var(--green-dark);
+  font-family: 'Montserrat', -apple-system, sans-serif;
+  font-size: 14px;
+  margin-top: 12px;
+  animation: fadeInUp 0.5s ease;
 }
 
 .newsletter-input {

@@ -7,10 +7,12 @@
   min-height: 0;
 }
 
-/* Grille produits : aspect-ratio et coins arrondis */
+/* Grille produits : le carrousel remplit la zone image du carré */
 .menu-test-product-image-wrap .product-image-carousel {
-  aspect-ratio: 4 / 3;
-  border-radius: 6px 6px 0 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -41,10 +43,15 @@
   display: block;
 }
 
-/* Grille produits : format 4:3, soupe centrée et visible en entier */
+/* Grille produits : image remplit le cadre sans laisser de blanc */
 .menu-test-product-image-wrap .product-image-carousel-img {
-  object-fit: contain;
-  object-position: center center;
+  object-fit: cover;
+  object-position: center 55%;
+}
+
+/* Soupes : image un peu plus haute dans le cadre */
+.menu-test-content[data-category="SOUPES"] .menu-test-product-image-wrap .product-image-carousel-img {
+  object-position: center 44%;
 }
 
 /* Lightbox : object-fit contain pour voir l'image en entier */

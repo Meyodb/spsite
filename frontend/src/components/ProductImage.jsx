@@ -17,12 +17,21 @@ function resolveImageProductId(productId) {
   return IMAGE_ID_ALIAS[productId] ?? productId;
 }
 
+const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL || "";
+
+function withImageBase(path) {
+  if (!IMG_BASE_URL) return path;
+  const base = IMG_BASE_URL.endsWith("/") ? IMG_BASE_URL.slice(0, -1) : IMG_BASE_URL;
+  return `${base}${path}`;
+}
+
 /**
  * URL de l'image d'un produit par convention : public/images/products/{id}.{ext}
+ * Si VITE_IMG_BASE_URL est défini, on pointe vers le CDN.
  */
 export function getProductImageUrl(productId, ext = "jpg") {
   const imageProductId = resolveImageProductId(productId);
-  return `/images/products/${imageProductId}.${ext}`;
+  return withImageBase(`/images/products/${imageProductId}.${ext}`);
 }
 
 /**

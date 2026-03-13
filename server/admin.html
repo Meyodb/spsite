@@ -360,8 +360,8 @@
             <label for="filterVisible">Statut</label>
             <select id="filterVisible">
               <option value="">Tous</option>
-              <option value="1">Visible</option>
-              <option value="0">Caché</option>
+              <option value="1">Actif</option>
+              <option value="0">Inactif</option>
             </select>
           </div>
 
@@ -473,10 +473,10 @@
                 />
               </div>
               <div>
-                <label>Affichage</label>
+                <label>Statut</label>
                 <div class="field-inline">
                   <input id="visible" type="checkbox" checked />
-                  <span>Visible sur le site</span>
+                  <span>Actif</span>
                 </div>
               </div>
             </div>
@@ -598,7 +598,7 @@
           <td>
             <span class="tag-pill">
               <span class="status-dot ${statusOn ? "on" : "off"}"></span>
-              ${statusOn ? "Visible" : "Caché"}
+              ${statusOn ? "Actif" : "Inactif"}
             </span>
           </td>
           <td style="text-align: right">
@@ -736,8 +736,17 @@
       });
 
       if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
-          window.location.href = "/";
+        logoutBtn.addEventListener("click", async () => {
+          try {
+            await fetch("/admin/logout", {
+              method: "POST",
+              credentials: "same-origin",
+            });
+          } catch (err) {
+            console.error("Erreur lors de la déconnexion admin:", err);
+          } finally {
+            window.location.href = "/";
+          }
         });
       }
 

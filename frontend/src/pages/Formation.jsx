@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { CodeProtection } from "../components/CodeProtection";
 import { FORMATION_SECTIONS } from "./FormationSection";
+import { PageSEO } from "../components/PageSEO";
 import "./Formation.css";
 
 export const Formation = () => {
@@ -19,6 +20,12 @@ export const Formation = () => {
   return (
     <CodeProtection>
       <main className="formation-page">
+        <PageSEO
+          title="Espace formation Soup & Juice"
+          description="Espace de formation interne Soup & Juice : vidéos et ressources pédagogiques pour les équipes."
+          path="/formation"
+          noindex
+        />
         <div className="formation-container">
           <header className="formation-header">
             <h1>{t("formation.spaceTitle")}</h1>

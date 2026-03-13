@@ -21,7 +21,13 @@ export const ADN = () => {
           <div className="adn-identity-container">
             <AnimatedItem animation="fadeInUp" delay={200} className="adn-identity-image">
               <div className="adn-photo-placeholder adn-identity-logo-frame">
-                <img src={logoSoupJuice} alt="Soup & Juice" className="adn-identity-logo" />
+              <img
+                src={logoSoupJuice}
+                alt="Soup & Juice"
+                className="adn-identity-logo"
+                width="320"
+                height="320"
+              />
               </div>
             </AnimatedItem>
             <div className="adn-identity-content">

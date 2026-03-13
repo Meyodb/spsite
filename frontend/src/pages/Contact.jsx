@@ -51,6 +51,7 @@ export const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,6 +65,10 @@ export const Contact = () => {
         ...prev,
         [name]: "",
       }));
+    }
+
+    if (submitSuccess) {
+      setSubmitSuccess(false);
     }
   };
 
@@ -117,6 +122,7 @@ export const Contact = () => {
       return;
     }
 
+    setSubmitError("");
     setIsSubmitting(true);
 
     try {
@@ -133,6 +139,7 @@ export const Contact = () => {
       }
 
       setSubmitSuccess(true);
+      setSubmitError("");
       setFormData({
         sujet: "",
         nom: "",
@@ -143,14 +150,9 @@ export const Contact = () => {
         fonction: "",
         message: "",
       });
-
-      // Réinitialiser le message de succès après 5 secondes
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
     } catch (error) {
       console.error("Contact submit error:", error);
-      alert(t("common.errorRetry"));
+      setSubmitError(t("common.errorRetry"));
     } finally {
       setIsSubmitting(false);
     }
@@ -360,6 +362,12 @@ export const Contact = () => {
                     {isSubmitting ? t("contact.sending") : t("contact.submit")}
                   </button>
                 </AnimatedItem>
+
+                {submitError && (
+                  <div className="form-global-error" role="alert">
+                    {submitError}
+                  </div>
+                )}
 
                 {submitSuccess && (
                   <div className="success-message">

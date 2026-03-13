@@ -3,7 +3,16 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import placeholder from "../assets/images/product-placeholder.svg";
 import "./ProductImageCarousel.css";
 
-const EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+// Ordre de priorité des formats : AVIF, WebP puis PNG/JPEG
+const EXTENSIONS = ["avif", "webp", "png", "jpg", "jpeg"];
+
+const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL || "";
+
+function withImageBase(path) {
+  if (!IMG_BASE_URL) return path;
+  const base = IMG_BASE_URL.endsWith("/") ? IMG_BASE_URL.slice(0, -1) : IMG_BASE_URL;
+  return `${base}${path}`;
+}
 
 /**
  * URL de l'image d'un produit.
@@ -12,9 +21,9 @@ const EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
  */
 function getSlideUrl(productId, slideIndex, ext = "png") {
   if (slideIndex === 0) {
-    return `/images/products/${productId}.${ext}`;
+    return withImageBase(`/images/products/${productId}.${ext}`);
   }
-  return `/images/products/${productId}_${slideIndex + 1}.${ext}`;
+  return withImageBase(`/images/products/${productId}_${slideIndex + 1}.${ext}`);
 }
 
 /**
@@ -88,6 +97,8 @@ export function ProductImageCarousel({ productId, alt, className, imageCount = 1
             className="product-image-carousel-img"
             loading="lazy"
             decoding="async"
+            width="600"
+            height="600"
             onError={() => handleImageError(currentIndex)}
             onLoad={() => handleImageLoad(currentIndex)}
           />
@@ -136,6 +147,8 @@ function ProductImageCarouselSingle({ productId, alt, className }) {
       className={className}
       loading="lazy"
       decoding="async"
+      width="600"
+      height="600"
       onError={() => setTryIndex((i) => (i + 1 < urls.length ? i + 1 : urls.length))}
     />
   );

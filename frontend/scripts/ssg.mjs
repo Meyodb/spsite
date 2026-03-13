@@ -8,7 +8,22 @@ const rootDir = path.resolve(__dirname, "..");
 const distDir = path.resolve(rootDir, "dist");
 const ssrBundlePath = path.resolve(rootDir, "dist-ssr", "entry-server.js");
 
-const routesToPrerender = ["/", "/produits", "/restaurants", "/faq", "/contact"];
+const routesToPrerender = [
+  "/",
+  "/produits",
+  "/restaurants",
+  "/faq",
+  "/contact",
+  "/adn",
+  "/nos-piliers",
+  "/catering",
+  "/allergenes",
+  "/mentions-legales",
+  "/politique-confidentialite",
+  "/politique-cookies",
+  "/cgu",
+  "/formation",
+];
 
 function normalizeRoute(route) {
   if (!route.startsWith("/")) return `/${route}`;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./CookieBanner.css";
 import {
@@ -7,9 +7,11 @@ import {
   getCookieConsent,
   setCookieConsent,
 } from "../cookies/consent";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 export const CookieBanner = () => {
   const [visible, setVisible] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const consent = getCookieConsent();
@@ -22,6 +24,8 @@ export const CookieBanner = () => {
       window.removeEventListener(COOKIE_CONSENT_OPEN_EVENT, openHandler);
     };
   }, []);
+
+  useFocusTrap(containerRef, { active: visible });
 
   const handleAccept = () => {
     setCookieConsent(COOKIE_CONSENT_VALUES.ACCEPTED);
@@ -36,7 +40,12 @@ export const CookieBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className="cookie-banner" role="dialog" aria-label="Consentement cookies">
+    <div
+      className="cookie-banner"
+      role="dialog"
+      aria-label="Consentement cookies"
+      ref={containerRef}
+    >
       <div className="cookie-banner-inner">
         <p className="cookie-banner-text">
           Nous utilisons des cookies pour améliorer votre expérience sur notre site.
