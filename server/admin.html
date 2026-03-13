@@ -41,7 +41,6 @@
         background: var(--bg-panel);
         border: 1px solid var(--border);
         box-shadow: var(--shadow);
-        overflow: hidden;
         display: flex;
         flex-direction: column;
       }
@@ -83,6 +82,14 @@
         flex-direction: column;
         gap: 12px;
         min-height: 0;
+      }
+
+      .panel--sticky {
+        position: sticky;
+        top: 16px;
+        align-self: start;
+        max-height: calc(100vh - 32px);
+        overflow-y: auto;
       }
 
       .panel-header {
@@ -297,6 +304,31 @@
         max-height: 100%;
         object-fit: cover;
       }
+
+      .admin-filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 16px;
+        margin-bottom: 12px;
+      }
+
+      .admin-filters label {
+        margin-bottom: 0;
+        font-size: 0.75rem;
+      }
+
+      .admin-filters select,
+      .admin-filters input[type="text"] {
+        width: auto;
+        min-width: 140px;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+      }
+
+      .admin-filters input[type="text"] {
+        min-width: 180px;
+      }
     </style>
   </head>
   <body>
@@ -314,9 +346,24 @@
               <span>produits &amp; visibilité</span>
             </div>
             <button id="refreshBtn" class="btn" type="button">
-              ↻ Recharger
+              Recharger
             </button>
           </header>
+
+          <div class="admin-filters">
+            <label for="filterCategory">Catégorie</label>
+            <select id="filterCategory">
+              <option value="">Toutes les catégories</option>
+            </select>
+            <label for="filterName">Nom</label>
+            <input id="filterName" type="text" placeholder="Rechercher par nom…" />
+            <label for="filterVisible">Statut</label>
+            <select id="filterVisible">
+              <option value="">Tous</option>
+              <option value="1">Visible</option>
+              <option value="0">Caché</option>
+            </select>
+          </div>
 
           <div class="table-wrapper">
             <table>
@@ -332,14 +379,14 @@
               </thead>
               <tbody id="productsTbody">
                 <tr>
-                  <td colspan="7">Chargement en cours…</td>
+                  <td colspan="6">Chargement en cours…</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <section class="panel">
+        <section class="panel panel--sticky">
           <header class="panel-header">
             <div class="panel-title">
               Produit
@@ -370,33 +417,17 @@
               </div>
             </div>
 
-            <!-- Ligne 2 : prix + ordre -->
-            <div class="form-grid" style="margin-top: 10px">
-              <div>
-                <label for="price">Prix (€)</label>
-                <input id="price" type="number" step="0.01" min="0" />
-              </div>
-              <div>
-                <label for="sortOrder">Ordre d’affichage</label>
-                <input id="sortOrder" type="number" step="1" />
-              </div>
+            <div style="margin-top: 10px">
+              <label for="price">Prix (€)</label>
+              <input id="price" type="number" step="0.01" min="0" />
             </div>
 
-            <!-- Ligne 3 : image URL + upload -->
-            <div class="form-grid" style="margin-top: 10px">
-              <div>
-                <label for="imageUrl">Chemin de l’image</label>
-                <input
-                  id="imageUrl"
-                  type="text"
-                  placeholder="ex: /uploads/products/xxx.jpg"
-                />
-              </div>
-              <div>
-                <label for="imageFile">Importer une image</label>
-                <div class="field-inline">
-                  <input id="imageFile" type="file" accept="image/*" />
-                </div>
+            <!-- Image : upload uniquement (URL stockée en caché) -->
+            <input type="hidden" id="imageUrl" />
+            <div style="margin-top: 10px">
+              <label for="imageFile">Importer une image</label>
+              <div class="field-inline">
+                <input id="imageFile" type="file" accept="image/*" />
               </div>
             </div>
 
@@ -450,8 +481,8 @@
               </div>
             </div>
 
-            <!-- Boutons + aperçu -->
-            <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap">
+            <!-- Boutons -->
+            <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
               <div style="display:flex; align-items:center; gap:8px;">
                 <button id="saveBtn" class="btn btn-primary" type="submit">
                   Enregistrer
@@ -464,12 +495,6 @@
                 >
                   Supprimer
                 </button>
-              </div>
-              <div id="imagePreviewWrapper" style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:0.75rem; color:var(--text-light);">Aperçu</span>
-                <div class="img-preview-wrap">
-                  <img id="imagePreview" src="" alt="" style="display:none;" />
-                </div>
               </div>
             </div>
           </form>
@@ -505,8 +530,12 @@
       const extraPriceEl = document.getElementById("extraPrice");
       const extraPriceLabelEl = document.getElementById("extraPriceLabel");
       const visibleEl = document.getElementById("visible");
-      const sortOrderEl = document.getElementById("sortOrder");
       const imageFileEl = document.getElementById("imageFile");
+      const filterCategoryEl = document.getElementById("filterCategory");
+      const filterNameEl = document.getElementById("filterName");
+      const filterVisibleEl = document.getElementById("filterVisible");
+
+      let allProducts = [];
       const imagePreviewEl = document.getElementById("imagePreview");
 
       function showError(msg) {
@@ -594,7 +623,6 @@
         extraPriceEl.value = "";
         extraPriceLabelEl.value = "";
         visibleEl.checked = true;
-        sortOrderEl.value = "";
         if (imageFileEl) imageFileEl.value = "";
         if (imagePreviewEl) {
           imagePreviewEl.src = "";
@@ -615,7 +643,6 @@
         extraPriceEl.value = p.extra_price != null ? p.extra_price : "";
         extraPriceLabelEl.value = p.extra_price_label || "";
         visibleEl.checked = Number(p.visible) === 1;
-        sortOrderEl.value = p.sort_order != null ? p.sort_order : "";
         if (imageFileEl) imageFileEl.value = "";
         if (imagePreviewEl) {
           if (p.image_url) {
@@ -637,11 +664,42 @@
       async function loadCategories() {
         const cats = await fetchJSON("/api/admin/categories");
         categorySelect.innerHTML = "";
+        if (filterCategoryEl) {
+          filterCategoryEl.innerHTML = '<option value="">Toutes les catégories</option>';
+        }
         for (const c of cats) {
           const opt = document.createElement("option");
           opt.value = c.id;
           opt.textContent = `${c.label_fr || c.code}`;
           categorySelect.appendChild(opt);
+          if (filterCategoryEl) {
+            const optFilter = document.createElement("option");
+            optFilter.value = c.id;
+            optFilter.textContent = c.label_fr || c.code;
+            filterCategoryEl.appendChild(optFilter);
+          }
+        }
+      }
+
+      function applyFilters() {
+        const catId = filterCategoryEl && filterCategoryEl.value ? String(filterCategoryEl.value) : "";
+        const nameQuery = filterNameEl && filterNameEl.value ? filterNameEl.value.trim().toLowerCase() : "";
+        const visibleVal = filterVisibleEl && filterVisibleEl.value !== "" ? filterVisibleEl.value : "";
+
+        const filtered = allProducts.filter((p) => {
+          if (catId && String(p.category_id) !== catId) return false;
+          if (nameQuery && !(p.name || "").toLowerCase().includes(nameQuery)) return false;
+          if (visibleVal !== "" && String(Number(p.visible)) !== visibleVal) return false;
+          return true;
+        });
+
+        tbody.innerHTML = "";
+        if (!filtered.length) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = '<td colspan="6">Aucun produit ne correspond aux filtres.</td>';
+          tbody.appendChild(tr);
+        } else {
+          filtered.forEach((p) => tbody.appendChild(rowForProduct(p)));
         }
       }
 
@@ -650,22 +708,14 @@
         clearError();
         try {
           const products = await fetchJSON("/api/admin/products");
-          tbody.innerHTML = "";
-          if (!products.length) {
-            const tr = document.createElement("tr");
-            tr.innerHTML =
-              '<td colspan="7">Aucun produit encore défini.</td>';
-            tbody.appendChild(tr);
-          } else {
-            for (const p of products) {
-              tbody.appendChild(rowForProduct(p));
-            }
-          }
+          allProducts = products;
+          applyFilters();
         } catch (err) {
+          allProducts = [];
           tbody.innerHTML = "";
           const tr = document.createElement("tr");
           tr.innerHTML =
-            '<td colspan="7">Erreur de chargement. Vérifiez vos identifiants ou rechargez la page.</td>';
+            '<td colspan="6">Erreur de chargement. Vérifiez vos identifiants ou rechargez la page.</td>';
           tbody.appendChild(tr);
           showError(err.message || "Erreur de chargement");
         } finally {
@@ -676,6 +726,10 @@
       refreshBtn.addEventListener("click", () => {
         loadProducts();
       });
+
+      if (filterCategoryEl) filterCategoryEl.addEventListener("change", applyFilters);
+      if (filterNameEl) filterNameEl.addEventListener("input", applyFilters);
+      if (filterVisibleEl) filterVisibleEl.addEventListener("change", applyFilters);
 
       newBtn.addEventListener("click", () => {
         resetForm();
@@ -762,8 +816,7 @@
           extra_price_label: extraPriceLabelEl.value.trim() || null,
           image_alt: imageAltEl.value.trim() || null,
           visible: visibleEl.checked,
-          sort_order:
-            sortOrderEl.value === "" ? 0 : Number(sortOrderEl.value),
+          sort_order: 0,
         };
 
         if (!payload.name) {

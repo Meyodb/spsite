@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
 import multer from "multer";
+import session from "express-session";
 import {
   getActivePromos,
   getStores,
@@ -50,38 +51,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// ─── Auth basique pour l'admin ─────────────────────────────────────────
+// ─── Auth admin (login par session) ────────────────────────────────────
 
-const ADMIN_USER = process.env.ADMIN_USER || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "change-me";
-
-function adminAuth(req, res, next) {
-  const header = req.headers.authorization || "";
-  const [scheme, encoded] = header.split(" ");
-  if (scheme !== "Basic" || !encoded) {
-    res.setHeader("WWW-Authenticate", 'Basic realm="admin"');
-    return res.status(401).send("Authentification requise");
-  }
-
-  let decoded = "";
-  try {
-    decoded = Buffer.from(encoded, "base64").toString("utf8");
-  } catch {
-    res.setHeader("WWW-Authenticate", 'Basic realm="admin"');
-    return res.status(401).send("Identifiants invalides");
-  }
-
-  const idx = decoded.indexOf(":");
-  const username = decoded.slice(0, idx);
-  const password = decoded.slice(idx + 1);
-
-  if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
-    return next();
-  }
-
-  res.setHeader("WWW-Authenticate", 'Basic realm="admin"');
-  return res.status(401).send("Identifiants invalides");
-}
+// Identifiants actuels du back-office.
+// Pour les modifier, change simplement ces valeurs et redémarre le serveur.
+const ADMIN_USER = "Soupandjuice";
+const ADMIN_PASSWORD = "wU48wJ29";
+const ADMIN_SESSION_SECRET =
+  process.env.ADMIN_SESSION_SECRET || "change-this-session-secret";
 
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
@@ -92,26 +69,64 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://esm.sh", "https://cdn.jsdelivr.net"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "blob:", "https://basemaps.cartocdn.com", "https://*.basemaps.cartocdn.com", "https://*.tile.openstreetmap.org"],
-      connectSrc: ["'self'", "https://basemaps.cartocdn.com", "https://*.basemaps.cartocdn.com", "https://*.tile.openstreetmap.org", "https://deliveroo.fr"],
-      mediaSrc: ["'self'", "blob:"],
-      frameSrc: ["'none'"],
-      objectSrc: ["'none'"],
-      workerSrc: ["'self'", "blob:"],
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://esm.sh",
+          "https://cdn.jsdelivr.net",
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://fonts.googleapis.com",
+        ],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "blob:",
+          "https://basemaps.cartocdn.com",
+          "https://*.basemaps.cartocdn.com",
+          "https://*.tile.openstreetmap.org",
+        ],
+        connectSrc: [
+          "'self'",
+          "https://basemaps.cartocdn.com",
+          "https://*.basemaps.cartocdn.com",
+          "https://*.tile.openstreetmap.org",
+          "https://deliveroo.fr",
+        ],
+        mediaSrc: ["'self'", "blob:"],
+        frameSrc: ["'none'"],
+        objectSrc: ["'none'"],
+        workerSrc: ["'self'", "blob:"],
+      },
     },
-  },
-  crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-}));
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(
+  session({
+    secret: ADMIN_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 30,
+    },
+  })
+);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const SPA_STATIC_ROUTES = new Set([
   "/",
@@ -136,6 +151,134 @@ function isValidSpaRoute(pathname) {
   if (/^\/restaurants\/[^/]+$/.test(pathname)) return true;
   return false;
 }
+
+function requireAdminSession(req, res, next) {
+  if (req.session && req.session.isAdmin) {
+    return next();
+  }
+  return res.redirect("/admin/login");
+}
+
+app.get("/admin/login", (req, res) => {
+  if (req.session && req.session.isAdmin) {
+    return res.redirect("/admin");
+  }
+  res.send(`<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Connexion administration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --green: #82907B;
+        --bg: #f7f6f3;
+        --bg-panel: #ffffff;
+        --border: #e0e0e0;
+        --text: #1a1a1a;
+        --danger: #c45c5c;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+      }
+      .card {
+        width: 100%;
+        max-width: 380px;
+        background: var(--bg-panel);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        padding: 24px 24px 20px;
+      }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 1.1rem;
+      }
+      p {
+        margin: 0 0 18px;
+        font-size: 0.9rem;
+      }
+      label {
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 4px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        padding: 8px 10px;
+        margin-bottom: 12px;
+        font-family: inherit;
+        font-size: 0.9rem;
+      }
+      button {
+        width: 100%;
+        border-radius: 999px;
+        border: none;
+        padding: 10px 14px;
+        background: var(--green);
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      button:hover { opacity: 0.92; }
+      .error {
+        margin-bottom: 12px;
+        font-size: 0.85rem;
+        color: var(--danger);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Connexion admin</h1>
+      <p>Veuillez entrer votre identifiant et votre mot de passe.</p>
+      ${
+        req.query.error
+          ? '<div class="error">Identifiants invalides.</div>'
+          : ""
+      }
+      <form method="post" action="/admin/login">
+        <label for="username">Identifiant</label>
+        <input id="username" name="username" type="text" autocomplete="username" required />
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+        <button type="submit">Se connecter</button>
+      </form>
+    </div>
+  </body>
+</html>`);
+});
+
+app.post("/admin/login", (req, res) => {
+  const { username, password } = req.body || {};
+  if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
+    req.session.isAdmin = true;
+    return res.redirect("/admin");
+  }
+  return res.redirect("/admin/login?error=1");
+});
+
+app.post("/admin/logout", (req, res) => {
+  req.session?.destroy(() => {
+    res.redirect("/");
+  });
+});
 
 app.get("/api/promos", (_, res) => res.json(getActivePromos()));
 app.get("/api/stores", (_, res) => res.json(getStores()));
@@ -238,7 +381,7 @@ app.get("/api/products", (_, res) => {
 
 // ─── Routes Admin protégées ────────────────────────────────────────────
 
-app.get("/admin", adminAuth, (req, res) => {
+app.get("/admin", requireAdminSession, (req, res) => {
   const adminHtml = path.join(__dirname, "admin.html");
   if (fs.existsSync(adminHtml)) {
     return res.sendFile(adminHtml);
@@ -248,30 +391,30 @@ app.get("/admin", adminAuth, (req, res) => {
     .send("Fichier admin.html manquant côté serveur.");
 });
 
-app.get("/api/admin/categories", adminAuth, (req, res) => {
+app.get("/api/admin/categories", requireAdminSession, (req, res) => {
   const categories = adminListCategories();
   res.json(categories);
 });
 
-app.get("/api/admin/products", adminAuth, (req, res) => {
+app.get("/api/admin/products", requireAdminSession, (req, res) => {
   const products = adminListProducts();
   res.json(products);
 });
 
 app.post(
   "/api/admin/upload-image",
-  adminAuth,
+  requireAdminSession,
   upload.single("file"),
   (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: "Aucun fichier reçu" });
-    }
+  }
     const url = `/uploads/products/${req.file.filename}`;
     return res.status(201).json({ url, filename: req.file.filename });
   }
 );
 
-app.post("/api/admin/products", adminAuth, (req, res) => {
+app.post("/api/admin/products", requireAdminSession, (req, res) => {
   const {
     name,
     category_id,
@@ -314,7 +457,7 @@ app.post("/api/admin/products", adminAuth, (req, res) => {
   return res.status(201).json({ id });
 });
 
-app.put("/api/admin/products/:id", adminAuth, (req, res) => {
+app.put("/api/admin/products/:id", requireAdminSession, (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isFinite(id)) {
     return res.status(400).json({ error: "ID invalide." });
@@ -366,7 +509,7 @@ app.put("/api/admin/products/:id", adminAuth, (req, res) => {
   return res.json({ updated: true });
 });
 
-app.delete("/api/admin/products/:id", adminAuth, (req, res) => {
+app.delete("/api/admin/products/:id", requireAdminSession, (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isFinite(id)) {
     return res.status(400).json({ error: "ID invalide." });
