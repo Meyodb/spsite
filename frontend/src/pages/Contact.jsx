@@ -389,6 +389,12 @@ export const Contact = () => {
                     </a>
                   </div>
                   <div className="info-item">
+                    <span className="info-label">Recrutement</span>
+                    <a href="mailto:recrutement@soup-juice.com" className="info-value">
+                      recrutement@soup-juice.com
+                    </a>
+                  </div>
+                  <div className="info-item">
                     <span className="info-label">{t("contact.hoursLabel")}</span>
                     <span className="info-value">
                       {t("contact.hours")}
