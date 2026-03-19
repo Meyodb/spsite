@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logoVert from "../assets/images/logo-vert.png";
+import logoEnseigne from "../assets/images/logo-enseigne.png";
 
 const LANGUAGES = [
   { code: "fr", flag: "FR" },
@@ -148,7 +149,15 @@ export const Header = () => {
           <div className="header-bar">
             <div className="nav-left">
               <Link to="/" className="logo">
-              <img src={logoVert} alt="Soup & Juice" width={140} height={40} />
+                <span className="logo-flip" aria-hidden="true">
+                  <span className="logo-flip-face logo-flip-front">
+                    <img src={logoVert} alt="" width={140} height={40} />
+                  </span>
+                  <span className="logo-flip-face logo-flip-back">
+                    <img src={logoEnseigne} alt="" width={140} height={40} />
+                  </span>
+                </span>
+                <span className="sr-only">Soup & Juice</span>
               </Link>
             </div>
             <button 

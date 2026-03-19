@@ -3,8 +3,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import placeholder from "../assets/images/product-placeholder.svg";
 import "./ProductImageCarousel.css";
 
-// Ordre de priorité des formats : AVIF, WebP puis PNG/JPEG
-const EXTENSIONS = ["avif", "webp", "png", "jpg", "jpeg"];
+// Formats essayés en fallback (png, jpg, jpeg uniquement — pas de webp/avif)
+const EXTENSIONS = ["png", "jpg", "jpeg"];
 
 const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL || "";
 

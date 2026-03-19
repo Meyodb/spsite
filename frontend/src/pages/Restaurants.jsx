@@ -15,6 +15,7 @@ import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
 import photoHonore from "../assets/images/restaurants/photo_honore.png";
 import photoKleber from "../assets/images/restaurants/photo_kleber.png";
 import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
+import photoKleber3 from "../assets/images/restaurants/photo_kleber_3.png";
 import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
 import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
 import photoBourse from "../assets/images/restaurants/photo_bourse.png";
@@ -48,7 +49,7 @@ const restaurantPhotos = {
   2: [photoBourse],                    // BOURSE
   3: [photoHaussmann],                 // HAUSSMANN
   4: [photoEcuries2, photoEcuries],    // ÉCURIES
-  5: [photoEtoile, photoKleber2],      // ÉTOILE - Avenue Kléber (boutique Keleber)
+  5: [photoEtoile, photoKleber3],      // ÉTOILE - Avenue Kléber (boutique Keleber)
   6: [photoOpera],                     // OPÉRA
   7: [photoNeuilly],                   // NEUILLY
   8: [photoHonore],                    // HONORÉ - Saint Honoré
