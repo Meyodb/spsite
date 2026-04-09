@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import "./CodeProtection.css";
 
 const TRAINING_CODE = "SOUP2024";
 const STORAGE_KEY = "training_access_granted";

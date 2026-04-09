@@ -11,6 +11,9 @@ frontend/dist-ssr/
 # Bases de données locales
 server/data/*.db
 
+# Export local des photos produit (généré par server/scripts/export-product-photos-by-category.py)
+server/data/product-photos-export/
+
 # Logs
 logs/
 *.log

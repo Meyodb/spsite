@@ -1,0 +1,111 @@
+.code-protection-container {
+  min-height: calc(100vh - 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(130, 144, 123, 0.16), transparent 35%),
+    radial-gradient(circle at 85% 80%, rgba(90, 102, 84, 0.16), transparent 30%),
+    #f7f7f4;
+}
+
+.code-protection-box {
+  width: min(460px, 100%);
+  background: #ffffff;
+  border: 1px solid #d7ddd3;
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(30, 45, 28, 0.12);
+  padding: 1.6rem 1.4rem;
+}
+
+.code-protection-header h2 {
+  margin: 0;
+  color: #2f3a2b;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+}
+
+.code-protection-header p {
+  margin: 0.55rem 0 0;
+  color: #586551;
+}
+
+.code-protection-form {
+  margin-top: 1.2rem;
+}
+
+.code-input-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.code-input-group label {
+  color: #34412f;
+  font-size: 0.94rem;
+  font-weight: 600;
+}
+
+.code-input-group input {
+  width: 100%;
+  border: 1px solid #c7d0c1;
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  font-size: 1rem;
+  color: #1f271d;
+  background: #fcfdfb;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.code-input-group input:focus {
+  outline: none;
+  border-color: #82907b;
+  box-shadow: 0 0 0 3px rgba(130, 144, 123, 0.22);
+}
+
+.code-input-group input.error {
+  border-color: #c24437;
+  box-shadow: 0 0 0 3px rgba(194, 68, 55, 0.16);
+}
+
+.error-message {
+  color: #b3372a;
+  font-size: 0.9rem;
+}
+
+.code-submit-btn {
+  margin-top: 1rem;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #82907b, #677462);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+.code-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 16px rgba(62, 81, 55, 0.22);
+}
+
+.code-submit-btn:active {
+  transform: translateY(0);
+  filter: brightness(0.97);
+}
+
+.code-protection-loader {
+  border: 1px solid #d7ddd3;
+  border-radius: 10px;
+  background: #fff;
+  color: #40513a;
+  padding: 0.8rem 1rem;
+}
+
+@media (max-width: 540px) {
+  .code-protection-box {
+    padding: 1.2rem 1rem;
+    border-radius: 12px;
+  }
+}
