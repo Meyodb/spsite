@@ -54,10 +54,13 @@
   object-position: center 44%;
 }
 
-/* Lightbox : object-fit contain pour voir l'image en entier */
-.product-image-lightbox-content .product-image-carousel-img {
+/* Boissons (carrousel) : même logique que ProduitsMenu — image entière, centrée */
+.menu-test-content[data-category="BOISSONS"] .menu-test-product-image-wrap .product-image-carousel-img {
   object-fit: contain;
+  object-position: center center;
 }
+
+/* Lightbox : voir ProductImageLightbox.css (dimensionnement intrinsèque + contain) */
 
 /* Flèches */
 .product-image-carousel-arrow {

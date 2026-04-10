@@ -22,6 +22,9 @@ export const Header = () => {
   const isHome = pathname === "/" || pathname === "";
   const currentLangCode = (i18n.language || "fr").split("-")[0];
   const currentLang = LANGUAGES.find((l) => l.code === currentLangCode) || LANGUAGES[0];
+  const [logoFrontSrc, logoBackSrc] = isHome
+    ? [logoEnseigne, logoVert]
+    : [logoVert, logoEnseigne];
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -151,10 +154,10 @@ export const Header = () => {
               <Link to="/" className="logo">
                 <span className="logo-flip" aria-hidden="true">
                   <span className="logo-flip-face logo-flip-front">
-                    <img src={logoVert} alt="" width={140} height={40} />
+                    <img src={logoFrontSrc} alt="" width={140} height={40} />
                   </span>
                   <span className="logo-flip-face logo-flip-back">
-                    <img src={logoEnseigne} alt="" width={140} height={40} />
+                    <img src={logoBackSrc} alt="" width={140} height={40} />
                   </span>
                 </span>
                 <span className="sr-only">Soup & Juice</span>

@@ -672,6 +672,12 @@
   object-position: center 44%;
 }
 
+/* Boissons : bouteilles/canettes — éviter le crop agressif du cover (ex. Vitamine Well) */
+.menu-test-content[data-category="BOISSONS"] .menu-test-product-image-wrap img {
+  object-fit: contain;
+  object-position: center center;
+}
+
 .menu-test-product-card--clickable {
   cursor: pointer;
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
-import videoAccueil from "../assets/videos/Video_accueil.MP4";
+import videoAccueil from "../assets/videos/Video_accueil.mp4";
 import heroPoster from "../assets/images/hero-poster.jpg";
 
 export const Home = () => {

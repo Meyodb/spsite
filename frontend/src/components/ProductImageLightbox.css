@@ -64,11 +64,44 @@
 .product-image-lightbox-content {
   max-width: 90vw;
   max-height: 90vh;
+  min-width: 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: product-lightbox-scaleIn 0.32s cubic-bezier(0.33, 1, 0.68, 1) 0.04s both;
   will-change: transform, opacity;
+}
+
+/*
+ * Carrousel : ProductImageCarousel.css applique aussi height/width 100% sur .product-image-carousel.
+ * Comme ce fichier est importé avant le carrousel, ces règles gagnent en cascade et créent un cycle
+ * de hauteur avec le parent flex → image verticale « coupée » / ligne au milieu. On rétablit un
+ * dimensionnement intrinsèque pour la lightbox uniquement.
+ */
+.product-image-lightbox-content .product-image-carousel {
+  width: auto;
+  max-width: min(90vw, 100%);
+  height: auto;
+  max-height: 85vh;
+  flex-shrink: 1;
+}
+
+.product-image-lightbox-content .product-image-carousel-track {
+  flex: 0 1 auto;
+}
+
+.product-image-lightbox-content .product-image-carousel-slide {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.product-image-lightbox-content .product-image-carousel-img {
+  width: auto;
+  height: auto;
+  max-width: min(86vw, 100%);
+  max-height: 78vh;
+  object-fit: contain;
 }
 
 @keyframes product-lightbox-scaleIn {
