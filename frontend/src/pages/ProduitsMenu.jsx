@@ -9,7 +9,6 @@ import {
   DESSERT_SUBCATEGORIES_ORDER,
   DESSERT_SUBCATEGORIES_COMPACT_ORDER,
   DESSERT_SUBCATEGORY_PRICES,
-  productHasPhoto,
 } from "../data/productsData";
 import { AllergenPictograms, getAllergensForProduct } from "../components/AllergenPictograms";
 import { ProductImage } from "../components/ProductImage";
@@ -83,9 +82,7 @@ export const ProduitsMenu = () => {
 
   const productsByCategory = useMemo(() => {
     const acc = {};
-    const categoriesRequiringPhoto = ["PLATS CHAUDS", "SALADES", "SANDWICH"];
     visibleProducts.forEach((p) => {
-      if (categoriesRequiringPhoto.includes(p.category) && !productHasPhoto(p)) return;
       if (!acc[p.category]) acc[p.category] = [];
       acc[p.category].push(p);
     });
@@ -148,7 +145,7 @@ export const ProduitsMenu = () => {
     <main className="produits-menu-test">
       <PageSEO
         title="Notre Carte - Soupes, Jus & Menus"
-        description="Découvrez la carte Soup & Juice : jus frais pressés, soupes maison, salades, sandwichs, plats chauds et desserts. Menus dès 13,50€ à Paris."
+        description="Découvrez la carte S&J : jus frais pressés, soupes maison, salades, sandwichs, plats chauds et desserts. Menus dès 13,50€ à Paris."
         path="/produits"
       />
       <div
@@ -335,7 +332,7 @@ export const ProduitsMenu = () => {
               <h2 className="menu-test-content-title">
                 {t(`products.categories.${CATEGORY_I18N_KEYS[activeCategory] || activeCategory}`)}
               </h2>
-              <span className="menu-test-category-price">7,5€</span>
+              <span className="menu-test-category-price">6€</span>
             </div>
           ) : activeCategory === "MILKSHAKES" ? (
             <div className="menu-test-title-size-row">
@@ -540,6 +537,8 @@ export const ProduitsMenu = () => {
               })}
             </div>
           )}
+
+          <p className="menu-test-images-disclaimer">{t("products.imagesDisclaimer")}</p>
         </section>
       </div>
       <ProductSheet

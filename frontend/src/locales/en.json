@@ -23,7 +23,7 @@
     "ariaLang": "Change language"
   },
   "footer": {
-    "titleYou": "Soup & Juice and you",
+    "titleYou": "S&J and you",
     "engagements": "Our commitments",
     "piliers": "Our pillars",
     "restaurants": "Our restaurants",
@@ -34,14 +34,14 @@
     "catering": "Catering service",
     "followUs": "Follow us",
     "ariaInstagram": "Follow us on Instagram",
-    "copyright": "© Copyright 2025 Soup & Juice - All rights reserved",
+    "copyright": "© Copyright 2025 S&J - All rights reserved",
     "legal": "Legal notice",
     "privacy": "Privacy policy",
     "cookies": "Cookie policy",
     "cgu": "Terms of use"
   },
   "home": {
-    "heroTitle": "Manger sain, se sentir bien, recommencer demain",
+    "heroTitle": "S&J Sunny and Juicy",
     "ctaProducts": "See our products",
     "statSince": "Healthy canteen since",
     "statRestaurants": "Restaurants in Paris",
@@ -53,8 +53,8 @@
     "newsletterDisclaimer": "By subscribing, you agree to receive our communications. You can unsubscribe at any time.",
     "newsletterEmailRequired": "Please enter your email address.",
     "newsletterEmailInvalid": "Please enter a valid email address.",
-    "joinTitle": "Join the Soup & Juice adventure",
-    "joinDescription": "Want to be part of the Soup & Juice adventure? Join our passionate team and help us make healthy eating accessible to everyone.",
+    "joinTitle": "Join the S&J adventure",
+    "joinDescription": "Want to be part of the S&J adventure? Join our passionate team and help us make healthy eating accessible to everyone.",
     "joinCta": "Join us"
   },
   "products": {
@@ -83,6 +83,7 @@
     "sectionSeasonMessageMilkshakes": "You will find a choice of milk: almond, oat, coconut, soy or cow.",
     "availabilityDisclaimer": "Product availability varies according to the season and in-store stock.",
     "availabilityDisclaimerShort": "Availability may vary according to in-store stock.",
+    "imagesDisclaimer": "Non-contractual images",
     "sectionCategoryLabel": {
       "platsChauds": "hot meals",
       "salades": "salads",
@@ -184,8 +185,8 @@
       "144": { "name": "WATER BOTTLE", "description": "Reusable water bottle" },
       "77": { "name": "RICOTTA CHERRY TOMATO QUICHE", "description": "Cherry tomatoes, ricotta, milk, cream, wheat flour, egg, chives." },
       "78": { "name": "QUICHE LORRAINE", "description": "Emmental, bacon, milk, cream, wheat flour, egg." },
-      "79": { "name": "GOAT CHEESE & SPINACH TART", "description": "Spinach, goat cheese, milk, cream, wheat flour, egg, sesame." },
-      "80": { "name": "SALMON & SPINACH TART", "description": "Spinach, smoked salmon, milk, cream, wheat flour, egg." },
+      "79": { "name": "GOAT CHEESE & SPINACH QUICHE", "description": "Spinach, goat cheese, milk, cream, wheat flour, egg, sesame." },
+      "80": { "name": "SALMON & SPINACH QUICHE", "description": "Spinach, smoked salmon, milk, cream, wheat flour, egg." },
       "81": { "name": "CHICKEN KORMA", "description": "Basmati rice, chicken, cream, yoghurt, coconut milk, carrots, peppers, spices." },
       "82": { "name": "CHICKEN TIKKA MASALA", "description": "Basmati rice, chicken, cream, tomatoes, yoghurt, carrots, almonds, raisins, spices." },
       "83": { "name": "CHICKEN BOMBAY", "description": "Basmati rice, chicken, tomato sauce, cream, onions, peas, spices." },
@@ -214,7 +215,7 @@
       "107": { "name": "BLACK RICE SWEET POTATO BACON SALAD", "description": "Black rice, bacon, feta, rocket, sweet potatoes." },
       "146": { "name": "BLACK RICE TUNA TAPENADE SALAD", "description": "Black rice, red curry grilled carrot, grilled pepper, grilled courgette, yellow onion, tuna tapenade, chives." },
       "147": { "name": "LOW CARB SALAD", "description": "White cabbage, carrots, mayonnaise, mustard, grilled mushrooms, baby spinach, poached egg, cheddar (pasteurised milk), pecan nuts." },
-      "108": { "name": "SUSHI SALAD", "description": "Sushi rice, avocado, smoked salmon, soya beans, white cabbage, ginger, sesame." },
+      "108": { "name": "LARGE SUSHI SALAD", "description": "Sushi rice, avocado, smoked salmon, soya beans, white cabbage, candied ginger, soya sauce, black and golden sesame seeds." },
       "109": { "name": "RAS EL HANOUT WRAP", "description": "Pita, cream cheese, chicken, ras el hanout spices, Greek yoghurt, candied lemon, pomegranate." },
       "111": { "name": "FETA WRAP (VEGETARIAN)", "description": "Pita, cream cheese, feta, olives, tzatziki, sun-dried tomatoes, mint." },
       "113": { "name": "TUNA WRAP", "description": "Pita, spreadable tuna, tomatoes, egg, olives, salad, basil, radish." },
@@ -243,11 +244,11 @@
     "identite": {
       "label": "IDENTITY & VISION",
       "title": "A brand born in 2001",
-      "text": "Soup & Juice is a fast-food chain that places flavour balance at the heart of every dish. Our mission: to support your daily nutritional intake with healthy, tasty and varied options.",
-      "imageAlt": "Soup & Juice identity and vision"
+      "text": "S&J is a fast-food chain that places flavour balance at the heart of every dish. Our mission: to support your daily nutritional intake with healthy, tasty and varied options.",
+      "imageAlt": "S&J identity and vision"
     },
     "pillars": {
-      "title": "What eating at Soup & Juice really brings you",
+      "title": "What eating at S&J really brings you",
       "intro": "Three fundamental pillars for your wellbeing",
       "cta": "Discover our three pillars"
     },
@@ -255,7 +256,7 @@
       "label": "QUALITY & KNOW-HOW",
       "title": "Homemade recipes",
       "text": "Our dishes are selected for their nutritional qualities. Complete and balanced recipes, they are prepared in our kitchens by teams who work every day close to the products to guarantee freshness and taste.",
-      "imageAlt": "Soup & Juice homemade recipes"
+      "imageAlt": "S&J homemade recipes"
     },
     "engagements": {
       "title": "OUR COMMITMENTS",
@@ -280,7 +281,7 @@
     "forme": {
       "title": "FITNESS",
       "intro": "More stable energy, all day long.",
-      "body": "At Soup & Juice, our dishes are built to support the body, not tire it. We combine proteins (lentils, chickpeas, eggs, chicken), fibre-rich vegetables, grains like quinoa or basmati rice, and good fats (olive oil, seeds, nuts).",
+      "body": "At S&J, our dishes are built to support the body, not tire it. We combine proteins (lentils, chickpeas, eggs, chicken), fibre-rich vegetables, grains like quinoa or basmati rice, and good fats (olive oil, seeds, nuts).",
       "resultLabel": "Result:",
       "bullet1": "better satiety",
       "bullet2": "fewer energy slumps after meals",
@@ -333,6 +334,8 @@
     "successTitle": "✓ Your message has been sent successfully!",
     "successSubtitle": "We will get back to you as soon as possible.",
     "infoTitle": "Contact information",
+    "imageAlt": "Two people walking with their S&J drinks",
+    "instagramLabel": "Instagram",
     "hoursLabel": "Hours",
     "hours": "Monday - Friday: 9am - 3pm",
     "errors": {
@@ -350,7 +353,7 @@
   },
   "restaurants": {
     "title": "OUR RESTAURANTS",
-    "subtitle": "Find the Soup & Juice restaurant nearest you",
+    "subtitle": "Find the S&J restaurant nearest you",
     "searchTitle": "Find the nearest restaurant",
     "addressPlaceholder": "Address",
     "locateMe": "Locate me",
@@ -363,7 +366,7 @@
     "popupNavigate": "Get directions",
     "hoursTitle": "OPENING HOURS",
     "ariaNavigate": "Get directions to",
-    "listTitle": "Find the nearest Soup & Juice!"
+    "listTitle": "Find the nearest S&J!"
   },
   "allergens": {
     "title": "Allergen table",
@@ -479,7 +482,7 @@
       "miseEnPlaceDesc": "Organisation and preparation of the workspace",
       "logistique": "Logistics",
       "logistiqueDesc": "Stock and logistics management",
-      "soupJuice": "Soup & Juice",
+      "soupJuice": "S&J",
       "menus": "Menus",
       "phrasesUtiles": "Useful Phrases",
       "boosters": "Boosters",
@@ -528,9 +531,9 @@
     "heroSubtitle": "Colourful, generous buffets for all your events",
     "label": "FOR YOUR EVENTS",
     "title": "A tailor‑made catering service for companies and individuals",
-    "description": "Whether you are a professional or an individual, at Soup & Juice we offer catering solutions for your buffets. We bring colour and energy to your events. From exotic small plates and finger food to more traditional buffets, we compose everything according to your needs – so feel free to be as precise as you like and let us turn your buffet into a truly gourmet moment.",
-    "imageJuicesAlt": "Soup & Juice juice bottles for a catering buffet",
-    "imageBuffetAlt": "Mini salads and verrines for a Soup & Juice catering buffet",
+    "description": "Whether you are a professional or an individual, at S&J we offer catering solutions for your buffets. We bring colour and energy to your events. From exotic small plates and finger food to more traditional buffets, we compose everything according to your needs – so feel free to be as precise as you like and let us turn your buffet into a truly gourmet moment.",
+    "imageJuicesAlt": "S&J juice bottles for a catering buffet",
+    "imageBuffetAlt": "Mini salads and verrines for a S&J catering buffet",
     "sectionFormatsLabel": "FORMATS & IDEAS",
     "sectionFormatsTitle": "From team breakfast to cocktail reception",
     "sectionFormatsText": "Wrap platters, fresh juices, mini salads, soups, hot dishes, desserts and treats: we design with you a buffet that matches your event, your constraints and your budget. Our team helps you build a balanced, colourful offer that is easy to enjoy, whatever the format (meeting, seminar, product launch, birthday, afterwork, and more).",
@@ -545,5 +548,159 @@
     "submit": "Access training",
     "error": "Incorrect code. Please try again.",
     "loading": "Loading..."
+  },
+  "chatbot": {
+    "title": "S&J Assistant",
+    "subtitle": "Online",
+    "welcome": "Hi 👋 I'm the S&J assistant. How can I help you today?",
+    "nudge": "I'm here to answer your questions 💬",
+    "nudgeClose": "Close bubble",
+    "footer": "Automated assistant — answers are indicative",
+    "menu": {
+      "aiChat": "Free chat (AI)",
+      "products": "Questions about our products",
+      "restaurants": "Our restaurants",
+      "faq": "Frequently asked questions",
+      "contact": "Contact the team"
+    },
+    "ai": {
+      "badge": "AI mode",
+      "ctaTitle": "More information",
+      "ctaSubtitle": "Ask our AI assistant a free question",
+      "intro": "Ask me anything! I can help with our products, restaurants, allergens, set menus and more. (My answers are AI-generated and should be treated as indicative.)",
+      "inputPlaceholder": "Type your question…",
+      "send": "Send",
+      "backToMenu": "Back to guided menu",
+      "ariaForm": "AI chat form",
+      "footer": "AI-generated answers — for reference",
+      "errorGeneric": "Sorry, I couldn't process your request. Try rephrasing or contact the team via the menu.",
+      "errorRateLimit": "You've sent many messages recently. Please wait a few minutes before trying again.",
+      "errorUnavailable": "The AI assistant is currently unavailable. Use the guided menu or contact us.",
+      "errorTimeout": "The response is taking too long. Try again in a moment.",
+      "errorNetwork": "Connection issue. Please check your network and try again."
+    },
+    "common": {
+      "backToMenu": "Back to main menu",
+      "backToProducts": "Back to categories",
+      "backToRestaurants": "Back to restaurants",
+      "backToFaq": "Back to FAQ categories",
+      "learnMore": "Learn more",
+      "redirecting": "Redirecting you to the page… you can come back here any time."
+    },
+    "aria": {
+      "open": "Open S&J assistant",
+      "close": "Close assistant",
+      "restart": "Restart conversation",
+      "options": "Reply options"
+    },
+    "products": {
+      "chooseCategory": "Which category are you interested in?",
+      "list": "Here are our {{category}}:",
+      "listWithMore": "Here are some of our {{category}} (+{{count}} more in-store):",
+      "viewFullMenu": "See the full menu",
+      "allergensTable": "Allergen table"
+    },
+    "restaurants": {
+      "list": "We have {{count}} restaurants in Paris and Neuilly. Tap one to see details:",
+      "viewMap": "View the interactive map",
+      "byMetroLine": "Find by metro line",
+      "chooseLine": "Which metro line would you like a restaurant on?",
+      "line": "Line {{line}}",
+      "lineResult": "{{count}} restaurant(s) served by line {{line}}:",
+      "lineNoResult": "Sorry, no restaurant is directly served by line {{line}}.",
+      "chooseAnotherLine": "Choose another line"
+    },
+    "faq": {
+      "chooseCategory": "Which topic can I help with?",
+      "chooseQuestion": "Your questions about: {{category}}",
+      "backToCategory": "Back to questions",
+      "otherQuestion": "Ask another question"
+    },
+    "faqCat": {
+      "restaurants": "Our restaurants",
+      "menu": "Our menu & products",
+      "allergens": "Allergens & diets",
+      "catering": "Catering & events",
+      "jobs": "Careers",
+      "values": "Commitments & values"
+    },
+    "faqQ": {
+      "locations": {
+        "q": "Where are your restaurants?",
+        "a": "We have 9 restaurants in Paris and Neuilly-sur-Seine. You'll find all addresses and an interactive map on our Restaurants page."
+      },
+      "hours": {
+        "q": "What are your opening hours?",
+        "a": "All our restaurants are open Monday to Friday, from 9:00 AM to 3:00 PM. We are closed on weekends and public holidays."
+      },
+      "delivery": {
+        "q": "Do you offer delivery?",
+        "a": "Yes, our Neuilly-sur-Seine restaurant is available on Deliveroo. For other locations, please come to the shop directly."
+      },
+      "carte": {
+        "q": "What's on your menu?",
+        "a": "Our menu includes fresh-pressed juices, homemade soups, salads, sandwiches (wraps and bagels), hot meals, milkshakes, desserts and health boosters. Set menus are available from €13.50."
+      },
+      "juicesFresh": {
+        "q": "Are your juices really fresh?",
+        "a": "Absolutely! Each juice is pressed to order in front of you, from fresh fruits and vegetables. No preservatives, no added sugar, no additives."
+      },
+      "seasons": {
+        "q": "Does the menu change with the seasons?",
+        "a": "Yes. Our soups and hot meals are more varied in winter (up to 10 recipes), while in summer we offer more salads and gazpachos."
+      },
+      "formulas": {
+        "q": "Do you offer set menus?",
+        "a": "Yes: Sandwich Menu (€13.50), Salad Menu (€14) and Hot Meal Menu (€14.50). Each includes a main dish + a soup or juice + a dessert."
+      },
+      "howConsult": {
+        "q": "How can I check allergens?",
+        "a": "The full allergen list is available on our dedicated page, with a detailed product-by-product table for the 14 regulated allergens."
+      },
+      "vegOptions": {
+        "q": "Do you have vegetarian or vegan options?",
+        "a": "Yes, most of our soups are vegetarian or even vegan. We also offer vegan hot meals (vegan lasagna, black and white rice with eggplant & falafel), vegetarian wraps and dairy-free desserts."
+      },
+      "gluten": {
+        "q": "Do your products contain gluten?",
+        "a": "Some products contain gluten (sandwiches, pastries). However, our fresh juices, several soups and some salads are gluten-free. Check the allergen table for details."
+      },
+      "lactose": {
+        "q": "Do you offer lactose-free products?",
+        "a": "Yes, many juices, soups and meals are dairy-free: gazpachos, tomato and basil soup, Mexican red beans, raspberry chia pudding, and more."
+      },
+      "cateringOffer": {
+        "q": "Do you offer catering?",
+        "a": "Yes, we offer catering for corporate events, seminars, receptions and cocktail parties: fresh juice platters, soups, mini salads and finger food, tailored to your needs."
+      },
+      "cateringOrder": {
+        "q": "How can I place a catering order?",
+        "a": "Contact us via the contact form by selecting the \"Professional\" subject, or visit us in-store. We'll get back to you within 24 hours with a personalised quote."
+      },
+      "cateringDelay": {
+        "q": "What's the minimum lead time for catering?",
+        "a": "We recommend contacting us at least 48 to 72 hours before your event for small orders, and at least one week ahead for events over 50 people."
+      },
+      "hiring": {
+        "q": "Are you hiring right now?",
+        "a": "We're always open to spontaneous applications: versatile team members, shop managers, and apprentices."
+      },
+      "apply": {
+        "q": "How do I apply at S&J?",
+        "a": "Send your application through our contact form by selecting the \"Careers\" subject. You can also drop by in-store."
+      },
+      "ingredients": {
+        "q": "Where do your ingredients come from?",
+        "a": "We favour short supply chains and local suppliers. Our fruits and vegetables are selected for their freshness, favouring French producers when in season."
+      },
+      "environment": {
+        "q": "What are your environmental commitments?",
+        "a": "We work on reducing our packaging, using recyclable containers, and fighting food waste. Our recipes are designed to minimise loss."
+      },
+      "pillars": {
+        "q": "What do your 3 pillars — Fitness, Diet, Health — mean?",
+        "a": "They are the 3 axes of our nutritional philosophy. Fitness: energising recipes for daily life. Diet: light, balanced options. Health: ingredients with recognised benefits."
+      }
+    }
   }
 }

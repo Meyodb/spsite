@@ -10,7 +10,7 @@ export const NosPiliers = () => {
     <main className="piliers-page">
       <PageSEO
         title="Nos 3 Piliers : Forme, Régime, Santé"
-        description="Les 3 piliers de Soup & Juice : Forme, Régime et Santé. Des recettes conçues pour votre bien-être au quotidien avec des ingrédients frais et naturels."
+        description="Les 3 piliers de S&J : Forme, Régime et Santé. Des recettes conçues pour votre bien-être au quotidien avec des ingrédients frais et naturels."
         path="/nos-piliers"
       />
       <AnimatedSection id="piliers" animation="fadeInUp" className="piliers-section">

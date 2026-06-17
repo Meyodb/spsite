@@ -12,7 +12,7 @@ export const ADN = () => {
     <main className="adn-page">
       <PageSEO
         title="Notre ADN"
-        description="Découvrez l'ADN de Soup & Juice : nos valeurs, notre savoir-faire et nos engagements pour une alimentation saine, fraîche et locale depuis 2001."
+        description="Découvrez l'ADN de S&J : nos valeurs, notre savoir-faire et nos engagements pour une alimentation saine, fraîche et locale depuis 2001."
         path="/adn"
       />
       <AnimatedSection id="adn" animation="fadeInUp" className="adn-section">
@@ -23,7 +23,7 @@ export const ADN = () => {
               <div className="adn-photo-placeholder adn-identity-logo-frame">
               <img
                 src={logoSoupJuice}
-                alt="Soup & Juice"
+                alt="S&J"
                 className="adn-identity-logo"
                 width="320"
                 height="320"

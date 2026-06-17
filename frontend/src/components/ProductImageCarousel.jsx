@@ -1,17 +1,25 @@
 import { useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import placeholder from "../assets/images/product-placeholder.svg";
+import placeholder from "../assets/images/logo-vert.png";
 import "./ProductImageCarousel.css";
 
 // Formats essayés en fallback (png, jpg, jpeg uniquement — pas de webp/avif)
 const EXTENSIONS = ["png", "jpg", "jpeg"];
 
 const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL || "";
+// Cache-busting : change à chaque build (donc à chaque `npm run restart`)
+// pour forcer le navigateur à recharger les photos produits.
+const BUILD_VERSION = typeof __BUILD_VERSION__ !== "undefined" ? __BUILD_VERSION__ : "";
 
 function withImageBase(path) {
   if (!IMG_BASE_URL) return path;
   const base = IMG_BASE_URL.endsWith("/") ? IMG_BASE_URL.slice(0, -1) : IMG_BASE_URL;
   return `${base}${path}`;
+}
+
+function withCacheBust(url) {
+  if (!BUILD_VERSION) return url;
+  return url.includes("?") ? `${url}&v=${BUILD_VERSION}` : `${url}?v=${BUILD_VERSION}`;
 }
 
 /**
@@ -21,9 +29,9 @@ function withImageBase(path) {
  */
 function getSlideUrl(productId, slideIndex, ext = "png") {
   if (slideIndex === 0) {
-    return withImageBase(`/images/products/${productId}.${ext}`);
+    return withCacheBust(withImageBase(`/images/products/${productId}.${ext}`));
   }
-  return withImageBase(`/images/products/${productId}_${slideIndex + 1}.${ext}`);
+  return withCacheBust(withImageBase(`/images/products/${productId}_${slideIndex + 1}.${ext}`));
 }
 
 /**

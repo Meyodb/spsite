@@ -23,7 +23,7 @@
     "ariaLang": "Changer de langue"
   },
   "footer": {
-    "titleYou": "Soup & Juice et vous",
+    "titleYou": "S&J et vous",
     "engagements": "Nos engagements",
     "piliers": "Nos piliers",
     "restaurants": "Nos restaurants",
@@ -34,14 +34,14 @@
     "catering": "Service traiteur",
     "followUs": "Suivez-nous",
     "ariaInstagram": "Suivez-nous sur Instagram",
-    "copyright": "© Copyright 2025 Soup & Juice - Tous droits réservés",
+    "copyright": "© Copyright 2025 S&J - Tous droits réservés",
     "legal": "Mentions légales",
     "privacy": "Politique de confidentialité",
     "cookies": "Politique de cookies",
     "cgu": "CGU"
   },
   "home": {
-    "heroTitle": "Manger sain, se sentir bien, recommencer demain",
+    "heroTitle": "S&J Sunny and Juicy",
     "ctaProducts": "Voir nos produits",
     "statSince": "Cantine saine depuis",
     "statRestaurants": "Restaurants sur Paris",
@@ -53,8 +53,8 @@
     "newsletterDisclaimer": "En vous inscrivant, vous acceptez de recevoir nos communications. Vous pouvez vous désinscrire à tout moment.",
     "newsletterEmailRequired": "Veuillez renseigner votre adresse email.",
     "newsletterEmailInvalid": "Veuillez saisir une adresse email valide.",
-    "joinTitle": "Rejoindre l'aventure Soup & Juice",
-    "joinDescription": "Vous souhaitez faire partie de l'aventure Soup & Juice ? Rejoignez notre équipe passionnée et contribuez à notre mission de rendre l'alimentation saine accessible à tous.",
+    "joinTitle": "Rejoindre l'aventure S&J",
+    "joinDescription": "Vous souhaitez faire partie de l'aventure S&J ? Rejoignez notre équipe passionnée et contribuez à notre mission de rendre l'alimentation saine accessible à tous.",
     "joinCta": "Rejoignez-nous"
   },
   "products": {
@@ -83,6 +83,7 @@
     "sectionSeasonMessageMilkshakes": "Vous retrouverez un choix de lait : amande, avoine, coco, soja ou vache.",
     "availabilityDisclaimer": "La disponibilité des produits varie selon les saisons et les stocks en magasin.",
     "availabilityDisclaimerShort": "La disponibilité peut varier selon les stocks en magasin.",
+    "imagesDisclaimer": "Images non contractuelles",
     "sectionCategoryLabel": {
       "platsChauds": "plats chauds",
       "salades": "salades",
@@ -221,8 +222,8 @@
       "144": { "name": "GOURDE", "description": "Gourde réutilisable" },
       "77": { "name": "QUICHE RICOTTA TOMATO CERISE", "description": "Tomates cerises, ricotta, lait, crème, farine de blé, œuf, ciboulette." },
       "78": { "name": "QUICHE LORRAINE", "description": "Emmental, lardons, lait, crème, farine de blé, œuf." },
-      "79": { "name": "TARTE CHÈVRE ÉPINARDS", "description": "Épinards, chèvre, lait, crème, farine de blé, œuf, sésame." },
-      "80": { "name": "TARTE SAUMON ÉPINARDS", "description": "Épinards, saumon fumé, lait, crème, farine de blé, œuf." },
+      "79": { "name": "QUICHE CHÈVRE ÉPINARDS", "description": "Épinards, chèvre, lait, crème, farine de blé, œuf, sésame." },
+      "80": { "name": "QUICHE SAUMON ÉPINARDS", "description": "Épinards, saumon fumé, lait, crème, farine de blé, œuf." },
       "81": { "name": "POULET KORMA", "description": "Riz basmati, poulet, crème, yaourt, lait de coco, carottes, poivrons, épices." },
       "82": { "name": "POULET TIKKA MASSALA", "description": "Riz basmati, poulet, crème, tomates, yaourt, carottes, amandes, raisins, épices." },
       "83": { "name": "POULET BOMBAY", "description": "Riz basmati, poulet, sauce tomate, crème, oignons, petits pois, épices." },
@@ -251,7 +252,7 @@
       "107": { "name": "SALADE RIZ NOIR PATATE DOUCE BACON", "description": "Riz noir, bacon, feta, roquette, patates douces." },
       "146": { "name": "SALADE RIZ NOIR TAPENADE DE THON", "description": "Riz noir, carotte grillée au curry rouge, poivron grillé, courgette grillée, oignon jaune, tapenade de thon, ciboulette." },
       "147": { "name": "SALADE LOW CARB", "description": "Chou blanc, carottes, mayonnaise, moutarde, champignons grillés, pousses d'épinard, œuf poché, cheddar bloc (lait pasteurisé), noix de pécan." },
-      "108": { "name": "SALADE SUSHI", "description": "Riz sushi, avocat, saumon fumé, fèves soja, chou blanc, gingembre, sésame." },
+      "108": { "name": "GRANDE SALADE SUSHI", "description": "Riz sushi, avocat, saumon fumé, fèves de soja, chou blanc, gingembre confit, sauce soja, graines de sésame noir et doré." },
       "109": { "name": "WRAP RAS EL HANOUT", "description": "Pita, crème cheese, poulet, épices ras el hanout, yaourt grec, citron confit, grenade." },
       "111": { "name": "WRAP FETA (VÉGÉTARIEN)", "description": "Pita, crème cheese, feta, olives, tzatziki, tomates séchées, menthe." },
       "113": { "name": "WRAP THON", "description": "Pita, thon tartinable, tomates, œuf, olives, salade, basilic, radis." },
@@ -280,11 +281,11 @@
     "identite": {
       "label": "IDENTITÉ & VISION",
       "title": "Une marque née en 2001",
-      "text": "Soup & Juice est une enseigne de restauration rapide qui place l'équilibre des saveurs au cœur de chaque assiette. Notre mission : accompagner vos apports nutritionnels au quotidien avec des options saines, savoureuses et variées.",
-      "imageAlt": "Identité et vision Soup & Juice"
+      "text": "S&J est une enseigne de restauration rapide qui place l'équilibre des saveurs au cœur de chaque assiette. Notre mission : accompagner vos apports nutritionnels au quotidien avec des options saines, savoureuses et variées.",
+      "imageAlt": "Identité et vision S&J"
     },
     "pillars": {
-      "title": "Ce que manger chez Soup & Juice apporte vraiment",
+      "title": "Ce que manger chez S&J apporte vraiment",
       "intro": "Trois piliers fondamentaux pour votre bien-être",
       "cta": "Découvrir nos trois piliers"
     },
@@ -292,7 +293,7 @@
       "label": "QUALITÉ & SAVOIR-FAIRE",
       "title": "Recettes faites maison",
       "text": "Nos plats sont sélectionnés pour leurs qualités nutritionnelles. Recettes complètes et équilibrées, elles sont élaborées dans nos cuisines par des équipes qui travaillent chaque jour au plus près des produits pour vous garantir fraîcheur et goût.",
-      "imageAlt": "Recettes faites maison Soup & Juice"
+      "imageAlt": "Recettes faites maison S&J"
     },
     "engagements": {
       "title": "NOS ENGAGEMENTS",
@@ -317,7 +318,7 @@
     "forme": {
       "title": "FORME",
       "intro": "Une énergie plus stable, toute la journée.",
-      "body": "Chez Soup & Juice, nos plats sont construits pour soutenir le corps, pas pour le fatiguer. Nous combinons protéines (lentilles, pois chiches, œufs, poulet), légumes riches en fibres, céréales comme le quinoa ou le riz basmati, et bonnes graisses (huile d'olive, graines, fruits secs).",
+      "body": "Chez S&J, nos plats sont construits pour soutenir le corps, pas pour le fatiguer. Nous combinons protéines (lentilles, pois chiches, œufs, poulet), légumes riches en fibres, céréales comme le quinoa ou le riz basmati, et bonnes graisses (huile d'olive, graines, fruits secs).",
       "resultLabel": "Résultat :",
       "bullet1": "une meilleure satiété",
       "bullet2": "moins de coups de fatigue après le repas",
@@ -370,6 +371,8 @@
     "successTitle": "✓ Votre message a été envoyé avec succès !",
     "successSubtitle": "Nous vous répondrons dans les plus brefs délais.",
     "infoTitle": "Informations de contact",
+    "imageAlt": "Deux personnes marchant avec leurs jus S&J",
+    "instagramLabel": "Instagram",
     "hoursLabel": "Horaires",
     "hours": "Lundi - Vendredi : 9h - 15h",
     "errors": {
@@ -387,7 +390,7 @@
   },
   "restaurants": {
     "title": "NOS RESTAURANTS",
-    "subtitle": "Trouvez le restaurant Soup & Juice le plus proche de vous",
+    "subtitle": "Trouvez le restaurant S&J le plus proche de vous",
     "searchTitle": "Recherchez le restaurant le plus proche",
     "addressPlaceholder": "Adresse",
     "locateMe": "Localisez-moi",
@@ -400,7 +403,7 @@
     "popupNavigate": "S'y rendre",
     "hoursTitle": "HORAIRES D'OUVERTURE",
     "ariaNavigate": "Obtenir l'itinéraire vers",
-    "listTitle": "Trouvez le Soup & Juice le plus proche !"
+    "listTitle": "Trouvez le S&J le plus proche !"
   },
   "allergens": {
     "title": "Tableau des allergènes",
@@ -516,7 +519,7 @@
       "miseEnPlaceDesc": "Organisation et préparation de l'espace de travail",
       "logistique": "Logistique",
       "logistiqueDesc": "Gestion des stocks et de la logistique",
-      "soupJuice": "Soup & Juice",
+      "soupJuice": "S&J",
       "menus": "Menus",
       "phrasesUtiles": "Phrases Utiles",
       "boosters": "Les Boosters",
@@ -544,7 +547,7 @@
       "interactionsClients": "Accueil, écoute et réponses",
       "questionsProduits": "Allergènes, ingrédients et conseils",
       "carteFidelite": "Tamponner et fidéliser",
-      "goodies": "Objets et cadeaux Soup & Juice",
+      "goodies": "Objets et cadeaux S&J",
       "jusDuJour": "Pression, dosage et présentation",
       "saladeDeFruits": "Coupe, assaisonnement et dressage",
       "recettesBoosters": "Dosettes et mélanges",
@@ -565,9 +568,9 @@
     "heroSubtitle": "Buffets colorés et gourmands pour tous vos événements",
     "label": "POUR VOS ÉVÉNEMENTS",
     "title": "Un service traiteur sur‑mesure, pour les pros et les particuliers",
-    "description": "Que vous soyez professionnel ou particulier, chez Soup & Juice, nous proposons des solutions pour vos buffets traiteur. Nous proposons de colorer et de donner du peps à vos événements. Petits plats exotiques, finger food ou buffet plus traditionnel, nous composons selon vos besoins alors n’hésitez pas à être aussi pointilleux que vous le souhaitez et permettez-nous de faire de votre buffet un véritable moment gourmand.",
-    "imageJuicesAlt": "Bouteilles de jus Soup & Juice pour un buffet traiteur",
-    "imageBuffetAlt": "Mini salades et verrines pour un buffet traiteur Soup & Juice",
+    "description": "Que vous soyez professionnel ou particulier, chez S&J, nous proposons des solutions pour vos buffets traiteur. Nous proposons de colorer et de donner du peps à vos événements. Petits plats exotiques, finger food ou buffet plus traditionnel, nous composons selon vos besoins alors n’hésitez pas à être aussi pointilleux que vous le souhaitez et permettez-nous de faire de votre buffet un véritable moment gourmand.",
+    "imageJuicesAlt": "Bouteilles de jus S&J pour un buffet traiteur",
+    "imageBuffetAlt": "Mini salades et verrines pour un buffet traiteur S&J",
     "sectionFormatsLabel": "FORMATS & IDÉES",
     "sectionFormatsTitle": "Du petit déjeuner d’équipe au cocktail dînatoire",
     "sectionFormatsText": "Plateaux de wraps ou navettes, jus frais, mini salades, soupes, plats chauds, desserts et douceurs : nous imaginons avec vous un buffet qui reflète votre événement, vos contraintes et votre budget. Notre équipe vous accompagne pour construire une offre équilibrée, colorée et facile à déguster, quel que soit le format (réunion, séminaire, lancement de produit, anniversaire, afterwork…).",
@@ -582,5 +585,159 @@
     "submit": "Accéder à la formation",
     "error": "Code incorrect. Veuillez réessayer.",
     "loading": "Chargement..."
+  },
+  "chatbot": {
+    "title": "Assistant S&J",
+    "subtitle": "En ligne",
+    "welcome": "Bonjour 👋 Je suis l'assistant S&J. Comment puis-je vous aider aujourd'hui ?",
+    "nudge": "Je réponds à vos questions 💬",
+    "nudgeClose": "Fermer la bulle",
+    "footer": "Assistant automatique — réponses indicatives",
+    "menu": {
+      "aiChat": "Discuter librement (IA)",
+      "products": "Questions sur nos produits",
+      "restaurants": "Nos restaurants",
+      "faq": "Questions fréquentes",
+      "contact": "Contacter l'équipe"
+    },
+    "ai": {
+      "badge": "Mode IA",
+      "ctaTitle": "Plus d'informations",
+      "ctaSubtitle": "Posez une question libre à notre assistant IA",
+      "intro": "Posez-moi votre question en toute liberté ! Je peux vous renseigner sur nos produits, nos restaurants, les allergènes, nos formules et bien plus. (Mes réponses sont générées par une IA à titre indicatif.)",
+      "inputPlaceholder": "Écrivez votre question…",
+      "send": "Envoyer",
+      "backToMenu": "Revenir au menu guidé",
+      "ariaForm": "Formulaire de chat IA",
+      "footer": "Réponses générées par IA — à titre indicatif",
+      "errorGeneric": "Désolé, je n'ai pas pu traiter votre demande. Vous pouvez reformuler ou contacter l'équipe via le menu.",
+      "errorRateLimit": "Vous avez envoyé beaucoup de messages récemment. Merci de patienter quelques minutes avant de réessayer.",
+      "errorUnavailable": "L'assistant IA n'est pas disponible pour le moment. Utilisez le menu guidé ou contactez-nous.",
+      "errorTimeout": "La réponse prend trop de temps. Réessayez dans quelques instants.",
+      "errorNetwork": "Problème de connexion. Vérifiez votre réseau et réessayez."
+    },
+    "common": {
+      "backToMenu": "Retour au menu principal",
+      "backToProducts": "Retour aux catégories",
+      "backToRestaurants": "Retour aux restaurants",
+      "backToFaq": "Retour aux catégories FAQ",
+      "learnMore": "En savoir plus",
+      "redirecting": "Je vous redirige vers la page dédiée… vous pouvez revenir ici à tout moment."
+    },
+    "aria": {
+      "open": "Ouvrir l'assistant S&J",
+      "close": "Fermer l'assistant",
+      "restart": "Recommencer la conversation",
+      "options": "Choix de réponse"
+    },
+    "products": {
+      "chooseCategory": "Quelle catégorie vous intéresse ?",
+      "list": "Voici nos {{category}} :",
+      "listWithMore": "Voici quelques-uns de nos {{category}} (+{{count}} autres en boutique) :",
+      "viewFullMenu": "Voir la carte complète",
+      "allergensTable": "Tableau des allergènes"
+    },
+    "restaurants": {
+      "list": "Nous avons {{count}} restaurants à Paris et Neuilly. Cliquez sur l'un d'eux pour voir ses infos :",
+      "viewMap": "Voir la carte interactive",
+      "byMetroLine": "Trouver par ligne de métro",
+      "chooseLine": "Sur quelle ligne de métro souhaitez-vous un restaurant ?",
+      "line": "Ligne {{line}}",
+      "lineResult": "{{count}} restaurant(s) desservi(s) par la ligne {{line}} :",
+      "lineNoResult": "Désolé, aucun restaurant n'est directement desservi par la ligne {{line}}.",
+      "chooseAnotherLine": "Choisir une autre ligne"
+    },
+    "faq": {
+      "chooseCategory": "Quel sujet vous intéresse ?",
+      "chooseQuestion": "Vos questions sur : {{category}}",
+      "backToCategory": "Retour aux questions",
+      "otherQuestion": "Poser une autre question"
+    },
+    "faqCat": {
+      "restaurants": "Nos restaurants",
+      "menu": "Notre carte & produits",
+      "allergens": "Allergènes & régimes",
+      "catering": "Catering & événements",
+      "jobs": "Recrutement",
+      "values": "Engagements & valeurs"
+    },
+    "faqQ": {
+      "locations": {
+        "q": "Où se trouvent vos restaurants ?",
+        "a": "Nous avons 9 restaurants à Paris et Neuilly-sur-Seine. Retrouvez toutes les adresses et la carte interactive sur notre page Restaurants."
+      },
+      "hours": {
+        "q": "Quels sont vos horaires d'ouverture ?",
+        "a": "Tous nos restaurants sont ouverts du lundi au vendredi, de 9h00 à 15h00. Nous sommes fermés le week-end et les jours fériés."
+      },
+      "delivery": {
+        "q": "Proposez-vous la livraison ?",
+        "a": "Oui, notre restaurant de Neuilly-sur-Seine est disponible sur Deliveroo. Pour les autres adresses, rendez-vous directement en boutique."
+      },
+      "carte": {
+        "q": "Que proposez-vous à la carte ?",
+        "a": "Notre carte comprend des jus frais pressés, des soupes maison, des salades, des sandwichs (wraps et bagels), des plats chauds, des milkshakes, des desserts et des boosters santé. Des formules menu sont disponibles dès 13,50€."
+      },
+      "juicesFresh": {
+        "q": "Vos jus sont-ils vraiment frais ?",
+        "a": "Absolument ! Chaque jus est préparé minute sous vos yeux, à partir de fruits et légumes frais. Aucun conservateur, aucun sucre ajouté, aucun additif."
+      },
+      "seasons": {
+        "q": "La carte change-t-elle selon les saisons ?",
+        "a": "Oui. Nos soupes et plats chauds sont plus nombreux en hiver (jusqu'à 10 recettes), tandis qu'en été nous proposons davantage de salades et de gaspachos."
+      },
+      "formulas": {
+        "q": "Proposez-vous des formules menu ?",
+        "a": "Oui : Menu Sandwich (13,50€), Menu Salade (14€) et Menu Plat Chaud (14,50€). Chaque formule inclut un plat principal + une soupe ou un jus + un dessert."
+      },
+      "howConsult": {
+        "q": "Comment consulter les allergènes ?",
+        "a": "La liste complète des allergènes est disponible sur notre page dédiée, avec un tableau détaillé produit par produit pour les 14 allergènes réglementaires."
+      },
+      "vegOptions": {
+        "q": "Avez-vous des options végétariennes ou vegan ?",
+        "a": "Oui, une grande partie de nos soupes sont végétariennes voire vegan. Nous proposons aussi des plats chauds vegan (lasagne vegan, duo de riz aubergines falafel), des wraps végétariens et des desserts sans produits laitiers."
+      },
+      "gluten": {
+        "q": "Vos produits contiennent-ils du gluten ?",
+        "a": "Certains produits contiennent du gluten (sandwichs, pâtisseries). Cependant, nos jus frais, plusieurs soupes et certaines salades en sont exempts. Consultez le tableau allergènes pour le détail."
+      },
+      "lactose": {
+        "q": "Proposez-vous des produits sans lactose ?",
+        "a": "Oui, de nombreux jus, soupes et plats sont sans produits laitiers : gaspachos, tomate au basilic, haricot rouge à la mexicaine, perles de chia framboise, etc."
+      },
+      "cateringOffer": {
+        "q": "Proposez-vous un service traiteur ?",
+        "a": "Oui, nous proposons un service de catering pour vos événements d'entreprise, séminaires, réceptions et cocktails : plateaux de jus frais, soupes, mini-salades et finger food sur mesure."
+      },
+      "cateringOrder": {
+        "q": "Comment passer commande pour un événement ?",
+        "a": "Contactez-nous via le formulaire de contact en sélectionnant le sujet « Professionnel », ou directement en magasin. Nous vous recontacterons sous 24h avec un devis personnalisé."
+      },
+      "cateringDelay": {
+        "q": "Quel est le délai minimum pour une commande traiteur ?",
+        "a": "Nous recommandons de nous contacter au minimum 48 à 72 heures avant votre événement pour les petites commandes, et au moins une semaine à l'avance pour plus de 50 personnes."
+      },
+      "hiring": {
+        "q": "Recrutez-vous en ce moment ?",
+        "a": "Nous sommes toujours ouverts aux candidatures spontanées : équipiers polyvalents, responsables de boutique, alternants."
+      },
+      "apply": {
+        "q": "Comment postuler chez S&J ?",
+        "a": "Envoyez votre candidature via le formulaire de contact en sélectionnant le sujet « Recrutement ». Vous pouvez aussi vous présenter directement en boutique."
+      },
+      "ingredients": {
+        "q": "D'où viennent vos ingrédients ?",
+        "a": "Nous privilégions les circuits courts et les fournisseurs locaux. Nos fruits et légumes sont sélectionnés pour leur fraîcheur, en favorisant les producteurs français quand la saison le permet."
+      },
+      "environment": {
+        "q": "Quels sont vos engagements environnementaux ?",
+        "a": "Nous travaillons sur la réduction de nos emballages, l'utilisation de contenants recyclables et la lutte contre le gaspillage alimentaire."
+      },
+      "pillars": {
+        "q": "Que signifient vos 3 piliers : Forme, Régime, Santé ?",
+        "a": "Ce sont les 3 axes de notre philosophie nutritionnelle. Forme : recettes énergétiques pour le quotidien. Régime : options légères et équilibrées. Santé : ingrédients aux bienfaits reconnus."
+      }
+    }
   }
 }

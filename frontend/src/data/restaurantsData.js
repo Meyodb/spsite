@@ -1,7 +1,7 @@
 export const RESTAURANTS = [
   {
     id: 1,
-    name: "SOUP & JUICE ST LAZARE",
+    name: "S&J ST LAZARE",
     slug: "st-lazare",
     address: "4 Rue de Londres, 75008 Paris",
     coordinates: [2.33046, 48.87678],
@@ -18,7 +18,7 @@ export const RESTAURANTS = [
   },
   {
     id: 2,
-    name: "SOUP & JUICE BOURSE",
+    name: "S&J BOURSE",
     slug: "bourse",
     address: "135 Rue Montmartre, 75002 Paris",
     coordinates: [2.34470, 48.86575],
@@ -35,7 +35,7 @@ export const RESTAURANTS = [
   },
   {
     id: 3,
-    name: "SOUP & JUICE HAUSSMANN",
+    name: "S&J HAUSSMANN",
     slug: "haussmann",
     address: "23 Rue Taitbout, 75009 Paris",
     coordinates: [2.33527, 48.87312],
@@ -52,7 +52,7 @@ export const RESTAURANTS = [
   },
   {
     id: 4,
-    name: "SOUP & JUICE ÉCURIES",
+    name: "S&J ÉCURIES",
     slug: "ecuries",
     address: "7 Rue des Petites Écuries, 75010 Paris",
     coordinates: [2.35344, 48.87306],
@@ -69,7 +69,7 @@ export const RESTAURANTS = [
   },
   {
     id: 5,
-    name: "SOUP & JUICE ÉTOILE",
+    name: "S&J ÉTOILE",
     slug: "etoile",
     address: "54 Avenue Kléber, 75016 Paris",
     coordinates: [2.29115, 48.86880],
@@ -87,7 +87,7 @@ export const RESTAURANTS = [
   },
   {
     id: 6,
-    name: "SOUP & JUICE OPÉRA",
+    name: "S&J OPÉRA",
     slug: "opera",
     address: "24 Rue du 4 septembre, 75002 Paris",
     coordinates: [2.33515, 48.86994],
@@ -104,7 +104,7 @@ export const RESTAURANTS = [
   },
   {
     id: 7,
-    name: "SOUP & JUICE NEUILLY",
+    name: "S&J NEUILLY",
     slug: "neuilly",
     address: "38 Rue Ybry, 92200 Neuilly-sur-Seine",
     coordinates: [2.26032, 48.88753],
@@ -122,7 +122,7 @@ export const RESTAURANTS = [
   },
   {
     id: 8,
-    name: "SOUP & JUICE HONORÉ",
+    name: "S&J HONORÉ",
     slug: "honore",
     address: "38 Rue de Berri, 75008 Paris",
     coordinates: [2.30700, 48.87390],
@@ -139,7 +139,7 @@ export const RESTAURANTS = [
   },
   {
     id: 9,
-    name: "SOUP & JUICE MADELEINE",
+    name: "S&J MADELEINE",
     slug: "madeleine",
     address: "24 Rue d'Anjou, 75008 Paris",
     coordinates: [2.32175, 48.87125],
@@ -159,5 +159,5 @@ export const RESTAURANTS = [
 export const RESTAURANT_COUNT = RESTAURANTS.length;
 
 export const RESTAURANT_NAMES_LIST = RESTAURANTS.map((r) =>
-  r.name.replace("SOUP & JUICE ", "")
+  r.name.replace("S&J ", "")
 ).join(", ");

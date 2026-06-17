@@ -72,7 +72,7 @@ const FAQ_ITEMS = [
     questions: [
       {
         q: "Proposez-vous un service traiteur ?",
-        a: "Oui, Soup & Juice propose un service de catering pour vos événements d'entreprise, séminaires, réceptions et cocktails. Nous préparons des plateaux de jus frais, soupes, mini-salades et finger food sur mesure.",
+        a: "Oui, S&J propose un service de catering pour vos événements d'entreprise, séminaires, réceptions et cocktails. Nous préparons des plateaux de jus frais, soupes, mini-salades et finger food sur mesure.",
         link: "/catering",
       },
       {
@@ -94,7 +94,7 @@ const FAQ_ITEMS = [
         a: "Nous sommes toujours ouverts aux candidatures spontanées ! Nous recherchons régulièrement des équipiers polyvalents, des responsables de boutique et des alternants.",
       },
       {
-        q: "Comment postuler chez Soup & Juice ?",
+        q: "Comment postuler chez S&J ?",
         a: "Envoyez votre candidature via notre formulaire de contact en sélectionnant le sujet \"Recrutement\". Indiquez le poste souhaité, votre disponibilité et la boutique qui vous intéresse. Vous pouvez aussi vous présenter directement en boutique.",
         link: "/contact",
       },
@@ -180,7 +180,7 @@ export const FAQ = () => {
     <main className="faq-page">
       <PageSEO
         title="Questions fréquentes (FAQ)"
-        description="Retrouvez les réponses aux questions les plus posées sur Soup & Juice : restaurants, carte, allergènes, livraison, catering, recrutement et engagements."
+        description="Retrouvez les réponses aux questions les plus posées sur S&J : restaurants, carte, allergènes, livraison, catering, recrutement et engagements."
         path="/faq"
         jsonLd={faqJsonLd}
       />
@@ -188,7 +188,7 @@ export const FAQ = () => {
         <div className="faq-hero-content">
           <h1 className="faq-title">Questions fréquentes</h1>
           <p className="faq-subtitle">
-            Tout ce que vous devez savoir sur Soup & Juice
+            Tout ce que vous devez savoir sur S&J
           </p>
         </div>
       </section>

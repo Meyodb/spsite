@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph internet["Internet"]
+        USER[Utilisateur]
+    end
+    subgraph vps["Serveur VPS"]
+        NGINX["Nginx<br/>HTTPS reverse proxy"]
+        PM2["PM2<br/>supervision processus"]
+        NODE["Node.js Express<br/>port 4000"]
+        SQLITE[("SQLite soupjuice.db")]
+        DIST["frontend/dist<br/>SPA compilée"]
+    end
+
+    USER -->|HTTPS| NGINX
+    NGINX --> PM2
+    PM2 --> NODE
+    NODE --> SQLITE
+    NODE --> DIST

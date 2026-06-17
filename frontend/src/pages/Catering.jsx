@@ -14,7 +14,7 @@ export const Catering = () => {
     <main className="adn-page">
       <PageSEO
         title="Traiteur & Catering"
-        description="Soup & Juice traiteur : plateaux de jus frais, soupes, mini-salades et finger food pour vos événements d'entreprise et réceptions à Paris."
+        description="S&J traiteur : plateaux de jus frais, soupes, mini-salades et finger food pour vos événements d'entreprise et réceptions à Paris."
         path="/catering"
       />
       <AnimatedSection id="catering" animation="fadeInUp" className="adn-section">

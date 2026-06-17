@@ -6,11 +6,11 @@ export const PolitiqueCookies = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
-      <PageSEO title="Politique cookies" description="Politique de gestion des cookies du site Soup & Juice." path="/politique-cookies" noindex />
+      <PageSEO title="Politique cookies" description="Politique de gestion des cookies du site S&J." path="/politique-cookies" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.cookiesTitle")}</h1>
-          <p className="legal-subtitle">Soup & Juice</p>
+          <p className="legal-subtitle">S&J</p>
         </div>
       </section>
 

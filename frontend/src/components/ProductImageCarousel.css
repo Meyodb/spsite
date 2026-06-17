@@ -16,6 +16,15 @@
   overflow: hidden;
 }
 
+/* Grille produits : verrouille track/slide sur la hauteur du cadre pour que
+   l'image (cover/contain) se calcule toujours sur le même format 4/3. */
+.menu-test-product-image-wrap .product-image-carousel-track,
+.menu-test-product-image-wrap .product-image-carousel-slide {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
 .product-image-carousel-track {
   position: relative;
   flex: 1;
@@ -46,12 +55,18 @@
 /* Grille produits : image remplit le cadre sans laisser de blanc */
 .menu-test-product-image-wrap .product-image-carousel-img {
   object-fit: cover;
-  object-position: center 55%;
+  object-position: center center;
 }
 
-/* Soupes : image un peu plus haute dans le cadre */
+/* Salades & plats : bol centré (photos déjà recadrées 4:3) */
+.menu-test-content[data-category="SALADES"] .menu-test-product-image-wrap .product-image-carousel-img,
+.menu-test-content[data-category="PLATS CHAUDS"] .menu-test-product-image-wrap .product-image-carousel-img {
+  object-position: center center;
+}
+
+/* Soupes : bol légèrement plus bas dans le cadre */
 .menu-test-content[data-category="SOUPES"] .menu-test-product-image-wrap .product-image-carousel-img {
-  object-position: center 44%;
+  object-position: center 52%;
 }
 
 /* Boissons (carrousel) : même logique que ProduitsMenu — image entière, centrée */

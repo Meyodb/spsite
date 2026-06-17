@@ -4,6 +4,8 @@ import "./CodeProtection.css";
 
 const TRAINING_CODE = "SOUP2024";
 const STORAGE_KEY = "training_access_granted";
+// Durée de validité d'une session d'accès à l'espace formation (12 heures).
+const SESSION_DURATION_MS = 12 * 60 * 60 * 1000;
 
 export const CodeProtection = ({ children }) => {
   const { t } = useTranslation();
@@ -13,19 +15,33 @@ export const CodeProtection = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const accessGranted = localStorage.getItem(STORAGE_KEY);
-    if (accessGranted === "true") {
+    const expiresAt = Number(localStorage.getItem(STORAGE_KEY));
+    if (expiresAt && Date.now() < expiresAt) {
       setIsAuthenticated(true);
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
     }
     setIsLoading(false);
   }, []);
+
+  // Verrouille automatiquement la page quand la session expire pendant la navigation.
+  useEffect(() => {
+    if (!isAuthenticated) return undefined;
+    const expiresAt = Number(localStorage.getItem(STORAGE_KEY));
+    if (!expiresAt) return undefined;
+    const timeoutId = setTimeout(() => {
+      localStorage.removeItem(STORAGE_KEY);
+      setIsAuthenticated(false);
+    }, Math.max(0, expiresAt - Date.now()));
+    return () => clearTimeout(timeoutId);
+  }, [isAuthenticated]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
     if (code.trim() === TRAINING_CODE) {
-      localStorage.setItem(STORAGE_KEY, "true");
+      localStorage.setItem(STORAGE_KEY, String(Date.now() + SESSION_DURATION_MS));
       setIsAuthenticated(true);
     } else {
       setError(t("codeProtection.error"));

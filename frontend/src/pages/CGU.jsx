@@ -6,11 +6,11 @@ export const CGU = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
-      <PageSEO title="Conditions générales d'utilisation" description="Conditions générales d'utilisation du site Soup & Juice." path="/cgu" noindex />
+      <PageSEO title="Conditions générales d'utilisation" description="Conditions générales d'utilisation du site S&J." path="/cgu" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.cguTitle")}</h1>
-          <p className="legal-subtitle">Soup & Juice</p>
+          <p className="legal-subtitle">S&J</p>
         </div>
       </section>
 

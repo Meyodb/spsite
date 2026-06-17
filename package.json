@@ -8,10 +8,15 @@
     "start:tunnel": "node scripts/start-with-tunnel.js",
     "deploy": "./scripts/deploy.sh",
     "deploy:server": "npm run build && npm run start",
-    "restart": "npm run build && pm2 restart spsite || npm run start"
+    "restart": "npm run build && pm2 restart spsite || npm run start",
+    "db:migrate": "node server/scripts/migrate-to-db.js",
+    "db:diagnostic": "node server/scripts/db-diagnostic.js",
+    "db:sync-js": "node server/scripts/sync-to-js.js",
+    "db:sync-js:dry": "node server/scripts/sync-to-js.js --dry"
   },
   "devDependencies": {
     "agentation": "^2.3.2",
+    "mammoth": "^1.12.0",
     "sharp": "^0.34.5"
   },
   "dependencies": {

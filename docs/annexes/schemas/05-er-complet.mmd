@@ -1,0 +1,43 @@
+erDiagram
+    category ||--o{ produit : "contient"
+    produit ||--o{ produit_allergene : "a"
+    allergene ||--o{ produit_allergene : "référencé par"
+    produit ||--o{ produit_translation : "traduit en"
+    produit ||--o| produit_sheet : "fiche enrichie"
+    category ||--o{ jdc_category_mapping : "mappée depuis JDC"
+    restaurant ||--o{ promo : "promotions"
+
+    category {
+        int id PK
+        string code
+        string managed_by
+    }
+    produit {
+        int id PK
+        int category_id FK
+        string jdc_id
+        int visible
+    }
+    allergene {
+        int id PK
+        string code
+    }
+    produit_allergene {
+        int produit_id FK
+        int allergene_id FK
+    }
+    produit_translation {
+        int produit_id FK
+        string lang
+    }
+    produit_sheet {
+        int produit_id PK
+    }
+    jdc_category_mapping {
+        string jdc_category_id PK
+        int site_category_id FK
+    }
+    restaurant {
+        int id PK
+        string slug
+    }

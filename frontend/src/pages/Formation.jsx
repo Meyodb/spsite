@@ -22,8 +22,8 @@ export const Formation = () => {
     <CodeProtection>
       <main className="formation-page">
         <PageSEO
-          title="Espace formation Soup & Juice"
-          description="Espace de formation interne Soup & Juice : vidéos et ressources pédagogiques pour les équipes."
+          title="Espace formation S&J"
+          description="Espace de formation interne S&J : vidéos et ressources pédagogiques pour les équipes."
           path="/formation"
           noindex
         />

@@ -6,6 +6,7 @@ import re
 import sqlite3
 import unicodedata
 from pathlib import Path
+from typing import Optional, Tuple
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -13,8 +14,146 @@ CSV_PATH = DATA / "export(3).csv"
 DB_PATH = DATA / "soupjuice.db"
 OUT_PATH = DATA / "mapping-pos-to-db.csv"
 
+# Catégories JDC hors « produit fini » (matières premières, entretien, semi-finis).
+JDC_SUPPLY_CATEGORIES = frozenset(
+    {
+        "Antipasti",
+        "Produit d'entretien",
+        "Fruits et pulpe",
+        "Sauces",
+        "Produits de la mer",
+        "Pains sandwiches",
+    }
+)
+
+# Catégories JDC produit fini mais gérées manuellement sur le site (pas de sync).
+JDC_MANUAL_SITE_CATEGORIES = frozenset({"Boissons", "Goodies"})
+
+DEFAULT_JDC_URL = (
+    "https://kmtmwnxtnzqbynhoztks.supabase.co/functions/v1/public-products"
+)
+
+# Département caisse → catégories JDC synchronisées.
+POS_DEPT_TO_JDC_SYNC = {
+    "soupes": frozenset({"Soupes"}),
+    "formules soupe": frozenset({"Soupes"}),
+    "plats": frozenset({"Plats chauds"}),
+    "salade": frozenset({"Salades"}),
+    "sandwich": frozenset({"Sandwichs"}),
+    "desserts": frozenset({"Desserts", "Desserts individuels", "Cakes sucrés"}),
+    "dessert": frozenset({"Desserts", "Desserts individuels", "Cakes sucrés"}),
+}
+
+# Département caisse → catégorie site gérée manuellement (hors sync JDC).
+POS_DEPT_TO_SITE_MANUAL = {
+    "jus de fruits": "JUS",
+    "jus de fruit": "JUS",
+    "formules jus": "JUS",
+    "soft": "BOISSONS",
+    "boissons": "BOISSONS",
+    "boissons à emporter": "BOISSONS",
+    "biere": "BOISSONS",
+    "autres": "BOISSONS",
+    "divers": "GOODIES",
+}
+
+_jdc_sync_cache = None
+
+
+def fetch_jdc_sync_categories():
+    """Catégories JDC éligibles à la sync (produit fini − manuel site)."""
+    global _jdc_sync_cache
+    if _jdc_sync_cache is not None:
+        return _jdc_sync_cache
+
+    import json
+    import os
+    import urllib.request
+
+    url = os.environ.get("JDC_PUBLIC_PRODUCTS_URL", DEFAULT_JDC_URL)
+    req = urllib.request.Request(url, headers={"Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=30) as res:
+        payload = json.load(res)
+
+    products = payload.get("products") if isinstance(payload, dict) else payload
+    if not isinstance(products, list):
+        products = []
+
+    sync_cats = set()
+    for p in products:
+        name = (p.get("category_name") or "").strip()
+        if (
+            name
+            and name not in JDC_SUPPLY_CATEGORIES
+            and name not in JDC_MANUAL_SITE_CATEGORIES
+        ):
+            sync_cats.add(name)
+
+    _jdc_sync_cache = sync_cats
+    return sync_cats
+
+# Articles opérationnels / formules / emballages — hors catalogue menu.
+EXCLUDE_POS = re.compile(
+    r"good day|feel good|extra\s|extra\s*0[,.]|vip\b|pot/bol|"
+    r"petite bouteille|grande bouteille|eat natural|"
+    r"taste of nature|supersec|soup & juice|\(jus\)|"
+    r"plat chaud \(menu\)|soup menu|formule\)|hors formule",
+    re.I,
+)
+
+def mapping_priority(row: dict) -> tuple:
+    conf = row.get("confiance") or "aucune"
+    pri = {"alias_sku": 40, "alias_nom": 30, "nom_proche": 20, "fuzzy": 10}.get(conf, 0)
+    note = row.get("note") or ""
+    m = re.search(r"score=(\d+)", note)
+    score = int(m.group(1)) if m else 0
+    try:
+        sku = int(row.get("sku_pos") or 0)
+    except ValueError:
+        sku = 0
+    return (pri, score, -sku)
+
+
+def dedupe_unique_targets(rows: list) -> int:
+    """Un produit site = une seule ligne mappée. Retourne le nb de doublons retirés."""
+    ranked = sorted(rows, key=mapping_priority, reverse=True)
+    used = set()
+    cleared = 0
+    for row in ranked:
+        raw = row.get("id_site")
+        if not raw:
+            continue
+        try:
+            sid = int(raw)
+        except (TypeError, ValueError):
+            continue
+        if sid in used:
+            row["id_site"] = ""
+            row["nom_site"] = ""
+            row["confiance"] = "aucune"
+            note = (row.get("note") or "").strip()
+            row["note"] = (note + "; doublon produit cible retiré").strip("; ")
+            cleared += 1
+        else:
+            used.add(sid)
+    return cleared
+
+
+def dedupe_sku_aliases(raw: dict) -> dict:
+    """Une entrée SKU_ALIASES par produit cible maximum."""
+    out = {}
+    used_pids = set()
+    for sku in sorted(raw.keys()):
+        pid = raw[sku]
+        if pid in used_pids:
+            continue
+        used_pids.add(pid)
+        out[sku] = pid
+    return out
+
+
 # Correspondances explicites (SKU POS → id site), lorsque le libellé seul est ambigu.
-SKU_ALIASES = {
+_RAW_SKU_ALIASES = {
     41: 60,
     42: 61,
     43: 24,
@@ -127,8 +266,8 @@ SKU_ALIASES = {
     1996: 42,
     1808: 84,
 }
+SKU_ALIASES = dedupe_sku_aliases(_RAW_SKU_ALIASES)
 
-# Même id POS pour plusieurs lignes site (on prend le représentant le plus parlant)
 # Mots trop génériques pour un rapprochement par sous-chaîne seul (ex. bouton « Salade » → SALADE FRUIT).
 GENERIC_TOKENS = frozenset(
     "salade soupe jus cake sandwich menu dessert plat fruit boisson cookie chips extra".split()
@@ -159,6 +298,64 @@ def norm(s: str) -> str:
     s = s.lower()
     s = re.sub(r"[^a-z0-9]+", " ", s)
     return " ".join(s.split())
+
+
+def dept_key(raw: str) -> str:
+    return (raw or "").strip().lower()
+
+
+def pos_row_site_category(parts: list) -> Optional[str]:
+    """Retourne la catégorie (JDC sync ou site manuel), ou None si hors scope."""
+    typ = (parts[4] or "").strip().lower()
+    if typ != "article":
+        return None
+    dept = dept_key(parts[7])
+    if not dept:
+        return None
+
+    nom = (parts[1] or "").strip()
+    bouton = (parts[9] or "").strip()
+    combined = f"{nom} {bouton}".strip()
+    if combined and EXCLUDE_POS.search(combined):
+        return None
+
+    site_manual = POS_DEPT_TO_SITE_MANUAL.get(dept)
+    if site_manual:
+        return site_manual
+
+    jdc_groups = POS_DEPT_TO_JDC_SYNC.get(dept)
+    if not jdc_groups:
+        return None
+    sync_cats = fetch_jdc_sync_categories()
+    matched = jdc_groups & sync_cats
+    if not matched:
+        return None
+    return next(iter(sorted(matched)))
+
+
+def prune_pos_export() -> Tuple[int, int]:
+    """Supprime du CSV caisse les lignes hors catégories menu site/JDC."""
+    if not CSV_PATH.exists():
+        raise FileNotFoundError(CSV_PATH)
+
+    kept_rows = []
+    removed = 0
+    with CSV_PATH.open(newline="", encoding="utf-8") as f:
+        reader = csv.reader(f, delimiter=";")
+        header = next(reader)
+        kept_rows.append(header)
+        for parts in reader:
+            parts = list(parts)
+            if pos_row_site_category(parts + [""] * max(0, 25 - len(parts))):
+                kept_rows.append(parts)
+            else:
+                removed += 1
+
+    with CSV_PATH.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter=";")
+        writer.writerows(kept_rows)
+
+    return len(kept_rows) - 1, removed
 
 
 def tokens(s: str) -> set:
@@ -194,16 +391,22 @@ def score_match(csv_text: str, db_name: str) -> float:
 
 
 def main():
+    kept, removed = prune_pos_export()
+    print(f"Export caisse filtré : {kept} conservés, {removed} supprimés → {CSV_PATH}")
+
     conn = sqlite3.connect(DB_PATH)
     db_products = list(conn.execute("SELECT id, name FROM produit ORDER BY id"))
     id_to_name = {r[0]: r[1] for r in db_products}
 
     rows_out = []
+    assigned_produit_ids = set()
     with CSV_PATH.open(newline="", encoding="utf-8") as f:
         r = csv.reader(f, delimiter=";")
         header = next(r)
         for parts in r:
             parts = list(parts) + [""] * 25
+            if not pos_row_site_category(parts):
+                continue
             sku_s = parts[0]
             nom = (parts[1] or "").strip()
             typ = (parts[4] or "").strip()
@@ -250,6 +453,14 @@ def main():
             if typ in ("groupe", "formule"):
                 note = (note + "; " if note else "") + f"type_csv={typ}"
 
+            if site_id is not None and site_id in assigned_produit_ids:
+                site_id = None
+                conf = ""
+                note = (note + "; " if note else "") + "produit cible déjà mappé"
+
+            if site_id is not None:
+                assigned_produit_ids.add(site_id)
+
             rows_out.append(
                 {
                     "sku_pos": sku,
@@ -263,6 +474,10 @@ def main():
                     "note": note.strip("; "),
                 }
             )
+
+    removed = dedupe_unique_targets(rows_out)
+    if removed:
+        print(f"Doublons produit cible retirés : {removed}")
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = [

@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logoVert from "../assets/images/logo-vert.png";
-import logoEnseigne from "../assets/images/logo-enseigne.png";
 
 const LANGUAGES = [
   { code: "fr", flag: "FR" },
@@ -22,9 +21,6 @@ export const Header = () => {
   const isHome = pathname === "/" || pathname === "";
   const currentLangCode = (i18n.language || "fr").split("-")[0];
   const currentLang = LANGUAGES.find((l) => l.code === currentLangCode) || LANGUAGES[0];
-  const [logoFrontSrc, logoBackSrc] = isHome
-    ? [logoEnseigne, logoVert]
-    : [logoVert, logoEnseigne];
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -152,15 +148,7 @@ export const Header = () => {
           <div className="header-bar">
             <div className="nav-left">
               <Link to="/" className="logo">
-                <span className="logo-flip" aria-hidden="true">
-                  <span className="logo-flip-face logo-flip-front">
-                    <img src={logoFrontSrc} alt="" width={140} height={40} />
-                  </span>
-                  <span className="logo-flip-face logo-flip-back">
-                    <img src={logoBackSrc} alt="" width={140} height={40} />
-                  </span>
-                </span>
-                <span className="sr-only">Soup & Juice</span>
+                <img src={logoVert} alt="S&J" width={80} height={80} />
               </Link>
             </div>
             <button 

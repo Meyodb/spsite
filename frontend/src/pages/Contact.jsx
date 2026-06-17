@@ -1,8 +1,10 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./Contact.css";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
+import contactLifestyle from "../assets/images/contact-lifestyle.jpg";
+
+const INSTAGRAM_URL = "https://www.instagram.com/soupjuiceparis/?hl=fr";
 
 export const Contact = () => {
   const { t } = useTranslation();
@@ -12,11 +14,10 @@ export const Contact = () => {
     "@context": "https://schema.org",
     "@type": ["Restaurant", "LocalBusiness"],
     "@id": restaurantEntityId,
-    name: "Soup & Juice",
+    name: "S&J",
     url: `${siteUrl}/contact`,
     image: `${siteUrl}/og-default.jpg`,
     logo: `${siteUrl}/og-default.jpg`,
-    telephone: "06 37 79 03 01",
     email: "contact@soup-juice.com",
     sameAs: ["https://www.instagram.com/soupjuiceparis/"],
     menu: `${siteUrl}/produits`,
@@ -33,136 +34,15 @@ export const Contact = () => {
       "@type": "ContactPoint",
       contactType: "customer support",
       email: "contact@soup-juice.com",
-      telephone: "06 37 79 03 01",
       availableLanguage: ["fr", "en"],
     },
-  };
-  const [formData, setFormData] = useState({
-    sujet: "",
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
-    entreprise: "",
-    fonction: "",
-    message: "",
-  });
-
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Effacer l'erreur du champ modifié
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
-
-    if (submitSuccess) {
-      setSubmitSuccess(false);
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.sujet) {
-      newErrors.sujet = t("contact.errors.subject");
-    }
-
-    if (!formData.nom.trim()) {
-      newErrors.nom = t("contact.errors.lastName");
-    }
-
-    if (!formData.prenom.trim()) {
-      newErrors.prenom = t("contact.errors.firstName");
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = t("contact.errors.emailRequired");
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = t("contact.errors.emailInvalid");
-    }
-
-    if (!formData.telephone.trim()) {
-      newErrors.telephone = t("contact.errors.phone");
-    }
-
-    if (formData.sujet === "pro" && !formData.entreprise.trim()) {
-      newErrors.entreprise = t("contact.errors.company");
-    }
-
-    if (formData.sujet === "pro" && !formData.fonction.trim()) {
-      newErrors.fonction = t("contact.errors.function");
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = t("contact.errors.messageRequired");
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = t("contact.errors.messageMin");
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setSubmitError("");
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      setSubmitSuccess(true);
-      setSubmitError("");
-      setFormData({
-        sujet: "",
-        nom: "",
-        prenom: "",
-        email: "",
-        telephone: "",
-        entreprise: "",
-        fonction: "",
-        message: "",
-      });
-    } catch (error) {
-      console.error("Contact submit error:", error);
-      setSubmitError(t("common.errorRetry"));
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
     <main className="contact-page">
       <PageSEO
         title="Contact"
-        description="Contactez Soup & Juice : recrutement, partenariats, catering ou question sur nos produits. Réponse rapide garantie."
+        description="Contactez S&J : recrutement, partenariats, catering ou question sur nos produits. Réponse rapide garantie."
         path="/contact"
         jsonLd={localBusinessJsonLd}
       />
@@ -182,227 +62,59 @@ export const Contact = () => {
       <div className="content-section contact-section">
         <AnimatedSection>
           <div className="contact-container">
-            <div className="contact-form-wrapper">
-              <form onSubmit={handleSubmit} className="contact-form">
-                <AnimatedItem>
-                  <div className="form-group">
-                    <label htmlFor="sujet" className="form-label">
-                      Sujet de votre demande <span className="required">*</span>
-                    </label>
-                    <select
-                      id="sujet"
-                      name="sujet"
-                      value={formData.sujet}
-                      onChange={handleChange}
-                      className={`form-select ${errors.sujet ? "error" : ""}`}
-                    >
-                      <option value="">Sélectionnez un sujet</option>
-                      <option value="pro">Contact Professionnel</option>
-                      <option value="recrutement">Recrutement</option>
-                      <option value="autre">Autre demande</option>
-                    </select>
-                    {errors.sujet && (
-                      <span className="error-message">{errors.sujet}</span>
-                    )}
-                  </div>
-                </AnimatedItem>
-
-                <div className="form-row">
-                  <AnimatedItem>
-                    <div className="form-group">
-                      <label htmlFor="nom" className="form-label">
-                        {t("contact.lastName")} <span className="required">{t("common.required")}</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="nom"
-                        name="nom"
-                        value={formData.nom}
-                        onChange={handleChange}
-                        className={`form-input ${errors.nom ? "error" : ""}`}
-                        placeholder="Votre nom"
-                      />
-                      {errors.nom && (
-                        <span className="error-message">{errors.nom}</span>
-                      )}
-                    </div>
-                  </AnimatedItem>
-
-                  <AnimatedItem>
-                    <div className="form-group">
-                      <label htmlFor="prenom" className="form-label">
-                        {t("contact.firstName")} <span className="required">{t("common.required")}</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="prenom"
-                        name="prenom"
-                        value={formData.prenom}
-                        onChange={handleChange}
-                        className={`form-input ${errors.prenom ? "error" : ""}`}
-                        placeholder={t("contact.placeholderFirstname")}
-                      />
-                      {errors.prenom && (
-                        <span className="error-message">{errors.prenom}</span>
-                      )}
-                    </div>
-                  </AnimatedItem>
+            <AnimatedItem className="contact-visual-wrap">
+              <figure className="contact-visual">
+                <img
+                  src={contactLifestyle}
+                  alt={t("contact.imageAlt")}
+                  className="contact-visual-img"
+                  loading="lazy"
+                  decoding="async"
+                  width="388"
+                  height="481"
+                />
+                <div className="contact-visual-overlay" />
+              </figure>
+            </AnimatedItem>
+            <AnimatedItem delay={150}>
+              <article
+                className="info-card info-card--featured"
+                aria-labelledby="contact-info-heading"
+              >
+                <h2 id="contact-info-heading" className="info-title info-title--featured">
+                  {t("contact.infoTitle")}
+                </h2>
+                <div className="info-item">
+                  <span className="info-label">{t("contact.email")}</span>
+                  <a href="mailto:contact@soup-juice.com" className="info-value info-value--cta">
+                    contact@soup-juice.com
+                  </a>
                 </div>
-
-                <div className="form-row">
-                  <AnimatedItem>
-                    <div className="form-group">
-                      <label htmlFor="email" className="form-label">
-                        {t("contact.email")} <span className="required">{t("common.required")}</span>
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={`form-input ${errors.email ? "error" : ""}`}
-                        placeholder="votre.email@exemple.com"
-                      />
-                      {errors.email && (
-                        <span className="error-message">{errors.email}</span>
-                      )}
-                    </div>
-                  </AnimatedItem>
-
-                  <AnimatedItem>
-                    <div className="form-group">
-                      <label htmlFor="telephone" className="form-label">
-                        {t("contact.phone")} <span className="required">{t("common.required")}</span>
-                      </label>
-                      <input
-                        type="tel"
-                        id="telephone"
-                        name="telephone"
-                        value={formData.telephone}
-                        onChange={handleChange}
-                        className={`form-input ${errors.telephone ? "error" : ""}`}
-                        placeholder="06 12 34 56 78"
-                      />
-                      {errors.telephone && (
-                        <span className="error-message">{errors.telephone}</span>
-                      )}
-                    </div>
-                  </AnimatedItem>
+                <div className="info-item">
+                  <span className="info-label">{t("footer.recruitment")}</span>
+                  <a href="mailto:recrutement@soup-juice.com" className="info-value info-value--cta">
+                    recrutement@soup-juice.com
+                  </a>
                 </div>
-
-                {formData.sujet === "pro" && (
-                  <AnimatedItem>
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="entreprise" className="form-label">
-                          {t("contact.company")} <span className="required">{t("common.required")}</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="entreprise"
-                          name="entreprise"
-                          value={formData.entreprise}
-                          onChange={handleChange}
-                          className={`form-input ${errors.entreprise ? "error" : ""}`}
-                          placeholder="Nom de votre entreprise"
-                        />
-                        {errors.entreprise && (
-                          <span className="error-message">{errors.entreprise}</span>
-                        )}
-                      </div>
-
-                      <div className="form-group">
-                        <label htmlFor="fonction" className="form-label">
-                          {t("contact.function")} <span className="required">{t("common.required")}</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="fonction"
-                          name="fonction"
-                          value={formData.fonction}
-                          onChange={handleChange}
-                          className={`form-input ${errors.fonction ? "error" : ""}`}
-                          placeholder={t("contact.placeholderFunction")}
-                        />
-                        {errors.fonction && (
-                          <span className="error-message">{errors.fonction}</span>
-                        )}
-                      </div>
-                    </div>
-                  </AnimatedItem>
-                )}
-
-                <AnimatedItem>
-                  <div className="form-group">
-                    <label htmlFor="message" className="form-label">
-                      Message <span className="required">*</span>
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className={`form-textarea ${errors.message ? "error" : ""}`}
-                      placeholder={t("contact.placeholderMessage")}
-                      rows="6"
-                    ></textarea>
-                    {errors.message && (
-                      <span className="error-message">{errors.message}</span>
-                    )}
-                  </div>
-                </AnimatedItem>
-
-                <AnimatedItem>
-                  <button
-                    type="submit"
-                    className="submit-button"
-                    disabled={isSubmitting}
+                <div className="info-item">
+                  <span className="info-label">{t("contact.instagramLabel")}</span>
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="info-value info-value--cta"
                   >
-                    {isSubmitting ? t("contact.sending") : t("contact.submit")}
-                  </button>
-                </AnimatedItem>
-
-                {submitError && (
-                  <div className="form-global-error" role="alert">
-                    {submitError}
-                  </div>
-                )}
-
-                {submitSuccess && (
-                  <div className="success-message">
-                    <p>{t("contact.successTitle")}</p>
-                    <p>{t("contact.successSubtitle")}</p>
-                  </div>
-                )}
-              </form>
-            </div>
-
-            <div className="contact-info">
-              <AnimatedSection>
-                <div className="info-card">
-                  <h3 className="info-title">Informations de contact</h3>
-                  <div className="info-item">
-                    <span className="info-label">Email</span>
-                    <a href="mailto:contact@soup-juice.com" className="info-value">
-                      contact@soup-juice.com
-                    </a>
-                  </div>
-                  <div className="info-item">
-                    <span className="info-label">Recrutement</span>
-                    <a href="mailto:recrutement@soup-juice.com" className="info-value">
-                      recrutement@soup-juice.com
-                    </a>
-                  </div>
-                  <div className="info-item">
-                    <span className="info-label">{t("contact.hoursLabel")}</span>
-                    <span className="info-value">
-                      {t("contact.hours")}
-                    </span>
-                  </div>
+                    @soupjuiceparis
+                  </a>
                 </div>
-              </AnimatedSection>
-            </div>
+                <div className="info-item">
+                  <span className="info-label">{t("contact.hoursLabel")}</span>
+                  <span className="info-value">
+                    {t("contact.hours")}
+                  </span>
+                </div>
+              </article>
+            </AnimatedItem>
           </div>
         </AnimatedSection>
       </div>

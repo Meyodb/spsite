@@ -1,11 +1,18 @@
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Charge .env depuis la racine du projet (un niveau au-dessus de /server)
+dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import path from "path";
-import { fileURLToPath } from "url";
 import fs from "fs";
 import multer from "multer";
 import session from "express-session";
+import { chatHandler } from "./chat.js";
 import {
   getActivePromos,
   getStores,
@@ -24,10 +31,30 @@ import {
   adminCreateProduct,
   adminUpdateProduct,
   adminDeleteProduct,
+  adminListAllergens,
+  adminGetProductAllergens,
+  adminSetProductAllergens,
+  adminGetProductTranslations,
+  adminSetProductTranslation,
+  adminGetProductSheet,
+  adminSetProductSheet,
+  adminUpdatePosMapping,
+  getDbDiagnostic,
+  getProductSheet,
+  getPosMapping,
+  getJdcCategoryMappings,
+  listSiteCategoriesWithMode,
+  upsertJdcCategoryMapping,
+  setCategoryManagedBy,
 } from "./db.js";
 import { sendContactEmail } from "./mail.js";
+import {
+  runJdcSync,
+  getJdcSyncStatus,
+  startJdcSyncScheduler,
+  fetchJdcCatalog,
+} from "./jdc-sync.js";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -155,6 +182,12 @@ function isValidSpaRoute(pathname) {
 function requireAdminSession(req, res, next) {
   if (req.session && req.session.isAdmin) {
     return next();
+  }
+  const wantsJson =
+    req.path.startsWith("/api/") ||
+    (req.headers.accept && req.headers.accept.includes("application/json"));
+  if (wantsJson) {
+    return res.status(401).json({ error: "Session admin requise. Reconnectez-vous." });
   }
   return res.redirect("/admin/login");
 }
@@ -303,6 +336,43 @@ app.get("/api/products/:id/allergenes", (req, res) => {
   res.json(getAllergensForProduct(id));
 });
 
+// Fiche enrichie d'un produit : nom traduit, ingrédients clés, bienfaits, allergènes, etc.
+app.get("/api/products/:id/sheet", (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) return res.status(400).json({ error: "ID invalide" });
+  const lang = normalizeLang(req.query.lang);
+  const sheet = getProductSheet(id, lang);
+  if (!sheet) return res.status(404).json({ error: "Produit introuvable" });
+  res.json(sheet);
+});
+
+// Catalogue complet : produits (avec traductions, allergènes, fiches) + référentiel allergènes.
+// Destiné à alimenter le frontend en un seul appel.
+app.get("/api/catalog", (req, res) => {
+  const lang = normalizeLang(req.query.lang);
+  const onlyVisible = req.query.onlyVisible === "1";
+  const products = getAllProductsForApi({
+    lang,
+    includeAllergens: true,
+    includeSheet: true,
+    onlyVisible,
+  });
+  res.json({
+    lang: lang || "fr",
+    allergens: getAllergenes(),
+    products,
+  });
+});
+
+function normalizeLang(raw) {
+  if (!raw) return null;
+  const lang = String(raw).toLowerCase().slice(0, 2);
+  return lang === "fr" || lang === "en" ? lang : null;
+}
+
+// ─── Chatbot IA (Google Gemini) ──────────────────────────────────────
+app.post("/api/chat", chatHandler);
+
 app.post("/api/contact", async (req, res) => {
   const {
     sujet,
@@ -384,8 +454,18 @@ app.get("/api/products/visibility", (_, res) => {
   res.json({ visibleIds, lastSync: null });
 });
 
-app.get("/api/products", (_, res) => {
-  const products = getAllProductsForApi();
+app.get("/api/products", (req, res) => {
+  const lang = normalizeLang(req.query.lang);
+  const includes = String(req.query.include || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const products = getAllProductsForApi({
+    lang,
+    includeAllergens: includes.includes("allergens"),
+    includeSheet: includes.includes("sheet"),
+    onlyVisible: req.query.onlyVisible === "1",
+  });
   res.json({ products });
 });
 
@@ -404,6 +484,14 @@ app.get("/admin", requireAdminSession, (req, res) => {
 app.get("/api/admin/categories", requireAdminSession, (req, res) => {
   const categories = adminListCategories();
   res.json(categories);
+});
+
+app.get("/api/admin/diagnostic", requireAdminSession, (req, res) => {
+  res.json(getDbDiagnostic());
+});
+
+app.get("/api/admin/pos-mapping", requireAdminSession, (req, res) => {
+  res.json(getPosMapping());
 });
 
 app.get("/api/admin/products", requireAdminSession, (req, res) => {
@@ -436,6 +524,7 @@ app.post("/api/admin/products", requireAdminSession, (req, res) => {
     extra_price_label,
     image_url,
     image_alt,
+    jdc_id,
     visible,
     sort_order,
   } = req.body || {};
@@ -460,6 +549,7 @@ app.post("/api/admin/products", requireAdminSession, (req, res) => {
     extra_price_label,
     image_url,
     image_alt,
+    jdc_id,
     visible: !!visible,
     sort_order,
   });
@@ -484,6 +574,7 @@ app.put("/api/admin/products/:id", requireAdminSession, (req, res) => {
     extra_price_label,
     image_url,
     image_alt,
+    jdc_id,
     visible,
     sort_order,
   } = req.body || {};
@@ -508,6 +599,7 @@ app.put("/api/admin/products/:id", requireAdminSession, (req, res) => {
     extra_price_label,
     image_url,
     image_alt,
+    jdc_id,
     visible: !!visible,
     sort_order,
   });
@@ -531,6 +623,212 @@ app.delete("/api/admin/products/:id", requireAdminSession, (req, res) => {
   }
 
   return res.json({ deleted: true });
+});
+
+// ─── Admin Allergènes (CRUD) ────────────────────────────────────────
+
+app.get("/api/admin/allergens", requireAdminSession, (_req, res) => {
+  res.json(adminListAllergens());
+});
+
+app.get(
+  "/api/admin/products/:id/allergens",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "ID invalide." });
+    }
+    return res.json(adminGetProductAllergens(id));
+  }
+);
+
+app.put(
+  "/api/admin/products/:id/allergens",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "ID invalide." });
+    }
+    const codes = Array.isArray(req.body?.codes) ? req.body.codes : [];
+    const result = adminSetProductAllergens(id, codes);
+    if (!result.ok) {
+      if (result.reason === "product_not_found") {
+        return res.status(404).json({ error: "Produit introuvable." });
+      }
+      return res.status(400).json({ error: "Impossible de sauvegarder." });
+    }
+    return res.json({
+      updated: true,
+      inserted: result.inserted,
+      unknown: result.unknown,
+    });
+  }
+);
+
+// ─── Admin Traductions (CRUD) ───────────────────────────────────────
+
+app.get(
+  "/api/admin/products/:id/translations",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "ID invalide." });
+    }
+    return res.json(adminGetProductTranslations(id));
+  }
+);
+
+app.put(
+  "/api/admin/products/:id/translations/:lang",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "ID invalide." });
+    }
+    const lang = String(req.params.lang || "").toLowerCase();
+    if (!["fr", "en"].includes(lang)) {
+      return res.status(400).json({ error: "Langue non supportée." });
+    }
+    const result = adminSetProductTranslation(id, lang, req.body || {});
+    if (!result.ok) {
+      if (result.reason === "product_not_found") {
+        return res.status(404).json({ error: "Produit introuvable." });
+      }
+      return res.status(400).json({ error: "Impossible de sauvegarder." });
+    }
+    return res.json({ updated: true, deleted: !!result.deleted });
+  }
+);
+
+// ─── Admin Fiches enrichies (CRUD) ──────────────────────────────────
+
+app.get(
+  "/api/admin/products/:id/sheet",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "ID invalide." });
+    }
+    const sheet = adminGetProductSheet(id);
+    return res.json(sheet || {});
+  }
+);
+
+app.put(
+  "/api/admin/products/:id/sheet",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) {
+      return res.status(400).json({ error: "ID invalide." });
+    }
+    const result = adminSetProductSheet(id, req.body || {});
+    if (!result.ok) {
+      if (result.reason === "product_not_found") {
+        return res.status(404).json({ error: "Produit introuvable." });
+      }
+      return res.status(400).json({ error: "Impossible de sauvegarder." });
+    }
+    return res.json({ updated: true });
+  }
+);
+
+// ─── Admin Synchro JDC ──────────────────────────────────────────────
+
+app.get("/api/admin/jdc-sync/status", requireAdminSession, (_req, res) => {
+  res.json(getJdcSyncStatus());
+});
+
+app.post("/api/admin/jdc-sync/run", requireAdminSession, async (_req, res) => {
+  const result = await runJdcSync({ source: "admin" });
+  if (!result.ok) {
+    return res.status(502).json({
+      error: result.error || "Échec de la synchronisation JDC.",
+      lastSync: result.lastSync,
+    });
+  }
+  return res.json({ ok: true, lastSync: result.lastSync });
+});
+
+app.get("/api/admin/jdc-sync/catalog", requireAdminSession, async (_req, res) => {
+  try {
+    const products = await fetchJdcCatalog();
+    res.json({ count: products.length, products });
+  } catch (err) {
+    res.status(502).json({ error: err?.message || "Impossible de récupérer le catalogue JDC." });
+  }
+});
+
+// Mapping catégories JDC → catégories site + mode (jdc / site) par catégorie site.
+app.get("/api/admin/jdc-sync/category-mappings", requireAdminSession, (_req, res) => {
+  res.json({
+    mappings: getJdcCategoryMappings(),
+    site_categories: listSiteCategoriesWithMode(),
+  });
+});
+
+app.put(
+  "/api/admin/jdc-sync/category-mappings/:jdcCategoryId",
+  requireAdminSession,
+  (req, res) => {
+    const { jdcCategoryId } = req.params;
+    const { jdc_category_name, site_category_id } = req.body || {};
+    const result = upsertJdcCategoryMapping(
+      jdcCategoryId,
+      jdc_category_name,
+      site_category_id
+    );
+    if (!result.ok) {
+      const code = result.reason === "site_category_not_found" ? 404 : 400;
+      return res.status(code).json({ error: result.reason });
+    }
+    return res.json({ ok: true });
+  }
+);
+
+app.put(
+  "/api/admin/categories/:id/managed-by",
+  requireAdminSession,
+  (req, res) => {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) return res.status(400).json({ error: "ID invalide." });
+    const result = setCategoryManagedBy(id, req.body?.managed_by);
+    if (!result.ok) {
+      const code = result.reason === "category_not_found" ? 404 : 400;
+      return res.status(code).json({ error: result.reason });
+    }
+    return res.json({ ok: true });
+  }
+);
+
+// ─── Admin POS mapping (PUT) ────────────────────────────────────────
+
+app.put("/api/admin/pos-mapping/:id", requireAdminSession, (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) {
+    return res.status(400).json({ error: "ID invalide." });
+  }
+  const result = adminUpdatePosMapping(id, req.body || {});
+  if (!result.ok) {
+    if (result.reason === "pos_not_found") {
+      return res.status(404).json({ error: "Ligne POS introuvable." });
+    }
+    if (result.reason === "product_not_found") {
+      return res.status(400).json({ error: "Produit cible introuvable." });
+    }
+    if (result.reason === "produit_already_mapped") {
+      return res.status(409).json({
+        error: "Ce produit est déjà la cible d'un autre mapping.",
+      });
+    }
+    return res.status(400).json({ error: "Impossible de sauvegarder." });
+  }
+  return res.json({ updated: true });
 });
 
 app.post("/api/newsletter/subscribe", (req, res) => {
@@ -623,6 +921,7 @@ if (fs.existsSync(frontendDist)) {
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`API mock soup & juice sur http://localhost:${PORT}`);
   console.log(`Accessible depuis le réseau sur http://0.0.0.0:${PORT}`);
+  startJdcSyncScheduler();
 });
 
 

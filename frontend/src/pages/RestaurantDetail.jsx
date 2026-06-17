@@ -118,7 +118,7 @@ export const RestaurantDetail = () => {
   const heroPhoto = photos[0] || null;
   const parsedAddress = parseRestaurantAddress(restaurant.address);
   const restaurantImages = photos.map(toAbsoluteImageUrl);
-  const shortName = restaurant.name.replace("SOUP & JUICE ", "");
+  const shortName = restaurant.name.replace("S&J ", "");
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -161,7 +161,7 @@ export const RestaurantDetail = () => {
   return (
     <main className="rd-page">
       <PageSEO
-        title={`Restaurant ${shortName} – Soup & Juice`}
+        title={`Restaurant ${shortName} – S&J`}
         description={restaurant.description}
         path={`/restaurants/${restaurant.slug}`}
         jsonLd={jsonLd}
@@ -250,7 +250,7 @@ export const RestaurantDetail = () => {
                   <UtensilsCrossed size={18} />
                 </span>
                 <div>
-                  <h3 className="rd-cta-produits-title">Voir la carte Soup &amp; Juice</h3>
+                  <h3 className="rd-cta-produits-title">Voir la carte S&J</h3>
                   <p className="rd-cta-produits-desc">
                     Tous nos produits disponibles dans ce restaurant.
                   </p>

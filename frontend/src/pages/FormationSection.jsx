@@ -55,7 +55,7 @@ export const FORMATION_SECTIONS = [
     cards: [
       {
         id: "soup-juice",
-        title: "Soup & Juice",
+        title: "S&J",
         bgColor: "#d4d4d4",
         imageUrl: "/images/formation/presentation/soup-juice.png",
         videoUrl: "/videos/formation/presentation/sj-presentation.mp4"

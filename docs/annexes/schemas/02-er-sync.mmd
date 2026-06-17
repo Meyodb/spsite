@@ -1,0 +1,24 @@
+erDiagram
+    category ||--o{ produit : "contient (category_id)"
+    category ||--o{ jdc_category_mapping : "mappée depuis JDC"
+
+    category {
+        int id PK
+        string code
+        string label_fr
+        string label_en
+        string managed_by "jdc | site"
+    }
+    produit {
+        int id PK
+        string name
+        int category_id FK
+        real price
+        int visible
+        string jdc_id "UUID produit caisse"
+    }
+    jdc_category_mapping {
+        string jdc_category_id PK
+        string jdc_category_name
+        int site_category_id FK "nullable"
+    }

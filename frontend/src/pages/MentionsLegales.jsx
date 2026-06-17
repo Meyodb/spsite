@@ -6,11 +6,11 @@ export const MentionsLegales = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
-      <PageSEO title="Mentions légales" description="Mentions légales du site Soup & Juice." path="/mentions-legales" noindex />
+      <PageSEO title="Mentions légales" description="Mentions légales du site S&J." path="/mentions-legales" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.mentionsTitle")}</h1>
-          <p className="legal-subtitle">Soup & Juice</p>
+          <p className="legal-subtitle">S&J</p>
         </div>
       </section>
 

@@ -451,64 +451,25 @@ body {
   color: var(--green);
   text-decoration: none;
   letter-spacing: -0.5px;
-  transition: color 0.3s ease, transform 0.3s ease;
-  display: inline-block;
-  line-height: 1;
-  position: relative;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
   margin-left: -18px;
 }
 
 .logo img {
-  height: auto;
-  width: auto;
-  max-width: 100%;
-  max-height: 100%;
+  width: 80px;
+  height: 80px;
   display: block;
   object-fit: contain;
   visibility: visible;
   opacity: 1;
 }
 
-.logo-flip {
-  position: relative;
-  display: block;
-  width: 200px;
-  height: 80px;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: transform;
-}
-
-.logo-flip-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-origin: center;
-  will-change: transform;
-}
-
-.logo-flip-front {
-  transform: rotateY(0deg);
-}
-
-.logo-flip-back {
-  transform: rotateY(180deg);
-}
-
 .logo:hover {
   color: var(--green-bright);
-}
-
-.logo:hover .logo-flip {
-  transform: rotateY(180deg);
 }
 
 .sr-only {
@@ -888,12 +849,7 @@ body {
   }
 
   .logo img {
-    height: 56px;
-    max-width: 150px;
-  }
-
-  .logo-flip {
-    width: 150px;
+    width: 56px;
     height: 56px;
   }
 
@@ -3356,20 +3312,11 @@ body {
 
   .logo {
     font-size: 20px;
-    line-height: 1;
     margin-left: -8px;
   }
 
   .logo img {
-    height: 70px;
-    max-width: 180px;
-    display: block;
-    visibility: visible;
-    opacity: 1;
-  }
-
-  .logo-flip {
-    width: 180px;
+    width: 70px;
     height: 70px;
   }
 

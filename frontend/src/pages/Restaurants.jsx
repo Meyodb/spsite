@@ -16,7 +16,7 @@ import photoHonore from "../assets/images/restaurants/photo_honore.png";
 import photoKleber from "../assets/images/restaurants/photo_kleber.png";
 import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
 import photoKleber3 from "../assets/images/restaurants/photo_kleber_3.png";
-import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
+import photoEtoile from "../assets/images/restaurants/photo_etoile_custom.png";
 import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
 import photoBourse from "../assets/images/restaurants/photo_bourse.png";
 import photoOpera from "../assets/images/restaurants/photo_opera.png";
@@ -49,7 +49,7 @@ const restaurantPhotos = {
   2: [photoBourse],                    // BOURSE
   3: [photoHaussmann],                 // HAUSSMANN
   4: [photoEcuries2, photoEcuries],    // ÉCURIES
-  5: [photoEtoile, photoKleber3],      // ÉTOILE - Avenue Kléber (boutique Keleber)
+  5: [photoEtoile],                    // ÉTOILE - Avenue Kléber (boutique Keleber)
   6: [photoOpera],                     // OPÉRA
   7: [photoNeuilly],                   // NEUILLY
   8: [photoHonore],                    // HONORÉ - Saint Honoré
@@ -430,14 +430,14 @@ export const Restaurants = () => {
     <main className="restaurants-page">
       <PageSEO
         title="Nos Restaurants à Paris"
-        description={`Retrouvez les ${RESTAURANT_COUNT} restaurants Soup & Juice à Paris et Neuilly : adresses, horaires, carte interactive. Soupes, jus frais et menus healthy près de chez vous.`}
+        description={`Retrouvez les ${RESTAURANT_COUNT} restaurants S&J à Paris et Neuilly : adresses, horaires, carte interactive. Soupes, jus frais et menus healthy près de chez vous.`}
         path="/restaurants"
         jsonLd={[
           {
             "@context": "https://schema.org",
             "@type": ["Restaurant", "LocalBusiness"],
             "@id": mainRestaurantId,
-            name: "Soup & Juice",
+            name: "S&J",
             url: `${siteUrl}/restaurants`,
             image: `${siteUrl}/og-default.jpg`,
             logo: `${siteUrl}/og-default.jpg`,

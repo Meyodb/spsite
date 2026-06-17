@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
-import videoAccueil from "../assets/videos/Video_accueil.mp4";
+import videoAccueil1 from "../assets/videos/Video_accueil_original.MP4";
+import videoAccueil2 from "../assets/videos/Video_accueil_2.mp4";
 import heroPoster from "../assets/images/hero-poster.jpg";
+
+const HERO_VIDEOS = [videoAccueil1, videoAccueil2];
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -12,6 +15,12 @@ export const Home = () => {
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [newsletterError, setNewsletterError] = useState("");
   const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
+  const heroVideoRef = useRef(null);
+
+  const heroVideo = useMemo(
+    () => HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)],
+    [],
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -26,6 +35,12 @@ export const Home = () => {
     const timeoutId = window.setTimeout(loadHeroVideo, 1500);
     return () => window.clearTimeout(timeoutId);
   }, []);
+
+  useEffect(() => {
+    if (shouldLoadHeroVideo && heroVideoRef.current) {
+      heroVideoRef.current.load();
+    }
+  }, [shouldLoadHeroVideo, heroVideo]);
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
@@ -73,12 +88,12 @@ export const Home = () => {
   return (
     <main>
       <PageSEO
-        description="Soup & Juice : soupes et jus frais pressés depuis 2001 à Paris. Découvrez nos recettes healthy, nos restaurants et nos engagements qualité."
+        description="S&J : soupes et jus frais pressés depuis 2001 à Paris. Découvrez nos recettes healthy, nos restaurants et nos engagements qualité."
         path="/"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Organization",
-          name: "Soup & Juice",
+          name: "S&J",
           url: "https://www.soup-juice.net",
           logo: "https://www.soup-juice.net/og-default.jpg",
           foundingDate: "2001",
@@ -95,6 +110,8 @@ export const Home = () => {
       />
       <section className="hero-section">
         <video 
+          ref={heroVideoRef}
+          key={heroVideo}
           className="hero-video" 
           autoPlay 
           loop 
@@ -103,7 +120,7 @@ export const Home = () => {
           preload="metadata"
           poster={heroPoster}
         >
-          {shouldLoadHeroVideo ? <source src={videoAccueil} type="video/mp4" /> : null}
+          {shouldLoadHeroVideo ? <source src={heroVideo} type="video/mp4" /> : null}
         </video>
         <div className="hero-content">
           <h1 className="hero-title">{t("home.heroTitle")}</h1>

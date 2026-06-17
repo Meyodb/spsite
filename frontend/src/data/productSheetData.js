@@ -291,7 +291,7 @@ export const PRODUCT_SHEET_DATA = {
     formulas: F_PLATS,
     isVegetarian: true,
     isVegan: false,
-    whyGood: "Tarte fine aux épinards et chèvre, parsemée de sésame. Légèreté et gourmandise.",
+    whyGood: "Quiche fine aux épinards et chèvre, parsemée de sésame. Légèreté et gourmandise.",
   },
   80: {
     benefits: ["Saumon : oméga 3", "Épinards : fer", "Protéines et légumes verts"],
@@ -303,7 +303,7 @@ export const PRODUCT_SHEET_DATA = {
     formulas: F_PLATS,
     isVegetarian: false,
     isVegan: false,
-    whyGood: "Tarte au saumon et épinards, mariage classique et équilibré. Riche en oméga 3.",
+    whyGood: "Quiche au saumon et épinards, mariage classique et équilibré. Riche en oméga 3.",
   },
   81: {
     benefits: ["Curry et lait de coco", "Protéines (poulet)", "Légumes colorés"],
@@ -691,16 +691,20 @@ export const PRODUCT_SHEET_DATA = {
     whyGood: "Salade low carb : légumes croquants, œuf poché et cheddar. Rassasiante et équilibrée.",
   },
   108: {
-    benefits: ["Riz vinaigré : glucides et légèreté", "Saumon fumé : oméga 3 et vitamine D", "Gingembre et sésame : digestion et calcium végétal"],
+    benefits: ["Riz vinaigré : glucides et légèreté", "Saumon fumé : oméga 3 et vitamine D", "Fèves de soja : protéines végétales", "Gingembre confit et sésame : digestion et saveur"],
     keyIngredients: [
-      { name: "Riz sushi", benefit: "Glucides" },
+      { name: "Riz sushi", benefit: "Glucides, vinaigre de riz" },
       { name: "Saumon fumé", benefit: "Oméga 3" },
-      { name: "Avocat", benefit: "Crémeux" },
+      { name: "Avocat", benefit: "Crémeux, bons gras" },
+      { name: "Fèves de soja", benefit: "Protéines végétales" },
+      { name: "Gingembre confit", benefit: "Digestion" },
+      { name: "Sauce soja", benefit: "Umami" },
+      { name: "Graines de sésame", benefit: "Calcium végétal" },
     ],
     formulas: F_SALADES,
     isVegetarian: false,
     isVegan: false,
-    whyGood: "Salade façon sushi : riz, saumon, avocat. Voyage japonais en salade.",
+    whyGood: "Grande salade façon sushi : riz vinaigré, saumon fumé, avocat, edamame et gingembre. Fraîcheur japonaise en format généreux.",
   },
   /* === SANDWICHS === */
   33: {

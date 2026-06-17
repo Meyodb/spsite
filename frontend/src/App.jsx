@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { CookieBanner } from "./components/CookieBanner";
+import { Chatbot } from "./components/Chatbot";
 import { COOKIE_CONSENT_UPDATED_EVENT } from "./cookies/consent";
 import { applyOptionalServicesFromConsent } from "./cookies/optionalServices";
 import { Home } from "./pages/Home";
@@ -80,6 +81,7 @@ function AppContent() {
         <Footer />
       </div>
       <CookieBanner />
+      <Chatbot />
     </>
   );
 }

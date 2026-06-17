@@ -6,11 +6,11 @@ export const PolitiqueConfidentialite = () => {
   const { t } = useTranslation();
   return (
     <main className="legal-page">
-      <PageSEO title="Politique de confidentialité" description="Politique de confidentialité de Soup & Juice." path="/politique-confidentialite" noindex />
+      <PageSEO title="Politique de confidentialité" description="Politique de confidentialité de S&J." path="/politique-confidentialite" noindex />
       <section className="legal-hero">
         <div className="legal-hero-content">
           <h1 className="legal-title">{t("legal.privacyTitle")}</h1>
-          <p className="legal-subtitle">Soup & Juice</p>
+          <p className="legal-subtitle">S&J</p>
         </div>
       </section>
 

@@ -22,8 +22,8 @@ id,categorie,type,nom,prix,volume,prix_supplement,libelle_supplement,description
 39,"PLATS CHAUDS",article,"QUICHE PATATE DOUCE FETA",7.5,,,,"Patate douce, feta, pistou",0,36
 77,"PLATS CHAUDS",article,"QUICHE RICOTTA TOMATO CERISE",7.5,,,,"Tomates cerises, ricotta, lait, crème, farine de blé, œuf, ciboulette",0,37
 78,"PLATS CHAUDS",article,"QUICHE LORRAINE",7.5,,,,"Emmental, lardons, lait, crème, farine de blé, œuf",1,38
-79,"PLATS CHAUDS",article,"TARTE CHÈVRE ÉPINARDS",7.5,,,,"Épinards, chèvre, lait, crème, farine de blé, œuf, sésame",0,39
-80,"PLATS CHAUDS",article,"TARTE SAUMON ÉPINARDS",7.5,,,,"Épinards, saumon fumé, lait, crème, farine de blé, œuf",0,40
+79,"PLATS CHAUDS",article,"QUICHE CHÈVRE ÉPINARDS",7.5,,,,"Épinards, chèvre, lait, crème, farine de blé, œuf, sésame",0,39
+80,"PLATS CHAUDS",article,"QUICHE SAUMON ÉPINARDS",7.5,,,,"Épinards, saumon fumé, lait, crème, farine de blé, œuf",0,40
 81,"PLATS CHAUDS",article,"POULET KORMA",7.5,,,,"Riz basmati, poulet, crème, yaourt, lait de coco, carottes, poivrons, épices",0,41
 82,"PLATS CHAUDS",article,"POULET TIKKA MASSALA",7.5,,,,"Riz basmati, poulet, crème, tomates, yaourt, carottes, amandes, raisins, épices",0,42
 83,"PLATS CHAUDS",article,"POULET BOMBAY",7.5,,,,"Riz basmati, poulet, sauce tomate, crème, oignons, petits pois, épices",0,43
@@ -56,7 +56,7 @@ id,categorie,type,nom,prix,volume,prix_supplement,libelle_supplement,description
 107,SALADES,article,"SALADE RIZ NOIR PATATE DOUCE BACON",6.5,,,,"Riz noir, bacon, feta, roquette, patates douces",0,70
 146,SALADES,article,"SALADE RIZ NOIR TAPENADE DE THON",6.5,,,,"Riz noir, carotte grillée au curry rouge, poivron grillé, courgette grillée, oignon jaune, tapenade de thon, ciboulette",1,71
 147,SALADES,article,"SALADE LOW CARB",6.5,,,,"Chou blanc, carottes, mayonnaise, moutarde, champignons grillés, pousses d'épinard, œuf poché, cheddar, noix de pécan",1,72
-108,SALADES,article,"SALADE SUSHI",6.5,,,,"Riz sushi, avocat, saumon fumé, fèves soja, chou blanc, gingembre, sésame",0,73
+108,SALADES,article,"GRANDE SALADE SUSHI",7.5,,,"+1€","Riz sushi, avocat, saumon fumé, fèves de soja, chou blanc, gingembre confit, sauce soja, graines de sésame noir et doré",0,73
 33,SANDWICH,article,"WRAP CAJUN",7.5,,,,"Pita, poulet, épices cajun, guacamole",1,74
 34,SANDWICH,article,"WRAP CHAUD MEXICAIN",,,,,,0,75
 35,SANDWICH,article,"WRAP CHAUD HOUMOUS FALAFEL",7.5,,,,"Pita, houmous, falafel BIO",1,76

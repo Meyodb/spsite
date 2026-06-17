@@ -1,4 +1,4 @@
-/* Page Menu - Style Soup & Juice */
+/* Page Menu - Style S&J */
 
 .produits-menu-test {
   min-height: 100vh;
@@ -497,6 +497,15 @@
   color: #1a1a1a;
 }
 
+.menu-test-images-disclaimer {
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+  margin: 28px 0 4px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
 /* Message unique au début (saison + disponibilité) */
 .menu-test-availability-note {
   font-size: 14px;
@@ -655,21 +664,32 @@
   flex: 0 0 auto;
   display: flex;
   aspect-ratio: 4 / 3;
+  /* Verrouille la hauteur du cadre sur l'aspect-ratio : sans ça, une photo
+     source en portrait gonfle le conteneur (min-height: auto) et casse
+     l'uniformité de l'affichage des produits. */
+  min-height: 0;
+  overflow: hidden;
 }
 
 .menu-test-product-image-wrap .menu-test-product-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 55%;
+  object-position: center center;
   display: block;
   border-radius: 6px;
   background: #fff;
 }
 
-/* Soupes : image un peu plus haute dans le cadre */
+/* Salades & plats : cadrage centré sur le bol */
+.menu-test-content[data-category="SALADES"] .menu-test-product-image-wrap .menu-test-product-image,
+.menu-test-content[data-category="PLATS CHAUDS"] .menu-test-product-image-wrap .menu-test-product-image {
+  object-position: center center;
+}
+
+/* Soupes : bol légèrement plus bas */
 .menu-test-content[data-category="SOUPES"] .menu-test-product-image-wrap .menu-test-product-image {
-  object-position: center 44%;
+  object-position: center 52%;
 }
 
 /* Boissons : bouteilles/canettes — éviter le crop agressif du cover (ex. Vitamine Well) */
@@ -834,7 +854,7 @@
 }
 
 .menu-test-dessert-subcategory-title {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -842,7 +862,7 @@
 }
 
 .menu-test-dessert-subcategory-price {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 800;
   color: var(--green-dark, #5a6654);
   font-family: 'Futura', 'Futura PT', 'Montserrat', -apple-system, sans-serif;

@@ -2,10 +2,9 @@ import { ProductImageCarousel } from "./ProductImageCarousel";
 
 /**
  * Alias d'ID pour les images produit.
- * Permet par exemple de faire afficher à SLIM DÉTOX (id 1) la photo de MISS SLIM (id 222).
+ * Permet par exemple de faire afficher à Tortellini pesto rouge (id 42) la photo des pâtes au pesto (id 90).
  */
 const IMAGE_ID_ALIAS = {
-  1: 222,
   42: 90, // Tortellini pesto rouge : affiche la photo des pâtes au pesto (fusion)
   // Soupes : partage d'images pour recettes similaires
   186: 185, // CHAMPIGNONS MIEL → CHAMPIGNONS
@@ -18,11 +17,19 @@ function resolveImageProductId(productId) {
 }
 
 const IMG_BASE_URL = import.meta.env.VITE_IMG_BASE_URL || "";
+// Cache-busting : change à chaque build (donc à chaque `npm run restart`)
+// pour forcer le navigateur à recharger les photos produits.
+const BUILD_VERSION = typeof __BUILD_VERSION__ !== "undefined" ? __BUILD_VERSION__ : "";
 
 function withImageBase(path) {
   if (!IMG_BASE_URL) return path;
   const base = IMG_BASE_URL.endsWith("/") ? IMG_BASE_URL.slice(0, -1) : IMG_BASE_URL;
   return `${base}${path}`;
+}
+
+function withCacheBust(url) {
+  if (!BUILD_VERSION) return url;
+  return url.includes("?") ? `${url}&v=${BUILD_VERSION}` : `${url}?v=${BUILD_VERSION}`;
 }
 
 /**
@@ -31,7 +38,7 @@ function withImageBase(path) {
  */
 export function getProductImageUrl(productId, ext = "jpg") {
   const imageProductId = resolveImageProductId(productId);
-  return withImageBase(`/images/products/${imageProductId}.${ext}`);
+  return withCacheBust(withImageBase(`/images/products/${imageProductId}.${ext}`));
 }
 
 /**
