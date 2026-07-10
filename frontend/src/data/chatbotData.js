@@ -34,10 +34,25 @@ const CATEGORY_I18N = {
   BOISSONS: "BOISSONS",
 };
 
+// Correspondance entre la clé du chatbot (underscore) et la valeur réelle
+// stockée dans PRODUCTS (ex. "PLATS_CHAUDS" → "PLATS CHAUDS").
+const CATEGORY_PRODUCT_VALUE = {
+  JUS: "JUS",
+  MILKSHAKES: "MILKSHAKES",
+  BOOSTERS: "BOOSTERS",
+  SOUPES: "SOUPES",
+  PLATS_CHAUDS: "PLATS CHAUDS",
+  SALADES: "SALADES",
+  SANDWICH: "SANDWICH",
+  DESSERTS: "DESSERTS",
+  BOISSONS: "BOISSONS",
+};
+
 const MAX_ITEMS_PER_CATEGORY = 12;
 
 function getVisibleProductsByCategory(category) {
-  return PRODUCTS.filter((p) => p.category === category && p.afficher !== false);
+  const target = CATEGORY_PRODUCT_VALUE[category] || category.replace(/_/g, " ");
+  return PRODUCTS.filter((p) => p.category === target && p.afficher !== false);
 }
 
 function translateProduct(product, t) {

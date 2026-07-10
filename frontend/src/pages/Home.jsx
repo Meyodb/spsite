@@ -123,7 +123,6 @@ export const Home = () => {
           {shouldLoadHeroVideo ? <source src={heroVideo} type="video/mp4" /> : null}
         </video>
         <div className="hero-content">
-          <h1 className="hero-title">{t("home.heroTitle")}</h1>
           <Link to="/produits" className="cta-hero"><span className="cta-hero-text">{t("home.ctaProducts")}</span></Link>
         </div>
       </section>
