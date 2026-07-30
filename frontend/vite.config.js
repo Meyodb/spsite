@@ -26,10 +26,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        // MapLibre n'est volontairement pas listé ici : en faire un chunk
+        // manuel le rattachait au graphe de l'entrée, et son mégaoctet était
+        // préchargé sur toutes les pages. Laissé au découpage automatique, il
+        // ne part qu'avec la page qui affiche la carte.
         manualChunks(id) {
-          if (id.includes("node_modules/maplibre-gl") || id.includes("node_modules/@vis.gl/react-maplibre")) {
-            return "maplibre";
-          }
           if (
             id.includes("node_modules/react") ||
             id.includes("node_modules/react-dom") ||

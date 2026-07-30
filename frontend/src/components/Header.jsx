@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import logoVert from "../assets/images/logo-vert.png";
+import logoVert from "../assets/images/logo-vert.webp";
 
 const LANGUAGES = [
   { code: "fr", flag: "FR", label: "Français" },

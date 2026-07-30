@@ -341,6 +341,16 @@
   width: 100% !important;
 }
 
+/* Réserve la place de la carte pendant son chargement différé (évite le CLS). */
+.rd-map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b6b6b;
+  font-size: 0.9rem;
+}
+
 .rd-marker {
   width: 36px;
   height: 36px;

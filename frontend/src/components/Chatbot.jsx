@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { getNode } from "../data/chatbotData";
 import { useFocusTrap } from "../hooks/useFocusTrap";
-import logoSJ from "../assets/images/logo-vert.png";
+import logoSJ from "../assets/images/logo-vert.webp";
 import "./Chatbot.css";
 
 const STORAGE_KEY = "sj-chatbot-opened-once";

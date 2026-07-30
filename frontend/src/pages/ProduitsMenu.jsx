@@ -21,9 +21,9 @@ import backImage from "../assets/images/back.png";
 import citron from "../assets/images/citron.png";
 import ananas from "../assets/images/ananas.png";
 import palmier from "../assets/images/palmier.png";
-import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.png";
-import photoMenu2 from "../assets/images/photo-menu/photo-salade.jpg";
-import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.png";
+import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.webp";
+import photoMenu2 from "../assets/images/photo-menu/photo-salade.webp";
+import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.webp";
 
 export const ProduitsMenu = () => {
   const { t } = useTranslation();

@@ -3,22 +3,22 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { MapPin, Clock, Navigation, ArrowLeft, Train, ChevronLeft, ChevronRight, X, ZoomIn, UtensilsCrossed } from "lucide-react";
 import { PageSEO } from "../components/PageSEO";
-import { Map, Marker } from "@vis.gl/react-maplibre";
+import { RestaurantMap } from "../components/RestaurantMap";
 import { RESTAURANTS } from "../data/restaurantsData";
 import { RATP_LINE_COLORS } from "../data/ratpLineColors";
-import logoVert from "../assets/images/logo-vert.png";
+import logoVert from "../assets/images/logo-vert.webp";
 import deliveroLogo from "../assets/images/delivero.svg";
-import photoLondre from "../assets/images/restaurants/photo_londre.jpg";
-import photoBourse from "../assets/images/restaurants/photo_bourse.png";
-import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
-import photoEcuries from "../assets/images/restaurants/photo_Ecuries.png";
-import photoEcuries2 from "../assets/images/restaurants/photo_Ecuries_2.png";
-import photoEtoile from "../assets/images/restaurants/photo_etoile.png";
-import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
-import photoOpera from "../assets/images/restaurants/photo_opera.png";
-import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
-import photoHonore from "../assets/images/restaurants/photo_honore.png";
-import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";
+import photoLondre from "../assets/images/restaurants/photo_londre.webp";
+import photoBourse from "../assets/images/restaurants/photo_bourse.webp";
+import photoHaussmann from "../assets/images/restaurants/photo_haussmann.webp";
+import photoEcuries from "../assets/images/restaurants/photo_Ecuries.webp";
+import photoEcuries2 from "../assets/images/restaurants/photo_Ecuries_2.webp";
+import photoEtoile from "../assets/images/restaurants/photo_etoile.webp";
+import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.webp";
+import photoOpera from "../assets/images/restaurants/photo_opera.webp";
+import photoNeuilly from "../assets/images/restaurants/photo_neuilly.webp";
+import photoHonore from "../assets/images/restaurants/photo_honore.webp";
+import photoMadeleine from "../assets/images/restaurants/photo_madeleine.webp";
 import "./RestaurantDetail.css";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 
@@ -57,9 +57,6 @@ const toAbsoluteImageUrl = (src) => {
 export const RestaurantDetail = () => {
   const { slug } = useParams();
   const { t } = useTranslation();
-  useEffect(() => {
-    import("maplibre-gl/dist/maplibre-gl.css");
-  }, []);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
   const scrollRef = useRef(null);
   const lightboxRef = useRef(null);
@@ -326,32 +323,12 @@ export const RestaurantDetail = () => {
           {/* Colonne droite : carte + galerie */}
           <div className="rd-map-col">
             <div className="rd-map-wrap">
-              <Map
-                initialViewState={{
-                  longitude: restaurant.coordinates[0],
-                  latitude: restaurant.coordinates[1],
-                  zoom: 15,
-                }}
-                style={{ width: "100%", height: "100%" }}
-                mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
-                attributionControl={true}
-                cooperativeGestures={true}
-              >
-                <Marker
-                  longitude={restaurant.coordinates[0]}
-                  latitude={restaurant.coordinates[1]}
-                  anchor="center"
-                >
-                  <div className="rd-marker">
-                    <div
-                      className="rd-marker-inner"
-                      style={{
-                        backgroundImage: `url(${logoVert})`,
-                      }}
-                    />
-                  </div>
-                </Marker>
-              </Map>
+              <RestaurantMap
+                longitude={restaurant.coordinates[0]}
+                latitude={restaurant.coordinates[1]}
+                markerImage={logoVert}
+                loadingLabel={t("common.loading")}
+              />
             </div>
 
             {photos.length > 0 && (

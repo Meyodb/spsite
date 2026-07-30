@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import placeholder from "../assets/images/logo-vert.png";
+import placeholder from "../assets/images/logo-vert.webp";
 import "./ProductImageCarousel.css";
 
 // Formats essayés en fallback (png, jpg, jpeg uniquement — pas de webp/avif)

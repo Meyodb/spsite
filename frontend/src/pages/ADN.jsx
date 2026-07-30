@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
 import recetteImage from "../assets/images/photo-menu/photo-qualite-recettes.jpg";
-import logoSoupJuice from "../assets/images/logo-vert.png";
+import logoSoupJuice from "../assets/images/logo-vert.webp";
 
 export const ADN = () => {
   const { t } = useTranslation();

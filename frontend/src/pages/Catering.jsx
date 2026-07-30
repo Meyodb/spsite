@@ -2,8 +2,8 @@ import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { PageSEO } from "../components/PageSEO";
-import traiteurJus from "../assets/images/catering/traiteur-jus.png";
-import miniSalades from "../assets/images/catering/mini-salades.png";
+import traiteurJus from "../assets/images/catering/traiteur-jus.webp";
+import miniSalades from "../assets/images/catering/mini-salades.webp";
 
 export const Catering = () => {
   const { t } = useTranslation();
