@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
 import { apiUrl } from "../utils/apiUrl";
+import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 import videoAccueil1 from "../assets/videos/Video_accueil_original.MP4";
 import videoAccueil2 from "../assets/videos/Video_accueil_2.mp4";
 import heroPoster from "../assets/images/hero-poster.jpg";
@@ -18,9 +19,12 @@ export const Home = () => {
   const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
   const [heroVideo, setHeroVideo] = useState(HERO_VIDEOS[0]);
   const heroVideoRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
+    // Mouvement réduit demandé : on s'en tient à l'image du poster.
+    if (prefersReducedMotion) return undefined;
 
     const loadHeroVideo = () => {
       setHeroVideo(HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)]);
@@ -34,7 +38,7 @@ export const Home = () => {
 
     const timeoutId = window.setTimeout(loadHeroVideo, 1500);
     return () => window.clearTimeout(timeoutId);
-  }, []);
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     if (shouldLoadHeroVideo && heroVideoRef.current) {
@@ -110,7 +114,7 @@ export const Home = () => {
           ref={heroVideoRef}
           key={heroVideo}
           className="hero-video" 
-          autoPlay 
+          autoPlay={!prefersReducedMotion}
           loop 
           muted 
           playsInline 
@@ -120,6 +124,9 @@ export const Home = () => {
           {shouldLoadHeroVideo ? <source src={heroVideo} type="video/mp4" /> : null}
         </video>
         <div className="hero-content">
+          {/* H1 requis pour le référencement, masqué visuellement car le
+              parti pris graphique du hero est de n'afficher que le bouton. */}
+          <h1 className="sr-only">{t("home.heroHeading")}</h1>
           <Link to="/produits" className="cta-hero"><span className="cta-hero-text">{t("home.ctaProducts")}</span></Link>
         </div>
       </section>

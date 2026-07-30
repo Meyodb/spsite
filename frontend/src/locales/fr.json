@@ -7,7 +7,8 @@
     "send": "Envoyer",
     "required": "*",
     "errorRetry": "Une erreur est survenue. Veuillez réessayer.",
-    "errorConnection": "Erreur de connexion au serveur. Veuillez réessayer plus tard."
+    "errorConnection": "Erreur de connexion au serveur. Veuillez réessayer plus tard.",
+    "skipToContent": "Aller au contenu principal"
   },
   "header": {
     "navHome": "ACCUEIL",
@@ -42,6 +43,7 @@
   },
   "home": {
     "heroTitle": "S&J Sunny and Juicy",
+    "heroHeading": "S&J — Soupes et jus frais pressés à Paris depuis 2001",
     "ctaProducts": "Voir nos produits",
     "statSince": "Cantine saine depuis",
     "statRestaurants": "Restaurants sur Paris",

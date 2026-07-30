@@ -39,6 +39,7 @@ function LazyPage({ children }) {
 
 function AppContent() {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
   const isHome = pathname === "/" || pathname === "";
 
   useEffect(() => {
@@ -57,8 +58,12 @@ function AppContent() {
   return (
     <>
       <ScrollToTop />
+      <a href="#contenu-principal" className="skip-link">
+        {t("common.skipToContent")}
+      </a>
       <div className={`sj-style ${isHome ? "page-is-home" : ""}`}>
         <Header />
+        <div id="contenu-principal" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/produits" element={<LazyPage><ProduitsMenu /></LazyPage>} />
@@ -78,6 +83,7 @@ function AppContent() {
           <Route path="/formation/:sectionId" element={<LazyPage><FormationSection /></LazyPage>} />
           <Route path="*" element={<LazyPage><NotFound /></LazyPage>} />
         </Routes>
+        </div>
         <Footer />
       </div>
       <CookieBanner />

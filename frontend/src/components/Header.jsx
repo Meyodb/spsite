@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import logoVert from "../assets/images/logo-vert.png";
 
 const LANGUAGES = [
-  { code: "fr", flag: "FR" },
-  { code: "en", flag: "EN" },
+  { code: "fr", flag: "FR", label: "Français" },
+  { code: "en", flag: "EN", label: "English" },
 ];
 
 export const Header = () => {
@@ -245,6 +245,7 @@ export const Header = () => {
               type="button"
               role="menuitem"
               className="header-lang-option"
+              lang={lang.code}
               onClick={(e) => {
                 e.stopPropagation();
                 localStorage.setItem("soup-juice-lang", lang.code);
@@ -253,6 +254,7 @@ export const Header = () => {
               }}
             >
               <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
+              <span className="sr-only">{lang.label}</span>
             </button>
           </li>
         ))}

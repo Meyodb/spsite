@@ -7,7 +7,8 @@
     "send": "Send",
     "required": "*",
     "errorRetry": "An error occurred. Please try again.",
-    "errorConnection": "Connection error. Please try again later."
+    "errorConnection": "Connection error. Please try again later.",
+    "skipToContent": "Skip to main content"
   },
   "header": {
     "navHome": "HOME",
@@ -42,6 +43,7 @@
   },
   "home": {
     "heroTitle": "S&J Sunny and Juicy",
+    "heroHeading": "S&J — Fresh soups and cold-pressed juices in Paris since 2001",
     "ctaProducts": "See our products",
     "statSince": "Healthy canteen since",
     "statRestaurants": "Restaurants in Paris",

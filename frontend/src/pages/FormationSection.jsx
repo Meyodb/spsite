@@ -350,13 +350,14 @@ export const FormationSection = () => {
   };
 
   return (
-    <CodeProtection>
+    <>
       <PageSEO
         title={sectionTitle}
         description="Espace de formation réservé au personnel S&J."
         path={`/formation/${sectionId}`}
         noindex
       />
+      <CodeProtection>
       <main className="formation-section-page">
         <div className="formation-section-container">
           <div className="formation-section-header">
@@ -449,6 +450,7 @@ export const FormationSection = () => {
           )}
         </div>
       </main>
-    </CodeProtection>
+      </CodeProtection>
+    </>
   );
 };

@@ -484,6 +484,52 @@ body {
   border: 0;
 }
 
+/* Lien d'évitement : visible uniquement à la prise de focus au clavier. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  z-index: 2000;
+  padding: 12px 24px;
+  background: var(--green, #82907B);
+  color: #fff;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  transition: transform 0.15s ease-in-out;
+}
+
+.skip-link:focus {
+  transform: translate(-50%, 0);
+  outline: 3px solid #fff;
+  outline-offset: -6px;
+}
+
+#contenu-principal:focus {
+  outline: none;
+}
+
+/* Respect du réglage système « réduire les animations » (WCAG 2.3.3).
+   Les éléments animés à l'apparition doivent rester visibles. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-animate,
+  .scroll-animate-item,
+  .animate-hidden {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 
 .mobile-menu-toggle {
   display: flex;

@@ -7,12 +7,20 @@ import {
 const GA_SCRIPT_ID = "sj-ga-script";
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
-if (GA_MEASUREMENT_ID) {
-  window[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+const isBrowser = () => typeof window !== "undefined";
+
+// Google Analytics reste désactivé par défaut : le drapeau ga-disable-* doit
+// être posé avant tout chargement du script.
+function setGaDisabled(disabled) {
+  if (!isBrowser() || !GA_MEASUREMENT_ID) return;
+  window[`ga-disable-${GA_MEASUREMENT_ID}`] = disabled;
 }
 
+setGaDisabled(true);
+
 function initGoogleAnalytics() {
-  if (!GA_MEASUREMENT_ID || document.getElementById(GA_SCRIPT_ID)) return;
+  if (!isBrowser() || !GA_MEASUREMENT_ID) return;
+  if (document.getElementById(GA_SCRIPT_ID)) return;
 
   const script = document.createElement("script");
   script.id = GA_SCRIPT_ID;
@@ -31,24 +39,16 @@ function initGoogleAnalytics() {
   window.gtag("config", GA_MEASUREMENT_ID, { anonymize_ip: true });
 }
 
-function disableGoogleAnalytics() {
-  if (!GA_MEASUREMENT_ID) return;
-
-  window[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
-}
-
 export function applyOptionalServicesFromConsent() {
-  const consent = getCookieConsent();
+  if (!isBrowser()) return;
 
-  if (consent === COOKIE_CONSENT_VALUES.ACCEPTED) {
+  if (getCookieConsent() === COOKIE_CONSENT_VALUES.ACCEPTED) {
     initGoogleAnalytics();
-    if (GA_MEASUREMENT_ID) {
-      window[`ga-disable-${GA_MEASUREMENT_ID}`] = false;
-    }
+    setGaDisabled(false);
     return;
   }
 
-  disableGoogleAnalytics();
+  setGaDisabled(true);
 }
 
 export function isAnalyticsEnabled() {

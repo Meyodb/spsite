@@ -19,14 +19,17 @@ export const Formation = () => {
   const getSectionTranslationKey = (sectionId) => SECTION_I18N[sectionId] || sectionId;
 
   return (
-    <CodeProtection>
+    <>
+      {/* Hors de CodeProtection : le noindex doit être présent même quand
+          seule l'invite de saisie du code est affichée. */}
+      <PageSEO
+        title="Espace formation S&J"
+        description="Espace de formation interne S&J : vidéos et ressources pédagogiques pour les équipes."
+        path="/formation"
+        noindex
+      />
+      <CodeProtection>
       <main className="formation-page">
-        <PageSEO
-          title="Espace formation S&J"
-          description="Espace de formation interne S&J : vidéos et ressources pédagogiques pour les équipes."
-          path="/formation"
-          noindex
-        />
         <div className="formation-container">
           <header className="formation-header">
             <h1>{t("formation.spaceTitle")}</h1>
@@ -62,6 +65,7 @@ export const Formation = () => {
           <FormationCommonActions />
         </div>
       </main>
-    </CodeProtection>
+      </CodeProtection>
+    </>
   );
 };
