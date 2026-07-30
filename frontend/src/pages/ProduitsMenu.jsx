@@ -14,6 +14,7 @@ import { AllergenPictograms } from "../components/AllergenPictograms";
 import { ProductImage } from "../components/ProductImage";
 import { ProductImageLightbox } from "../components/ProductImageLightbox";
 import { ProductSheet } from "../components/ProductSheet";
+import { apiUrl } from "../utils/apiUrl";
 import jus from "../assets/images/jus.png";
 import soupe from "../assets/images/soupe.png";
 import backImage from "../assets/images/back.png";
@@ -23,11 +24,6 @@ import palmier from "../assets/images/palmier.png";
 import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.png";
 import photoMenu2 from "../assets/images/photo-menu/photo-salade.jpg";
 import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.png";
-
-const getApiBase = () => {
-  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-  return "";
-};
 
 export const ProduitsMenu = () => {
   const { t } = useTranslation();
@@ -40,14 +36,14 @@ export const ProduitsMenu = () => {
   const [productsFromApi, setProductsFromApi] = useState(null);
 
   useEffect(() => {
-    fetch(`${getApiBase()}/api/products/visibility`)
+    fetch(apiUrl("/api/products/visibility"))
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((data) => setVisibleIdsFromApi(data.visibleIds ?? []))
       .catch(() => setVisibleIdsFromApi(undefined));
   }, []);
 
   useEffect(() => {
-    fetch(`${getApiBase()}/api/products`)
+    fetch(apiUrl("/api/products"))
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((data) => {
         const apiProducts = Array.isArray(data) ? data : data.products ?? [];

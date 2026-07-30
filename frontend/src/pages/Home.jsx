@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
 import { PageSEO } from "../components/PageSEO";
+import { apiUrl } from "../utils/apiUrl";
 import videoAccueil1 from "../assets/videos/Video_accueil_original.MP4";
 import videoAccueil2 from "../assets/videos/Video_accueil_2.mp4";
 import heroPoster from "../assets/images/hero-poster.jpg";
@@ -58,10 +59,7 @@ export const Home = () => {
     setNewsletterError("");
 
     try {
-      const apiBase = import.meta.env.VITE_API_URL !== undefined
-        ? import.meta.env.VITE_API_URL
-        : (import.meta.env.DEV ? "http://localhost:4000" : "");
-      const response = await fetch(`${apiBase}/api/newsletter/subscribe`, {
+      const response = await fetch(apiUrl("/api/newsletter/subscribe"), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

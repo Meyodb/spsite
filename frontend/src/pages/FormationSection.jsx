@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { CodeProtection } from "../components/CodeProtection";
+import { PageSEO } from "../components/PageSEO";
 import { FormationCommonActions } from "../components/FormationCommonActions";
 import { useFocusTrap } from "../hooks/useFocusTrap";
 import "./Formation.css";
@@ -350,6 +351,12 @@ export const FormationSection = () => {
 
   return (
     <CodeProtection>
+      <PageSEO
+        title={sectionTitle}
+        description="Espace de formation réservé au personnel S&J."
+        path={`/formation/${sectionId}`}
+        noindex
+      />
       <main className="formation-section-page">
         <div className="formation-section-container">
           <div className="formation-section-header">

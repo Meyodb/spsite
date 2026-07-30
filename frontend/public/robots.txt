@@ -2,10 +2,9 @@ User-agent: *
 Allow: /
 
 Disallow: /api/
-Disallow: /mentions-legales
-Disallow: /politique-confidentialite
-Disallow: /politique-cookies
-Disallow: /cgu
-Disallow: /formation
+Disallow: /admin
+
+# Les pages légales et l'espace formation sont exclus de l'index via une
+# balise meta robots noindex : les lister ici ne ferait que les signaler.
 
 Sitemap: https://www.soup-juice.net/sitemap.xml

@@ -184,7 +184,9 @@ app.use(
       httpOnly: true,
       sameSite: "lax",
       secure: IS_PRODUCTION,
-      maxAge: 1000 * 60 * 30,
+      // Le cookie couvre la plus longue session (formation, 12 h) ; l'expiration
+      // admin, plus courte, est vérifiée séparément dans requireAdminSession.
+      maxAge: 1000 * 60 * 60 * 12,
     },
   })
 );
@@ -233,9 +235,30 @@ const newsletterLimiter = createRateLimiter({
   message: "Trop d'inscriptions depuis cette adresse. Réessayez plus tard.",
 });
 
+const formationLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  blockMs: 30 * 60 * 1000,
+  message: "Trop de tentatives. Réessayez dans 30 minutes.",
+});
+
+const ADMIN_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+
 function requireAdminSession(req, res, next) {
-  if (req.session && req.session.isAdmin) {
+  const isAdminSessionValid =
+    req.session &&
+    req.session.isAdmin &&
+    req.session.adminExpiresAt > Date.now();
+
+  if (isAdminSessionValid) {
+    // Session glissante : chaque action repousse l'expiration.
+    req.session.adminExpiresAt = Date.now() + ADMIN_IDLE_TIMEOUT_MS;
     return next();
+  }
+
+  if (req.session?.isAdmin) {
+    delete req.session.isAdmin;
+    delete req.session.adminExpiresAt;
   }
   const wantsJson =
     req.path.startsWith("/api/") ||
@@ -369,6 +392,7 @@ app.post("/admin/login", loginLimiter, (req, res) => {
       return res.redirect("/admin/login?error=1");
     }
     req.session.isAdmin = true;
+    req.session.adminExpiresAt = Date.now() + ADMIN_IDLE_TIMEOUT_MS;
     return res.redirect("/admin");
   });
 });
@@ -388,6 +412,60 @@ app.post("/admin/logout", (req, res) => {
     return res.redirect("/");
   });
 });
+
+// ─── Espace formation (réservé au personnel) ───────────────────────────
+
+// Le code d'accès ne transite plus dans le bundle JS : il est vérifié ici.
+const FORMATION_ACCESS_CODE = process.env.FORMATION_ACCESS_CODE;
+const FORMATION_SESSION_MS = 12 * 60 * 60 * 1000;
+
+function hasFormationAccess(req) {
+  return Boolean(
+    req.session &&
+      (req.session.isAdmin ||
+        (req.session.formationExpiresAt &&
+          req.session.formationExpiresAt > Date.now()))
+  );
+}
+
+function requireFormationSession(req, res, next) {
+  if (hasFormationAccess(req)) return next();
+  return res.status(401).json({ error: "Accès formation requis." });
+}
+
+app.get("/api/formation/session", (req, res) => {
+  res.json({ authenticated: hasFormationAccess(req) });
+});
+
+app.post("/api/formation/login", formationLimiter, (req, res) => {
+  if (!FORMATION_ACCESS_CODE) {
+    console.error("FORMATION_ACCESS_CODE n'est pas défini dans .env.");
+    return res.status(500).json({ error: "Espace formation non configuré." });
+  }
+
+  if (!safeEquals(req.body?.code, FORMATION_ACCESS_CODE)) {
+    return res.status(401).json({ error: "Code invalide." });
+  }
+
+  req.session.formationExpiresAt = Date.now() + FORMATION_SESSION_MS;
+  return res.json({ authenticated: true });
+});
+
+app.post("/api/formation/logout", (req, res) => {
+  if (req.session) delete req.session.formationExpiresAt;
+  res.json({ authenticated: false });
+});
+
+// Vidéos servies hors de /public : inaccessibles sans session formation.
+app.use(
+  "/videos/formation",
+  requireFormationSession,
+  express.static(path.join(__dirname, "protected-media", "formation"), {
+    setHeaders: (res) => {
+      res.setHeader("Cache-Control", "private, max-age=3600");
+    },
+  })
+);
 
 app.get("/api/promos", (_, res) => res.json(getActivePromos()));
 app.get("/api/stores", (_, res) => res.json(getStores()));

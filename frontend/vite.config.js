@@ -15,6 +15,12 @@ export default defineConfig({
         target: "http://localhost:4000",
         changeOrigin: true,
       },
+      // Les vidéos de formation ne sont plus dans /public : elles sont
+      // servies par le backend derrière une session.
+      "/videos": {
+        target: "http://localhost:4000",
+        changeOrigin: true,
+      },
     },
   },
   build: {
