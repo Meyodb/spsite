@@ -47,6 +47,8 @@ export const Header = () => {
   }, [langDropdownOpen]);
 
   useEffect(() => {
+    // Synchronise la fermeture du menu langue avec celle du menu mobile.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!mobileMenuOpen) setLangDropdownOpen(false);
   }, [mobileMenuOpen]);
 

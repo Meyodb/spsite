@@ -45,6 +45,7 @@ const getYoutubeEmbedUrl = (url) => {
 };
 
 // Données des sections (à partager avec Formation.jsx)
+// eslint-disable-next-line react-refresh/only-export-components
 export const FORMATION_SECTIONS = [
   {
     id: "presentation",

@@ -11,7 +11,6 @@ const CLOSE_DURATION_MS = 280;
  */
 export function ProductImageLightbox({ open, onClose, productId, alt, imageCount }) {
   const [isClosing, setIsClosing] = useState(false);
-  const handleCloseRef = useRef(() => {});
   const containerRef = useRef(null);
 
   useFocusTrap(containerRef, { active: open && !isClosing });
@@ -23,12 +22,10 @@ export function ProductImageLightbox({ open, onClose, productId, alt, imageCount
     });
   }, []);
 
-  handleCloseRef.current = handleClose;
-
   useEffect(() => {
     if (!open) return;
     const handleEscape = (e) => {
-      if (e.key === "Escape") handleCloseRef.current();
+      if (e.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", handleEscape);
     const raf = requestAnimationFrame(() => {
@@ -39,7 +36,7 @@ export function ProductImageLightbox({ open, onClose, productId, alt, imageCount
       cancelAnimationFrame(raf);
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [open, handleClose]);
 
   useEffect(() => {
     if (!isClosing) return;

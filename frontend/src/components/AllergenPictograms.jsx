@@ -68,6 +68,7 @@ const ALLERGEN_ICONS = {
 };
 
 /** Mapping produit (nom) -> allergènes */
+// eslint-disable-next-line react-refresh/only-export-components
 export const ALLERGEN_BY_PRODUCT = {
   /* Plats chauds */
   "CABILLAUD TERIYAKI": ["gluten", "poissons", "soja", "sesame"],
@@ -179,6 +180,7 @@ export const ALLERGEN_BY_PRODUCT = {
 };
 
 /** Retourne les allergènes pour un produit (par nom) */
+// eslint-disable-next-line react-refresh/only-export-components
 export function getAllergensForProduct(productName) {
   return ALLERGEN_BY_PRODUCT[productName] || [];
 }

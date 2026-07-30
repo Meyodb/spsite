@@ -15,6 +15,9 @@ export const CookieBanner = () => {
 
   useEffect(() => {
     const consent = getCookieConsent();
+    // Lecture client au montage (localStorage) : indispensable pour éviter un
+    // décalage d'hydratation SSR, d'où l'affichage différé de la bannière.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!consent) setVisible(true);
 
     const openHandler = () => setVisible(true);

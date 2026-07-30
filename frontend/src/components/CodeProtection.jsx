@@ -17,6 +17,8 @@ export const CodeProtection = ({ children }) => {
   useEffect(() => {
     const expiresAt = Number(localStorage.getItem(STORAGE_KEY));
     if (expiresAt && Date.now() < expiresAt) {
+      // Lecture client au montage (localStorage) : requise pour le SSR.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsAuthenticated(true);
     } else {
       localStorage.removeItem(STORAGE_KEY);

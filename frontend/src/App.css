@@ -273,7 +273,7 @@ body {
 }
 
 .page-is-home .main-header .logo img {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .page-is-home .main-header .logo:hover {

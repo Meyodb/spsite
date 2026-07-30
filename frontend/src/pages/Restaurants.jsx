@@ -13,9 +13,6 @@ import photoMadeleine from "../assets/images/restaurants/photo_madeleine.png";
 import photoLondre from "../assets/images/restaurants/photo_londre.jpg";
 import photoNeuilly from "../assets/images/restaurants/photo_neuilly.jpg";
 import photoHonore from "../assets/images/restaurants/photo_honore.png";
-import photoKleber from "../assets/images/restaurants/photo_kleber.png";
-import photoKleber2 from "../assets/images/restaurants/photo_kleber_2.png";
-import photoKleber3 from "../assets/images/restaurants/photo_kleber_3.png";
 import photoEtoile from "../assets/images/restaurants/photo_etoile_custom.png";
 import photoHaussmann from "../assets/images/restaurants/photo_haussmann.png";
 import photoBourse from "../assets/images/restaurants/photo_bourse.png";
@@ -62,30 +59,30 @@ const CLOSE_DURATION_MS = 280;
 const RestaurantPhotoLightbox = ({ open, photos, initialIndex, onClose }) => {
   const [index, setIndex] = useState(initialIndex);
   const [isClosing, setIsClosing] = useState(false);
-  const handleCloseRef = useRef(() => {});
   const containerRef = useRef(null);
 
   useFocusTrap(containerRef, { active: open && !isClosing });
 
   useEffect(() => {
+    // Réinitialise la photo affichée à l'ouverture de la lightbox.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (open) setIndex(initialIndex);
   }, [open, initialIndex]);
 
   const handleClose = useCallback(() => {
     setIsClosing((prev) => (prev ? prev : true));
   }, []);
-  handleCloseRef.current = handleClose;
 
   useEffect(() => {
     if (!open) return;
-    const onEscape = (e) => { if (e.key === "Escape") handleCloseRef.current(); };
+    const onEscape = (e) => { if (e.key === "Escape") handleClose(); };
     document.addEventListener("keydown", onEscape);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onEscape);
       document.body.style.overflow = "";
     };
-  }, [open]);
+  }, [open, handleClose]);
 
   useEffect(() => {
     if (!isClosing) return;
@@ -166,13 +163,20 @@ const RestaurantPhotoLightbox = ({ open, photos, initialIndex, onClose }) => {
   );
 };
 
+const PhotoWrapper = ({ children, onClick }) => (
+  <button
+    type="button"
+    className="restaurant-photo-carousel-photo-wrap"
+    onClick={onClick}
+    aria-label="Voir la photo en plein écran"
+  >
+    {children}
+  </button>
+);
+
 const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
   const [index, setIndex] = useState(initialIndex);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-
-  useEffect(() => {
-    setIndex(initialIndex);
-  }, [photos, initialIndex]);
 
   if (!photos || photos.length === 0) {
     return null;
@@ -190,21 +194,10 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
 
   const openLightbox = () => setLightboxOpen(true);
 
-  const PhotoWrapper = ({ children }) => (
-    <button
-      type="button"
-      className="restaurant-photo-carousel-photo-wrap"
-      onClick={openLightbox}
-      aria-label="Voir la photo en plein écran"
-    >
-      {children}
-    </button>
-  );
-
   if (photos.length === 1) {
     return (
       <>
-        <PhotoWrapper>
+        <PhotoWrapper onClick={openLightbox}>
           <img
             src={photos[0]}
             alt=""
@@ -236,7 +229,7 @@ const RestaurantPhotoCarousel = ({ photos, initialIndex = 0 }) => {
         >
           ‹
         </button>
-        <PhotoWrapper>
+        <PhotoWrapper onClick={openLightbox}>
           <img
             src={photos[index]}
             alt=""
@@ -303,6 +296,17 @@ const center = [
   restaurants.reduce((s, r) => s + r.coordinates[0], 0) / restaurants.length,
   restaurants.reduce((s, r) => s + r.coordinates[1], 0) / restaurants.length,
 ];
+
+// Limites géographiques pour cadrer tous les restaurants (données statiques)
+const bounds = restaurants.reduce(
+  (acc, restaurant) => ({
+    minLng: Math.min(acc.minLng, restaurant.coordinates[0]),
+    maxLng: Math.max(acc.maxLng, restaurant.coordinates[0]),
+    minLat: Math.min(acc.minLat, restaurant.coordinates[1]),
+    maxLat: Math.max(acc.maxLat, restaurant.coordinates[1]),
+  }),
+  { minLng: Infinity, maxLng: -Infinity, minLat: Infinity, maxLat: -Infinity },
+);
 
 export const Restaurants = () => {
   const { t } = useTranslation();
@@ -389,19 +393,6 @@ export const Restaurants = () => {
   const onMarkerClick = useCallback((restaurant) => {
     handleRestaurantClick(restaurant);
   }, [handleRestaurantClick]);
-
-  // Calculer les limites pour afficher tous les restaurants
-  const bounds = restaurants.reduce(
-    (acc, restaurant) => {
-      return {
-        minLng: Math.min(acc.minLng, restaurant.coordinates[0]),
-        maxLng: Math.max(acc.maxLng, restaurant.coordinates[0]),
-        minLat: Math.min(acc.minLat, restaurant.coordinates[1]),
-        maxLat: Math.max(acc.maxLat, restaurant.coordinates[1]),
-      };
-    },
-    { minLng: Infinity, maxLng: -Infinity, minLat: Infinity, maxLat: -Infinity }
-  );
 
   useEffect(() => {
     // Ajuster la vue pour afficher tous les restaurants au chargement
@@ -584,6 +575,7 @@ export const Restaurants = () => {
               <div className="restaurant-detail-panel-image">
                 {restaurantPhotos[selectedRestaurant.id] ? (
                   <RestaurantPhotoCarousel
+                    key={selectedRestaurant.id}
                     photos={restaurantPhotos[selectedRestaurant.id]}
                     initialIndex={selectedRestaurant.id === 5 ? 1 : 0}
                   />

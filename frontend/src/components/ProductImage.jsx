@@ -6,6 +6,7 @@ import { ProductImageCarousel } from "./ProductImageCarousel";
  */
 const IMAGE_ID_ALIAS = {
   42: 90, // Tortellini pesto rouge : affiche la photo des pâtes au pesto (fusion)
+  260: 90, // Pâtes végétarienne pesto (JDC) : affiche la photo des pâtes au pesto
   // Soupes : partage d'images pour recettes similaires
   186: 185, // CHAMPIGNONS MIEL → CHAMPIGNONS
   191: 190, // CAROTTE ORANGE → CAROTTES POMMES ET CURRY
@@ -36,6 +37,7 @@ function withCacheBust(url) {
  * URL de l'image d'un produit par convention : public/images/products/{id}.{ext}
  * Si VITE_IMG_BASE_URL est défini, on pointe vers le CDN.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function getProductImageUrl(productId, ext = "jpg") {
   const imageProductId = resolveImageProductId(productId);
   return withCacheBust(withImageBase(`/images/products/${imageProductId}.${ext}`));

@@ -10,7 +10,7 @@ import {
   DESSERT_SUBCATEGORIES_COMPACT_ORDER,
   DESSERT_SUBCATEGORY_PRICES,
 } from "../data/productsData";
-import { AllergenPictograms, getAllergensForProduct } from "../components/AllergenPictograms";
+import { AllergenPictograms } from "../components/AllergenPictograms";
 import { ProductImage } from "../components/ProductImage";
 import { ProductImageLightbox } from "../components/ProductImageLightbox";
 import { ProductSheet } from "../components/ProductSheet";
@@ -20,9 +20,9 @@ import backImage from "../assets/images/back.png";
 import citron from "../assets/images/citron.png";
 import ananas from "../assets/images/ananas.png";
 import palmier from "../assets/images/palmier.png";
-import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.jpg";
+import photoMenu1 from "../assets/images/photo-menu/photo-sandwich.png";
 import photoMenu2 from "../assets/images/photo-menu/photo-salade.jpg";
-import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.jpg";
+import photoMenu3 from "../assets/images/photo-menu/photo-platchaud.png";
 
 const getApiBase = () => {
   if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
@@ -99,12 +99,16 @@ export const ProduitsMenu = () => {
 
   useEffect(() => {
     if (orderedCategories.length > 0 && !activeCategory) {
+      // Sélection de la catégorie par défaut une fois les données chargées.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveCategory(orderedCategories[0]);
     }
   }, [orderedCategories, activeCategory]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 992px)");
+    // Lecture client au montage (matchMedia) : requise pour le SSR.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobile(mq.matches);
     const handler = (e) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);

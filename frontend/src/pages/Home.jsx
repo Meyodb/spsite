@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AnimatedSection, AnimatedItem } from "../components/AnimatedSection";
@@ -15,17 +15,16 @@ export const Home = () => {
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [newsletterError, setNewsletterError] = useState("");
   const [shouldLoadHeroVideo, setShouldLoadHeroVideo] = useState(false);
+  const [heroVideo, setHeroVideo] = useState(HERO_VIDEOS[0]);
   const heroVideoRef = useRef(null);
-
-  const heroVideo = useMemo(
-    () => HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)],
-    [],
-  );
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
 
-    const loadHeroVideo = () => setShouldLoadHeroVideo(true);
+    const loadHeroVideo = () => {
+      setHeroVideo(HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)]);
+      setShouldLoadHeroVideo(true);
+    };
 
     if ("requestIdleCallback" in window) {
       const idleCallbackId = window.requestIdleCallback(loadHeroVideo, { timeout: 2500 });

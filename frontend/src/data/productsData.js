@@ -4,7 +4,7 @@
  * Pour les produits provenant de l'API qui ont imageUrl défini,
  * on considère qu'ils ont toujours une photo.
  */
-const IMAGE_ID_ALIAS = { 42: 90 };
+const IMAGE_ID_ALIAS = { 42: 90, 260: 90 };
 const PRODUCT_IDS_WITH_PHOTO = new Set([
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 17, 18, 19, 20, 21,
   26, 27, 28, 30, 31, 32, 33, 34, 35, 36, 37, 38, 43, 45, 47, 48, 51, 52, 60, 61, 62, 63,
