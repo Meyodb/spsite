@@ -4,6 +4,8 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  // Le .env du projet est à la racine, un niveau au-dessus de /frontend.
+  envDir: "..",
   define: {
     __BUILD_VERSION__: JSON.stringify(Date.now().toString()),
   },

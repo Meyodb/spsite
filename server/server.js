@@ -48,6 +48,8 @@ import {
   setCategoryManagedBy,
 } from "./db.js";
 import { sendContactEmail } from "./mail.js";
+import { verifyPassword, safeEquals } from "./auth.js";
+import { createRateLimiter } from "./rate-limit.js";
 import {
   runJdcSync,
   getJdcSyncStatus,
@@ -80,14 +82,31 @@ const upload = multer({ storage });
 
 // ─── Auth admin (login par session) ────────────────────────────────────
 
-// Identifiants actuels du back-office.
-// Pour les modifier, change simplement ces valeurs et redémarre le serveur.
-const ADMIN_USER = "Soupandjuice";
-const ADMIN_PASSWORD = "wU48wJ29";
-const ADMIN_SESSION_SECRET =
-  process.env.ADMIN_SESSION_SECRET || "change-this-session-secret";
+// Identifiants du back-office : uniquement via .env.
+// Pour changer le mot de passe : node server/scripts/set-admin-password.js
+const IS_PRODUCTION = process.env.NODE_ENV === "production";
+const ADMIN_USER = process.env.ADMIN_USER;
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET;
 
-if (process.env.NODE_ENV === "production") {
+if (!ADMIN_USER || !ADMIN_PASSWORD_HASH) {
+  console.error(
+    "ADMIN_USER et ADMIN_PASSWORD_HASH doivent être définis dans .env. " +
+      "Générez le hash avec : node server/scripts/set-admin-password.js"
+  );
+  process.exit(1);
+}
+
+if (!ADMIN_SESSION_SECRET) {
+  console.error(
+    "ADMIN_SESSION_SECRET doit être défini dans .env " +
+      "(ex: node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\")."
+  );
+  process.exit(1);
+}
+
+if (IS_PRODUCTION) {
+  app.set("trust proxy", 1);
   app.use((req, res, next) => {
     if (req.headers["x-forwarded-proto"] !== "https") {
       return res.redirect(301, `https://${req.headers.host}${req.url}`);
@@ -106,6 +125,7 @@ app.use(
           "'unsafe-inline'",
           "https://esm.sh",
           "https://cdn.jsdelivr.net",
+          "https://www.googletagmanager.com",
         ],
         styleSrc: [
           "'self'",
@@ -127,6 +147,9 @@ app.use(
           "https://*.basemaps.cartocdn.com",
           "https://*.tile.openstreetmap.org",
           "https://deliveroo.fr",
+          "https://www.google-analytics.com",
+          "https://*.google-analytics.com",
+          "https://*.analytics.google.com",
         ],
         mediaSrc: ["'self'", "blob:"],
         frameSrc: ["'none'"],
@@ -138,7 +161,18 @@ app.use(
     crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
-app.use(cors());
+// En production, seules les origines du site sont autorisées.
+const ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: IS_PRODUCTION ? ALLOWED_ORIGINS : true,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
@@ -149,7 +183,7 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: IS_PRODUCTION,
       maxAge: 1000 * 60 * 30,
     },
   })
@@ -178,6 +212,26 @@ function isValidSpaRoute(pathname) {
   if (/^\/restaurants\/[^/]+$/.test(pathname)) return true;
   return false;
 }
+
+// 5 tentatives par IP sur 15 min, puis blocage d'une heure.
+const loginLimiter = createRateLimiter({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  blockMs: 60 * 60 * 1000,
+  message: "Trop de tentatives de connexion. Réessayez dans une heure.",
+});
+
+const contactLimiter = createRateLimiter({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  message: "Trop de messages envoyés. Réessayez dans une heure.",
+});
+
+const newsletterLimiter = createRateLimiter({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  message: "Trop d'inscriptions depuis cette adresse. Réessayez plus tard.",
+});
 
 function requireAdminSession(req, res, next) {
   if (req.session && req.session.isAdmin) {
@@ -298,13 +352,25 @@ app.get("/admin/login", (req, res) => {
 </html>`);
 });
 
-app.post("/admin/login", (req, res) => {
+app.post("/admin/login", loginLimiter, (req, res) => {
   const { username, password } = req.body || {};
-  if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
+  const isValid =
+    safeEquals(username, ADMIN_USER) && verifyPassword(password, ADMIN_PASSWORD_HASH);
+
+  if (!isValid) {
+    console.warn(`Tentative de connexion admin échouée depuis ${req.ip}`);
+    return res.redirect("/admin/login?error=1");
+  }
+
+  // Régénère l'identifiant de session après authentification (anti session fixation).
+  req.session.regenerate((err) => {
+    if (err) {
+      console.error("Erreur lors de la régénération de la session admin:", err);
+      return res.redirect("/admin/login?error=1");
+    }
     req.session.isAdmin = true;
     return res.redirect("/admin");
-  }
-  return res.redirect("/admin/login?error=1");
+  });
 });
 
 app.post("/admin/logout", (req, res) => {
@@ -373,7 +439,7 @@ function normalizeLang(raw) {
 // ─── Chatbot IA (Google Gemini) ──────────────────────────────────────
 app.post("/api/chat", chatHandler);
 
-app.post("/api/contact", async (req, res) => {
+app.post("/api/contact", contactLimiter, async (req, res) => {
   const {
     sujet,
     nom,
@@ -424,8 +490,8 @@ app.post("/api/contact", async (req, res) => {
 
   const id = saveContactMessage(storedMessage);
 
-  console.log("---- Nouveau message de contact (DB) ----");
-  console.log({ id, ...storedMessage });
+  // Pas de données personnelles dans les logs : elles sont consultables en base.
+  console.log(`Nouveau message de contact enregistré (id=${id}, sujet=${sujet})`);
 
   // Envoi d'email non bloquant pour le client : on essaie, mais on ne casse pas la réponse en cas d'erreur
   try {
@@ -441,8 +507,8 @@ app.post("/api/contact", async (req, res) => {
   });
 });
 
-// (Optionnel) route d'admin pour lister les derniers messages
-app.get("/api/contact/messages", (req, res) => {
+// Route d'admin pour lister les derniers messages (données personnelles).
+app.get("/api/contact/messages", requireAdminSession, (req, res) => {
   const limit = Number(req.query.limit) || 100;
   const safeLimit = Number.isFinite(limit) && limit > 0 && limit <= 500 ? limit : 100;
   const messages = listContactMessages(safeLimit);
@@ -831,7 +897,7 @@ app.put("/api/admin/pos-mapping/:id", requireAdminSession, (req, res) => {
   return res.json({ updated: true });
 });
 
-app.post("/api/newsletter/subscribe", (req, res) => {
+app.post("/api/newsletter/subscribe", newsletterLimiter, (req, res) => {
   const { email } = req.body;
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -857,14 +923,14 @@ app.post("/api/newsletter/subscribe", (req, res) => {
     });
   }
 
-  console.log(`Nouvel abonné newsletter: ${email}`);
+  console.log("Nouvelle inscription newsletter enregistrée");
   res.json({
     success: true,
     message: "Inscription réussie ! Merci de votre intérêt.",
   });
 });
 
-app.get("/api/newsletter/subscribers", (req, res) => {
+app.get("/api/newsletter/subscribers", requireAdminSession, (req, res) => {
   const subscribers = listNewsletterSubscribers();
   res.json({
     count: subscribers.length,

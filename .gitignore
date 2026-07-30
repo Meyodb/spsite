@@ -47,3 +47,10 @@ pnpm-debug.log*
 .cache
 .vite/
 frontend/.vite/
+
+# Clés SSH (ne jamais versionner)
+key
+key.pub
+*.pem
+id_rsa*
+id_ed25519*
