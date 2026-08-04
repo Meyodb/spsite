@@ -9,6 +9,27 @@ const LANGUAGES = [
   { code: "en", flag: "EN", label: "English" },
 ];
 
+// Source unique de la navigation : les rendus mobile et desktop en découlent.
+// scrollToTop force le retour en haut sur les pages où l'on peut déjà se
+// trouver, la navigation router seule ne déclenchant alors aucun défilement.
+const NAV_LINKS = [
+  { to: "/", labelKey: "header.navHome", scrollToTop: true },
+  { to: "/produits", labelKey: "header.navProducts", scrollToTop: true },
+  { to: "/restaurants", labelKey: "header.navRestaurants" },
+  { to: "/adn", labelKey: "header.navAdn" },
+  { to: "/nos-piliers", labelKey: "header.navPiliers" },
+  { to: "/catering", labelKey: "header.navCatering" },
+  { to: "/contact", labelKey: "header.navContact" },
+];
+
+const INSTAGRAM_URL = "https://www.instagram.com/soupjuiceparis/?hl=fr";
+
+const InstagramIcon = () => (
+  <svg className="instagram-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+  </svg>
+);
+
 export const Header = () => {
   const { t, i18n } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -98,31 +119,61 @@ export const Header = () => {
     mobileMenuOpen ? "menu-open" : ""
   ].filter(Boolean).join(" ");
 
-  const navLinks = (
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
+  const handleNavClick = (link) => {
+    setMobileMenuOpen(false);
+    if (link.scrollToTop) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  };
+
+  const renderNavContent = (triggerRef) => (
     <>
-      <Link to="/" className="nav-link" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); }}>{t("header.navHome")}</Link>
-      <Link to="/produits" className="nav-link" onClick={() => { setMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'instant' }); }}>{t("header.navProducts")}</Link>
-      <Link to="/restaurants" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navRestaurants")}</Link>
-      <Link to="/adn" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navAdn")}</Link>
-      <Link to="/nos-piliers" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navPiliers")}</Link>
-      <Link to="/catering" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navCatering")}</Link>
-      <Link to="/contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navContact")}</Link>
+      {NAV_LINKS.map((link) => (
+        <Link
+          key={link.to}
+          to={link.to}
+          className="nav-link"
+          onClick={() => handleNavClick(link)}
+        >
+          {t(link.labelKey)}
+        </Link>
+      ))}
       <div className="nav-right-bottom">
-        <a href="https://www.instagram.com/soupjuiceparis/?hl=fr" target="_blank" rel="noopener noreferrer" className="cta-header instagram-header" onClick={() => setMobileMenuOpen(false)} aria-label={t("header.ariaInstagram")}>
-          <svg className="instagram-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-header instagram-header"
+          onClick={closeMobileMenu}
+          aria-label={t("header.ariaInstagram")}
+        >
+          <InstagramIcon />
           <span>Instagram</span>
         </a>
         <div className={`header-lang-dropdown header-lang-discret ${langDropdownOpen ? "is-open" : ""}`}>
-          <button ref={mobileTriggerRef} type="button" className="header-lang-trigger" onClick={(e) => { e.stopPropagation(); setLangDropdownOpen((o) => !o); }} aria-expanded={langDropdownOpen} aria-haspopup="true" aria-label={t("header.ariaLang")}>
+          <button
+            ref={triggerRef}
+            type="button"
+            className="header-lang-trigger"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLangDropdownOpen((open) => !open);
+            }}
+            aria-expanded={langDropdownOpen}
+            aria-haspopup="true"
+            aria-label={t("header.ariaLang")}
+          >
             <span className="header-lang-code">{currentLang.code.toUpperCase()}</span>
-            <svg className="header-lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+            <svg className="header-lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </button>
         </div>
       </div>
     </>
   );
-
-  const closeMobileMenu = () => setMobileMenuOpen(false);
 
   const mobileMenuPortal = mobileMenuOpen && createPortal(
     <div className="mobile-menu-portal" aria-hidden="false">
@@ -136,7 +187,7 @@ export const Header = () => {
         >
           <span aria-hidden="true">×</span>
         </button>
-        {navLinks}
+        {renderNavContent(mobileTriggerRef)}
       </div>
     </div>,
     document.body,
@@ -153,7 +204,7 @@ export const Header = () => {
                 <img src={logoVert} alt="S&J" width={80} height={80} />
               </Link>
             </div>
-            <button 
+            <button
               className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setMobileMenuOpen(!mobileMenuOpen); }}
               aria-label={t("header.ariaMenu")}
@@ -163,105 +214,51 @@ export const Header = () => {
               <span></span><span></span><span></span>
             </button>
           </div>
-          <div className={`nav-right ${mobileMenuOpen ? 'mobile-open' : ''}`} onClick={(e) => e.stopPropagation()} style={mobileMenuOpen ? { display: 'none' } : undefined}>
-          <Link 
-            to="/" 
-            className="nav-link" 
-            onClick={() => {
-              setMobileMenuOpen(false);
-              window.scrollTo({ top: 0, behavior: 'instant' });
-            }}
+          <div
+            className={`nav-right ${mobileMenuOpen ? 'mobile-open' : ''}`}
+            onClick={(e) => e.stopPropagation()}
+            style={mobileMenuOpen ? { display: 'none' } : undefined}
           >
-            {t("header.navHome")}
-          </Link>
-          <Link 
-            to="/produits" 
-            className="nav-link" 
-            onClick={() => {
-              setMobileMenuOpen(false);
-              window.scrollTo({ top: 0, behavior: 'instant' });
-            }}
-          >
-            {t("header.navProducts")}
-          </Link>
-          <Link to="/restaurants" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navRestaurants")}</Link>
-          <Link to="/adn" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navAdn")}</Link>
-          <Link to="/nos-piliers" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navPiliers")}</Link>
-          <Link to="/catering" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navCatering")}</Link>
-          <Link to="/contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>{t("header.navContact")}</Link>
-          <div className="nav-right-bottom">
-            <a
-              href="https://www.instagram.com/soupjuiceparis/?hl=fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-header instagram-header"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label={t("header.ariaInstagram")}
-            >
-              <svg className="instagram-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-              <span>Instagram</span>
-            </a>
-            <div className={`header-lang-dropdown header-lang-discret ${langDropdownOpen ? "is-open" : ""}`}>
-            <button
-              ref={desktopTriggerRef}
-              type="button"
-              className="header-lang-trigger"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLangDropdownOpen((open) => !open);
-              }}
-              aria-expanded={langDropdownOpen}
-              aria-haspopup="true"
-              aria-label={t("header.ariaLang")}
-            >
-              <span className="header-lang-code">{currentLang.code.toUpperCase()}</span>
-              <svg className="header-lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            </div>
+            {renderNavContent(desktopTriggerRef)}
           </div>
-        </div>
-      </nav>
-    </header>
-    {mobileMenuPortal}
-    {langDropdownOpen && createPortal(
-      <ul
-        className="header-lang-menu header-lang-menu--portal"
-        role="menu"
-        style={{
-          position: "fixed",
-          top: langMenuPosition.top,
-          left: langMenuPosition.left,
-          minWidth: langMenuPosition.minWidth,
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {LANGUAGES.filter((l) => l.code !== currentLangCode).map((lang) => (
-          <li key={lang.code} role="none">
-            <button
-              type="button"
-              role="menuitem"
-              className="header-lang-option"
-              lang={lang.code}
-              onClick={(e) => {
-                e.stopPropagation();
-                localStorage.setItem("soup-juice-lang", lang.code);
-                i18n.changeLanguage(lang.code);
-                setLangDropdownOpen(false);
-              }}
-            >
-              <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
-              <span className="sr-only">{lang.label}</span>
-            </button>
-          </li>
-        ))}
-      </ul>,
-      document.body,
-      "lang-menu"
-    )}
+        </nav>
+      </header>
+      {mobileMenuPortal}
+      {langDropdownOpen && createPortal(
+        <ul
+          className="header-lang-menu header-lang-menu--portal"
+          role="menu"
+          style={{
+            position: "fixed",
+            top: langMenuPosition.top,
+            left: langMenuPosition.left,
+            minWidth: langMenuPosition.minWidth,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {LANGUAGES.filter((l) => l.code !== currentLangCode).map((lang) => (
+            <li key={lang.code} role="none">
+              <button
+                type="button"
+                role="menuitem"
+                className="header-lang-option"
+                lang={lang.code}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  localStorage.setItem("soup-juice-lang", lang.code);
+                  i18n.changeLanguage(lang.code);
+                  setLangDropdownOpen(false);
+                }}
+              >
+                <span className="header-lang-option-flag" aria-hidden="true">{lang.flag}</span>
+                <span className="sr-only">{lang.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>,
+        document.body,
+        "lang-menu"
+      )}
     </>
   );
 };

@@ -54,3 +54,6 @@ key.pub
 *.pem
 id_rsa*
 id_ed25519*
+
+# Sessions (base regeneree automatiquement)
+server/data/sessions.db*

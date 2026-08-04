@@ -50,6 +50,7 @@ import {
 import { sendContactEmail } from "./mail.js";
 import { verifyPassword, safeEquals } from "./auth.js";
 import { createRateLimiter } from "./rate-limit.js";
+import { createSessionStore } from "./session-store.js";
 import {
   runJdcSync,
   getJdcSyncStatus,
@@ -177,6 +178,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
+    store: createSessionStore(),
     secret: ADMIN_SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
