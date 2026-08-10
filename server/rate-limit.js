@@ -11,6 +11,8 @@ export function createRateLimiter({
   message = "Trop de requêtes, réessayez plus tard.",
   blockMs = 0,
   keyGenerator = (req) => req.ip,
+  // Permet de répondre autrement qu'en JSON (redirection d'un formulaire HTML).
+  onLimit = (req, res) => res.status(429).json({ success: false, message }),
 }) {
   return function rateLimiter(req, res, next) {
     const key = keyGenerator(req);
@@ -19,7 +21,7 @@ export function createRateLimiter({
 
     if (bucket.blockedUntil > now) {
       res.setHeader("Retry-After", Math.ceil((bucket.blockedUntil - now) / 1000));
-      return res.status(429).json({ success: false, message });
+      return onLimit(req, res);
     }
 
     bucket.hits = bucket.hits.filter((t) => t > now - windowMs);
@@ -28,7 +30,7 @@ export function createRateLimiter({
       if (blockMs > 0) bucket.blockedUntil = now + blockMs;
       buckets.set(key, bucket);
       res.setHeader("Retry-After", Math.ceil((blockMs || windowMs) / 1000));
-      return res.status(429).json({ success: false, message });
+      return onLimit(req, res);
     }
 
     bucket.hits.push(now);

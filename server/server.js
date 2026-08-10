@@ -223,6 +223,7 @@ const loginLimiter = createRateLimiter({
   max: 5,
   blockMs: 60 * 60 * 1000,
   message: "Trop de tentatives de connexion. Réessayez dans une heure.",
+  onLimit: (_req, res) => res.redirect("/admin/login?error=throttled"),
 });
 
 const contactLimiter = createRateLimiter({
@@ -361,9 +362,11 @@ app.get("/admin/login", (req, res) => {
       <h1>Connexion admin</h1>
       <p>Veuillez entrer votre identifiant et votre mot de passe.</p>
       ${
-        req.query.error
-          ? '<div class="error">Identifiants invalides.</div>'
-          : ""
+        req.query.error === "throttled"
+          ? '<div class="error">Trop de tentatives. Réessayez dans une heure.</div>'
+          : req.query.error
+            ? '<div class="error">Identifiants invalides.</div>'
+            : ""
       }
       <form method="post" action="/admin/login">
         <label for="username">Identifiant</label>
@@ -377,14 +380,18 @@ app.get("/admin/login", (req, res) => {
 </html>`);
 });
 
-app.post("/admin/login", loginLimiter, (req, res) => {
+app.post("/admin/login", (req, res) => {
   const { username, password } = req.body || {};
   const isValid =
     safeEquals(username, ADMIN_USER) && verifyPassword(password, ADMIN_PASSWORD_HASH);
 
+  // Seuls les échecs alimentent le compteur : des identifiants corrects
+  // doivent toujours passer, même après plusieurs tentatives ratées.
   if (!isValid) {
     console.warn(`Tentative de connexion admin échouée depuis ${req.ip}`);
-    return res.redirect("/admin/login?error=1");
+    return loginLimiter(req, res, () => {
+      return res.redirect("/admin/login?error=1");
+    });
   }
 
   // Régénère l'identifiant de session après authentification (anti session fixation).
@@ -439,14 +446,18 @@ app.get("/api/formation/session", (req, res) => {
   res.json({ authenticated: hasFormationAccess(req) });
 });
 
-app.post("/api/formation/login", formationLimiter, (req, res) => {
+app.post("/api/formation/login", (req, res) => {
   if (!FORMATION_ACCESS_CODE) {
     console.error("FORMATION_ACCESS_CODE n'est pas défini dans .env.");
     return res.status(500).json({ error: "Espace formation non configuré." });
   }
 
+  // Le rate limit ne compte que les codes invalides : un bon code doit
+  // toujours passer, même après plusieurs essais ratés.
   if (!safeEquals(req.body?.code, FORMATION_ACCESS_CODE)) {
-    return res.status(401).json({ error: "Code invalide." });
+    return formationLimiter(req, res, () => {
+      return res.status(401).json({ error: "Code invalide." });
+    });
   }
 
   req.session.formationExpiresAt = Date.now() + FORMATION_SESSION_MS;
