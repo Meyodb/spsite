@@ -549,6 +549,7 @@
     "codePlaceholder": "Enter the code",
     "submit": "Access training",
     "error": "Incorrect code. Please try again.",
+    "rateLimited": "Too many attempts. Please try again in 30 minutes.",
     "loading": "Loading..."
   },
   "chatbot": {

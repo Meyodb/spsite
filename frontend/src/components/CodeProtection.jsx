@@ -46,10 +46,16 @@ export const CodeProtection = ({ children }) => {
       if (response.ok) {
         setIsAuthenticated(true);
         setCode("");
-      } else {
-        setError(t("codeProtection.error"));
-        setCode("");
+        return;
       }
+
+      const data = await response.json().catch(() => ({}));
+      if (response.status === 429) {
+        setError(data.message || t("codeProtection.rateLimited"));
+      } else {
+        setError(data.error || t("codeProtection.error"));
+      }
+      setCode("");
     } catch {
       setError(t("common.errorConnection"));
     } finally {

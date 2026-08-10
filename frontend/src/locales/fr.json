@@ -586,6 +586,7 @@
     "codePlaceholder": "Entrez le code",
     "submit": "Accéder à la formation",
     "error": "Code incorrect. Veuillez réessayer.",
+    "rateLimited": "Trop de tentatives. Réessayez dans 30 minutes.",
     "loading": "Chargement..."
   },
   "chatbot": {
